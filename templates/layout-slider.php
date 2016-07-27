@@ -1,0 +1,33 @@
+<?php
+namespace Netzstrategen\Gallerya;
+
+$show_navigation = count($images) > 5;
+?>
+
+<div class="gallerya gallerya--slider">
+  <ul class="js-gallerya-slider js-gallerya-lightbox">
+    <?php foreach ($images as $image): ?>
+      <li>
+        <figure class="gallerya__image">
+          <a href="<?= wp_get_attachment_image_src($image->ID, apply_filters('gallerya/image_size_lightbox', 'large'))[0] ?>">
+            <?= wp_get_attachment_image($image->ID, apply_filters('gallerya/image_size_slider', 'post-thumbnail')) ?>
+          <?php if ($image->post_excerpt): ?>
+            <figcaption><?= $image->post_excerpt ?></figcaption>
+          <?php endif; ?>
+          </a>
+        </figure>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+  <?php if ($show_navigation): ?>
+    <ul class="gallerya--slider__nav  js-gallerya-thumbnail-slider">
+      <?php foreach ($images as $image): ?>
+        <li>
+          <figure class="gallerya__image">
+            <?= wp_get_attachment_image($image->ID, apply_filters('gallerya/image_size_nav_thumbnail', 'thumbnail')) ?>
+          </figure>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  <?php endif; ?>
+</div>
