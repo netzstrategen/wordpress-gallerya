@@ -39,11 +39,13 @@
           selector: '.gallerya__image > a'
         });
       }
-      $('.article__content').lightGallery({
-        thumbnail: true,
-        showThumbByDefault: false,
-        selector: 'figure > a'
-      });
+      if ($('body').hasClass('woocommerce') && $('.images').length > 0) {
+        $('.images').lightGallery({
+          thumbnail: true,
+          showThumbByDefault: false,
+          selector: '[data-rel="prettyPhoto[product-gallery]"]'
+        });
+      }
     }
 
   });
