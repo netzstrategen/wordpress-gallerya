@@ -17,6 +17,7 @@
           sliderArgs['pageDots'] = false;
         }
         $(this).flickity(sliderArgs);
+        var sliderData = $(this).data('flickity');
         if (navigation.length > 0) {
           var navigationArgs = {
             asNavFor: element,
@@ -27,6 +28,13 @@
             arrowShape: arrowShape
           };
           navigation.flickity(navigationArgs);
+
+          $(this).on('select.flickity', function () {
+            var index = sliderData.selectedIndex;
+            var className = 'is-currently-selected';
+            navigation.find('.flickity-slider li').removeClass(className)
+              .eq(index).addClass(className);
+          });
         }
       });
     }
