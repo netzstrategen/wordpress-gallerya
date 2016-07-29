@@ -44,6 +44,7 @@
         $('.js-gallerya-lightbox').lightGallery({
           thumbnail: true,
           showThumbByDefault: false,
+          subHtmlSelectorRelative: true,
           selector: '.gallerya__image > a'
         });
       }
@@ -51,6 +52,7 @@
         $('.images').lightGallery({
           thumbnail: true,
           showThumbByDefault: false,
+          subHtmlSelectorRelative: true,
           selector: '[data-rel="prettyPhoto[product-gallery]"]'
         });
       }
