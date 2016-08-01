@@ -29,6 +29,16 @@
   }
 }
 
+.gallerya--slider .flickity-prev-next-button, .gallerya--grid .flickity-prev-next-button {
+  top: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .gallerya--slider .flickity-prev-next-button, .gallerya--grid .flickity-prev-next-button {
+    top: 50%;
+  }
+}
+
 .gallerya--slider .flickity-prev-next-button, .gallerya--grid .flickity-prev-next-button,
 .gallerya--slider .flickity-page-dots .dot, .gallerya--grid .flickity-page-dots .dot {
   background: #e0e2e3;

@@ -46,6 +46,13 @@ $color-secondary: #c4c4c4;
       }
     }
 
+    .flickity-prev-next-button {
+      top: auto;
+      @media screen and (min-width: $screen-sm-min) {
+        top: 50%;
+      }
+    }
+
     .flickity-prev-next-button,
     .flickity-page-dots .dot {
       background: $color-primary;
