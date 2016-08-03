@@ -49,10 +49,6 @@
   background: #c4c4c4;
 }
 
-.gallerya--slider ul.gallerya--slider__nav, .gallerya--grid ul.gallerya--slider__nav {
-  margin-top: 32px;
-}
-
 .gallerya--slider ul.gallerya--slider__nav .flickity-prev-next-button, .gallerya--grid ul.gallerya--slider__nav .flickity-prev-next-button {
   width: 20px;
   height: 20px;

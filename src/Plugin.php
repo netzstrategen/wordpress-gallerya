@@ -53,6 +53,17 @@ class Plugin {
   }
 
   /**
+   * @implements wp_enqueue_scripts
+   */
+  public static function wp_enqueue_scripts() {
+    wp_enqueue_script('gallery-script-libs', static::getBaseUrl() . '/dist/scripts/libs.min.js');
+    wp_enqueue_script('gallery-script-custom', static::getBaseUrl() . '/dist/scripts/script.min.js');
+
+    wp_enqueue_style('gallery-style-libs', static::getBaseUrl() . '/dist/styles/libs.min.css');
+    wp_enqueue_style('gallery-style-custom', static::getBaseUrl() . '/dist/styles/style.min.css');
+  }
+
+  /**
    * @implements post_gallery
    */
   public static function post_gallery($output = '', $atts) {
@@ -65,17 +76,6 @@ class Plugin {
     ]);
     $output = ob_get_clean();
     return $output;
-  }
-
-  /**
-   * @implements wp_enqueue_scripts
-   */
-  public static function wp_enqueue_scripts() {
-    wp_enqueue_script('gallery-script-libs', Plugin::getBaseUrl() . '/dist/scripts/libs.min.js');
-    wp_enqueue_script('gallery-script-custom', Plugin::getBaseUrl() . '/dist/scripts/script.min.js');
-
-    wp_enqueue_style('gallery-style-libs', Plugin::getBaseUrl() . '/dist/styles/libs.min.css');
-    wp_enqueue_style('gallery-style-custom', Plugin::getBaseUrl() . '/dist/styles/style.min.css');
   }
 
   /**
