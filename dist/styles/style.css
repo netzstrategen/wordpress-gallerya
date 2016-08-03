@@ -29,27 +29,7 @@
   }
 }
 
-.gallerya--slider .flickity-prev-next-button, .gallerya--grid .flickity-prev-next-button {
-  top: auto;
-}
-
-@media screen and (min-width: 768px) {
-  .gallerya--slider .flickity-prev-next-button, .gallerya--grid .flickity-prev-next-button {
-    top: 50%;
-  }
-}
-
-.gallerya--slider .flickity-prev-next-button, .gallerya--grid .flickity-prev-next-button,
-.gallerya--slider .flickity-page-dots .dot, .gallerya--grid .flickity-page-dots .dot {
-  background: #e0e2e3;
-}
-
-.gallerya--slider .flickity-prev-next-button:hover, .gallerya--grid .flickity-prev-next-button:hover,
-.gallerya--slider .flickity-page-dots .dot:hover, .gallerya--grid .flickity-page-dots .dot:hover {
-  background: #c4c4c4;
-}
-
-.gallerya--slider ul.gallerya--slider__nav .flickity-prev-next-button, .gallerya--grid ul.gallerya--slider__nav .flickity-prev-next-button {
+.gallerya--slider .gallerya--slider__nav .flickity-prev-next-button, .gallerya--grid .gallerya--slider__nav .flickity-prev-next-button {
   width: 20px;
   height: 20px;
   top: 50%;
@@ -57,36 +37,36 @@
           transform: translateY(-50%);
 }
 
-.gallerya--slider ul.gallerya--slider__nav .flickity-prev-next-button.previous, .gallerya--grid ul.gallerya--slider__nav .flickity-prev-next-button.previous {
+.gallerya--slider .gallerya--slider__nav .flickity-prev-next-button.previous, .gallerya--grid .gallerya--slider__nav .flickity-prev-next-button.previous {
   left: 4px;
 }
 
-.gallerya--slider ul.gallerya--slider__nav .flickity-prev-next-button.next, .gallerya--grid ul.gallerya--slider__nav .flickity-prev-next-button.next {
+.gallerya--slider .gallerya--slider__nav .flickity-prev-next-button.next, .gallerya--grid .gallerya--slider__nav .flickity-prev-next-button.next {
   right: 4px;
 }
 
-.gallerya--slider ul.gallerya--slider__nav .flickity-prev-next-button[disabled], .gallerya--grid ul.gallerya--slider__nav .flickity-prev-next-button[disabled] {
+.gallerya--slider .gallerya--slider__nav .flickity-prev-next-button[disabled], .gallerya--grid .gallerya--slider__nav .flickity-prev-next-button[disabled] {
   opacity: .5;
 }
 
-.gallerya--slider ul.gallerya--slider__nav li, .gallerya--grid ul.gallerya--slider__nav li {
+.gallerya--slider .gallerya--slider__nav li, .gallerya--grid .gallerya--slider__nav li {
   width: calc(100% / 3);
   padding: 0 5px;
 }
 
 @media screen and (min-width: 480px) {
-  .gallerya--slider ul.gallerya--slider__nav li, .gallerya--grid ul.gallerya--slider__nav li {
+  .gallerya--slider .gallerya--slider__nav li, .gallerya--grid .gallerya--slider__nav li {
     width: calc(100% / 4);
   }
 }
 
 @media screen and (min-width: 768px) {
-  .gallerya--slider ul.gallerya--slider__nav li, .gallerya--grid ul.gallerya--slider__nav li {
+  .gallerya--slider .gallerya--slider__nav li, .gallerya--grid .gallerya--slider__nav li {
     width: calc(100% / 5);
   }
 }
 
-.gallerya--slider ul.gallerya--slider__nav figure, .gallerya--grid ul.gallerya--slider__nav figure {
+.gallerya--slider .gallerya--slider__nav figure, .gallerya--grid .gallerya--slider__nav figure {
   width: 100%;
   margin: initial;
   display: inline-block;
@@ -143,6 +123,7 @@
 .gallerya__image img {
   width: auto;
   max-height: 645px;
+  vertical-align: middle;
 }
 
 .gallerya__image figcaption {
@@ -165,6 +146,63 @@
     background: linear-gradient(to top, #000 0%, transparent 100%);
     color: #e0e2e3;
   }
+}
+
+.gallerya__image-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-transform: translateX(-5px);
+          transform: translateX(-5px);
+}
+
+@media screen and (min-width: 768px) {
+  .gallerya__image-group {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.gallerya__image-group .gallerya__image {
+  margin: 0;
+  width: auto;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  max-width: calc(100% / 2);
+}
+
+@media screen and (min-width: 768px) {
+  .gallerya__image-group .gallerya__image {
+    max-width: calc(100% / 3);
+  }
+}
+
+.gallerya .flickity-prev-next-button {
+  top: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .gallerya .flickity-prev-next-button {
+    top: 50%;
+  }
+}
+
+.gallerya .flickity-page-dots,
+.gallerya .flickity-prev-next-button {
+  margin: 0;
+}
+
+.gallerya .flickity-prev-next-button,
+.gallerya .flickity-page-dots .dot {
+  background: #e0e2e3;
+}
+
+.gallerya .flickity-prev-next-button:hover,
+.gallerya .flickity-page-dots .dot:hover {
+  background: #c4c4c4;
 }
 
 .lg-outer .lg-item {

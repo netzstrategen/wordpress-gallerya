@@ -11,6 +11,7 @@ $default_layout = apply_filters('gallerya/default_layout', Plugin::DEFAULT_LAYOU
       <option value="default"><?= sprintf(__('- Default (%s) -', Plugin::L10N), $default_layout) ?></option>
       <option value="slider"><?= __('Slider', Plugin::L10N) ?></option>
       <option value="grid"><?= __('Grid', Plugin::L10N) ?></option>
+      <option value="grid-slider"><?= __('Grid slider', Plugin::L10N) ?></option>
     </select>
   </label>
 </script>

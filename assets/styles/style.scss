@@ -46,23 +46,7 @@ $color-secondary: #c4c4c4;
       }
     }
 
-    .flickity-prev-next-button {
-      top: auto;
-      @media screen and (min-width: $screen-sm-min) {
-        top: 50%;
-      }
-    }
-
-    .flickity-prev-next-button,
-    .flickity-page-dots .dot {
-      background: $color-primary;
-
-      &:hover {
-        background: $color-secondary;
-      }
-    }
-
-    ul.gallerya--slider__nav {
+    .gallerya--slider__nav {
 
       .flickity-prev-next-button {
         width: 20px;
@@ -95,7 +79,6 @@ $color-secondary: #c4c4c4;
         margin: initial;
         display: inline-block;
       }
-
     }
   }
 
@@ -151,6 +134,7 @@ $color-secondary: #c4c4c4;
     img {
       width: auto;
       max-height: 645px;
+      vertical-align: middle;
     }
 
     figcaption {
@@ -170,6 +154,49 @@ $color-secondary: #c4c4c4;
         background: linear-gradient(to top, $color-dark 0%, transparent 100%);
         color: $color-primary;
       }
+    }
+  }
+
+  &__image-group {
+    display: flex;
+    flex-wrap: wrap;
+    transform: translateX(-5px);
+    @media screen and (min-width: $screen-sm-min) {
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .gallerya__image {
+      margin: 0;
+      width: auto;
+      margin-bottom: 5px;
+      padding-left: 5px;
+      max-width: calc(100% / 2);
+      @media screen and (min-width: $screen-sm-min) {
+        max-width: calc(100% / 3);
+      }
+    }
+  }
+
+  .flickity-prev-next-button {
+    top: auto;
+    @media screen and (min-width: $screen-sm-min) {
+      top: 50%;
+    }
+  }
+
+  .flickity-page-dots,
+  .flickity-prev-next-button {
+    margin: 0
+  }
+
+  .flickity-prev-next-button,
+  .flickity-page-dots .dot {
+    background: $color-primary;
+
+    &:hover {
+      background: $color-secondary;
     }
   }
 }
