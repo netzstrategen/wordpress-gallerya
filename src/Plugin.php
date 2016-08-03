@@ -48,6 +48,8 @@ class Plugin {
     if (class_exists('WooCommerce')) {
       WooCommerce::init();
     }
+
+    add_action('print_media_templates', __CLASS__ . '::print_media_templates');
   }
 
   /**
@@ -58,7 +60,7 @@ class Plugin {
     $atts['post__in'] = $atts['include'];
     $layout = !empty($atts['layout']) ? $atts['layout'] : apply_filters('gallerya/default_layout', self::DEFAULT_LAYOUT);
     ob_start();
-    Plugin::renderTemplate(['templates/layout-' . $layout . '.php'], [
+    static::renderTemplate(['templates/layout-' . $layout . '.php'], [
       'images' => get_posts($atts),
     ]);
     $output = ob_get_clean();
@@ -74,6 +76,13 @@ class Plugin {
 
     wp_enqueue_style('gallery-style-libs', Plugin::getBaseUrl() . '/dist/styles/libs.min.css');
     wp_enqueue_style('gallery-style-custom', Plugin::getBaseUrl() . '/dist/styles/style.min.css');
+  }
+
+  /**
+   * @implements print_media_templates
+   */
+  public static function print_media_templates() {
+    static::renderTemplate(['templates/settings.php']);
   }
 
   /**
