@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "unused-because-wordpress.js": {
+      "bower": ["jquery"]
+    },
+    "libs.min.js": {
+      "main": true
+    },
+    "script.min.js": {
+      "files": [
+        "scripts/script.js"
+      ]
+    },
+    "style.min.css": {
+      "files": [
+        "styles/style.scss"
+      ]
+    },
+    "libs.min.css": {
+      "main": true
+    }
+  }
+}

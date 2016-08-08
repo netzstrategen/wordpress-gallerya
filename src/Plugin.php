@@ -56,11 +56,11 @@ class Plugin {
    * @implements wp_enqueue_scripts
    */
   public static function wp_enqueue_scripts() {
-    wp_enqueue_script('gallery-script-libs', static::getBaseUrl() . '/dist/scripts/libs.min.js', ['jquery'], FALSE, TRUE);
-    wp_enqueue_script('gallery-script-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', ['jquery'], FALSE, TRUE);
+    wp_enqueue_style('gallerya-style-libs', static::getBaseUrl() . '/dist/styles/libs.min.css');
+    wp_enqueue_style('gallerya-style-custom', static::getBaseUrl() . '/dist/styles/style.min.css');
 
-    wp_enqueue_style('gallery-style-libs', static::getBaseUrl() . '/dist/styles/libs.min.css');
-    wp_enqueue_style('gallery-style-custom', static::getBaseUrl() . '/dist/styles/style.min.css');
+    wp_enqueue_script('gallerya-script-libs', static::getBaseUrl() . '/dist/scripts/libs.min.js', ['jquery'], FALSE, TRUE);
+    wp_enqueue_script('gallerya-script-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', ['gallerya-script-libs'], FALSE, TRUE);
   }
 
   /**

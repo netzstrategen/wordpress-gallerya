@@ -26,7 +26,7 @@
       "main": [
         "./dist/js/lightgallery.min.js",
         "./dist/js/lg-thumbnail.min.js",
-        "./dist/css/lightgallery.css",
+        "./dist/css/lightgallery.min.css",
         "./dist/fonts/lg.eot",
         "./dist/fonts/lg.svg",
         "./dist/fonts/lg.ttf",
