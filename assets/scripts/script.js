@@ -53,7 +53,7 @@
           thumbnail: true,
           showThumbByDefault: false,
           subHtmlSelectorRelative: true,
-          selector: '[data-rel="prettyPhoto[product-gallery]"]'
+          selector: '.zoom'
         });
       }
     }
