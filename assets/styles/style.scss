@@ -68,16 +68,22 @@ $color-secondary: #c4c4c4;
       }
 
       li {
-        width: calc(100% / 3);
-        @media screen and (min-width: $screen-xs-min) { width: calc(100% / 4); }
-        @media screen and (min-width: $screen-sm-min) { width: calc(100% / 5); }
+        width: auto;
         padding: 0 5px;
       }
 
       figure {
         width: 100%;
         margin: initial;
-        display: inline-block;
+        display: block;
+        max-height: 90px;
+
+        img {
+          width: auto;
+          height: 100%;
+          display: block;
+          max-width: none;
+        }
       }
     }
   }
