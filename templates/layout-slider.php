@@ -26,7 +26,7 @@ $show_navigation = count($images) > 5;
       <?php foreach ($images as $image): ?>
         <li>
           <figure class="gallerya__image">
-            <?= wp_get_attachment_image($image->ID, apply_filters('gallerya/image_size_nav_thumbnail', 'thumbnail')) ?>
+            <?= wp_get_attachment_image($image->ID, apply_filters('gallerya/image_size_slider_thumbnail', 'thumbnail')) ?>
           </figure>
         </li>
       <?php endforeach; ?>
