@@ -11,7 +11,7 @@ $show_navigation = count($images) > 5;
     ?>
       <li>
         <figure class="gallerya__image">
-          <a href="<?= wp_get_attachment_image_src($image->ID, apply_filters('gallerya/image_size_lightbox', 'large'))[0] ?>" <?= !empty($caption) ? 'data-sub-html=".gallerya__image__caption"' : '' ?>>
+          <a href="<?= wp_get_attachment_image_src($image->ID, apply_filters('gallerya/image_size_lightbox', 'large'))[0] ?>" <?= !empty($caption) ? 'data-sub-html="' . esc_attr($caption) . '"' : '' ?>>
             <?= wp_get_attachment_image($image->ID, apply_filters('gallerya/image_size_slider', 'post-thumbnail')) ?>
           <?php if (!empty($caption)): ?>
             <figcaption class="gallerya__image__caption"><?= $caption ?></figcaption>
