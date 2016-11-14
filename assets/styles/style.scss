@@ -190,6 +190,8 @@ $color-secondary: #c4c4c4;
 
   .flickity-prev-next-button {
     top: auto;
+    width: 28px;
+    height: 28px;
     @media screen and (min-width: $screen-sm-min) {
       top: 50%;
     }
