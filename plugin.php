@@ -33,4 +33,5 @@ function classloader($class) {
 spl_autoload_register(__NAMESPACE__ . '\classloader');
 
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
+add_action('init', __NAMESPACE__ . '\Plugin::post_gallery_init', 20);
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
