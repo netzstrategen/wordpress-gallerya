@@ -1,7 +1,7 @@
 <?php
 namespace Netzstrategen\Gallerya;
 
-$show_navigation = count($images) > 5;
+$show_navigation = count($images) >= $nav_count_min;
 ?>
 
 <div class="gallerya gallerya--slider">
