@@ -73,6 +73,7 @@ class Plugin {
     ob_start();
     static::renderTemplate(['templates/layout-' . $layout . '.php'], [
       'images' => get_posts($atts),
+      'nav_count_min' => apply_filters('gallerya/nav_count_min', 6),
     ]);
     $output = ob_get_clean();
     return $output;
