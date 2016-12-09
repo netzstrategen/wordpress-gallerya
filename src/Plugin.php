@@ -69,6 +69,7 @@ class Plugin {
   public static function post_gallery($output = '', $atts) {
     $atts['post_type'] = 'attachment';
     $atts['post__in'] = $atts['include'];
+    $atts['orderby'] = 'post__in';
     $layout = !empty($atts['layout']) ? $atts['layout'] : apply_filters('gallerya/default_layout', self::DEFAULT_LAYOUT);
     ob_start();
     static::renderTemplate(['templates/layout-' . $layout . '.php'], [
