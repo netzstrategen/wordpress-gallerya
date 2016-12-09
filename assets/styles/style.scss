@@ -179,6 +179,7 @@ $color-secondary: #c4c4c4;
     .gallerya__image {
       margin: 0;
       width: auto;
+      flex: 1 0 30%;
       margin-bottom: 5px;
       padding-left: 5px;
       max-width: calc(100% / 2);
