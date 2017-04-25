@@ -43,7 +43,7 @@ class Plugin {
    */
   public static function init() {
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
-    add_filter('post_gallery', __CLASS__ . '::post_gallery', 10, 2);
+    self::gallerya_post_init();
 
     if (class_exists('WooCommerce')) {
       WooCommerce::init();
@@ -61,6 +61,15 @@ class Plugin {
 
     wp_enqueue_script('gallerya-script-libs', static::getBaseUrl() . '/dist/scripts/libs.min.js', ['jquery'], FALSE, TRUE);
     wp_enqueue_script('gallerya-script-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', ['gallerya-script-libs'], FALSE, TRUE);
+  }
+
+  public static function gallerya_post_init() {
+    $url = home_url(add_query_arg(array()));
+    $id = url_to_postid($url);
+    $post_type = apply_filters('gallerya_post_init', 'post');
+    if (get_post_type($id) === $post_type) {
+      add_filter('post_gallery', __CLASS__ . '::post_gallery', 10, 2);
+    }
   }
 
   /**
