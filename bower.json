@@ -24,7 +24,7 @@
     },
     "lightgallery": {
       "main": [
-        "./dist/js/lightgallery.min.js",
+        "./dist/js/lightgallery.js",
         "./dist/js/lg-thumbnail.min.js",
         "./dist/js/lg-zoom.min.js",
         "./dist/css/lightgallery.min.css",
