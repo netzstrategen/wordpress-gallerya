@@ -1,13 +1,8 @@
 {
   "name": "gallerya",
-  "version": "1.9.2",
+  "version": "1.9.5",
   "author": "netzstrategen <hallo@netzstrategen.com>",
-  "licenses": [
-    {
-      "type": "GPL-2.0",
-      "url": "http://www.gnu.org/licenses/gpl-2.0"
-    }
-  ],
+  "license": "GPL-2.0",
   "devDependencies": {
     "asset-builder": "^1.1.0",
     "browser-sync": "^2.8.2",
