@@ -2,6 +2,7 @@
 namespace Netzstrategen\Gallerya;
 
 $show_navigation = count($images) >= $nav_count_min;
+$slider_image_size = has_image_size('post-thumbnail') ? 'post-thumbnail' : 'large';
 ?>
 
 <div class="gallerya gallerya--slider">
@@ -12,7 +13,7 @@ $show_navigation = count($images) >= $nav_count_min;
       <li>
         <figure class="gallerya__image">
           <a href="<?= wp_get_attachment_image_src($image->ID, apply_filters('gallerya/image_size_lightbox', 'large'))[0] ?>" <?= !empty($caption) ? 'data-sub-html="' . esc_attr($caption) . '"' : '' ?>>
-            <?= wp_get_attachment_image($image->ID, apply_filters('gallerya/image_size_slider', 'post-thumbnail')) ?>
+            <?= wp_get_attachment_image($image->ID, apply_filters('gallerya/image_size_slider', $slider_image_size)) ?>
           <?php if (!empty($caption)): ?>
             <figcaption class="gallerya__image__caption"><?= $caption ?></figcaption>
           <?php endif; ?>
