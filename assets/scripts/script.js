@@ -40,19 +40,17 @@
     }
 
     if (typeof $.fn.lightGallery === 'function') {
-      if ($('.js-gallerya-lightbox').length > 0) {
-        $('.js-gallerya-lightbox').lightGallery({
-          thumbnail: true,
-          showThumbByDefault: false,
-          subHtmlSelectorRelative: true,
-          selector: '.gallerya__image > a'
-        });
-      }
-      $('.woocommerce-product-gallery--with-images').lightGallery({
+      $('.js-gallerya-lightbox').lightGallery({
         thumbnail: true,
         showThumbByDefault: false,
         subHtmlSelectorRelative: true,
-        selector: '.wp-post-image'
+        selector: '.gallerya__image > a'
+      });
+      $('.woocommerce-product-gallery').lightGallery({
+        thumbnail: true,
+        showThumbByDefault: false,
+        subHtmlSelectorRelative: true,
+        selector: '.attachment-shop_single'
       });
     }
 
