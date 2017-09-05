@@ -48,14 +48,12 @@
           selector: '.gallerya__image > a'
         });
       }
-      if ($('body').hasClass('woocommerce') && $('.images').length > 0) {
-        $('.images').lightGallery({
-          thumbnail: true,
-          showThumbByDefault: false,
-          subHtmlSelectorRelative: true,
-          selector: '.zoom'
-        });
-      }
+      $('.woocommerce-product-gallery__image').lightGallery({
+        thumbnail: true,
+        showThumbByDefault: false,
+        subHtmlSelectorRelative: true,
+        selector: '.wp-post-image'
+      });
     }
 
   });
