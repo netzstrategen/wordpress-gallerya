@@ -48,7 +48,7 @@
           selector: '.gallerya__image > a'
         });
       }
-      $('.woocommerce-product-gallery__image').lightGallery({
+      $('.woocommerce-product-gallery--with-images').lightGallery({
         thumbnail: true,
         showThumbByDefault: false,
         subHtmlSelectorRelative: true,
