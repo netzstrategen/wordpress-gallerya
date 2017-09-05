@@ -50,7 +50,7 @@
         thumbnail: true,
         showThumbByDefault: false,
         subHtmlSelectorRelative: true,
-        selector: '.attachment-shop_single'
+        selector: 'img[class*="attachment-"]'
       });
     }
 
