@@ -53,7 +53,7 @@
           thumbnail: true,
           showThumbByDefault: false,
           subHtmlSelectorRelative: true,
-          selector: '.wp-post-image'
+          selector: '.zoom'
         });
       }
     }
