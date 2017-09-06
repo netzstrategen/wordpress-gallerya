@@ -44,11 +44,6 @@ class Plugin {
   public static function init() {
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
     add_filter('post_gallery', __CLASS__ . '::post_gallery', 10, 2);
-
-    if (class_exists('WooCommerce')) {
-      WooCommerce::init();
-    }
-
     add_action('print_media_templates', __CLASS__ . '::print_media_templates');
   }
 
