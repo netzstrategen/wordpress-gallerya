@@ -50,7 +50,7 @@
         thumbnail: true,
         showThumbByDefault: false,
         subHtmlSelectorRelative: true,
-        selector: 'img[class*="attachment-"]'
+        selector: 'a'
       });
     }
 
