@@ -32,6 +32,10 @@
           toggleElementVisible(navigation, false);
         }
 
+        // Flickity has problems to calculate correctly the height of the images
+        // when wp-rocket lazyload option is active. To solve this, we wait for the
+        // first image and the first thumbnail to be fully loaded before calling
+        // flickity.
         $(this).find('img').first().load(function () {
           $(_this).flickity(sliderArgs);
           var sliderData = $(_this).data('flickity');
