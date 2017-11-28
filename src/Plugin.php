@@ -117,6 +117,15 @@ class Plugin {
   }
 
   /**
+   * Checks if wp-rocket plugin is active and images lazyload option is set.
+   *
+   * @return bool
+   */
+  public static function lazyLoadIsActive() {
+    return is_plugin_active('wp-rocket/wp-rocket.php') && get_rocket_option('lazyload');
+  }
+
+  /**
    * The base URL path to this plugin's folder.
    *
    * Uses plugins_url() instead of plugin_dir_url() to avoid a trailing slash.
