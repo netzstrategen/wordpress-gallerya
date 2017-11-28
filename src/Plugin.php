@@ -45,6 +45,14 @@ class Plugin {
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
     add_filter('post_gallery', __CLASS__ . '::post_gallery', 10, 2);
     add_action('print_media_templates', __CLASS__ . '::print_media_templates');
+
+    // Adds data-srcset attributes to image links to make them reponsive in lightGallery.
+    // @todo Make lightGallery properly respect srcset & sizes in JavaScript instead
+    //   of duplicating that information in HTML; see
+    //   https://github.com/netzstrategen/wordpress-gallerya/pull/11#issuecomment-355664739
+    if (is_plugin_active('woocommerce/woocommerce.php')) {
+      add_filter('woocommerce_single_product_image_thumbnail_html', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_image_thumbnail_html', 10, 2);
+    }
   }
 
   /**
