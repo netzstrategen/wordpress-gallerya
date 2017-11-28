@@ -45,6 +45,11 @@ class Plugin {
     add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts');
     add_filter('post_gallery', __CLASS__ . '::post_gallery', 10, 2);
     add_action('print_media_templates', __CLASS__ . '::print_media_templates');
+
+    // Adds srcset attributes to image links to make them reponsive on lightgallery.
+    if (is_plugin_active('woocommerce/woocommerce.php')) {
+      add_filter('woocommerce_single_product_image_thumbnail_html', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_image_thumbnail_html', 10, 2);
+    }
   }
 
   /**
