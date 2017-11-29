@@ -3,11 +3,11 @@ namespace Netzstrategen\Gallerya;
 
 $show_navigation = count($images) >= $nav_count_min;
 $slider_image_size = has_image_size('post-thumbnail') ? 'post-thumbnail' : 'large';
+$image_attr = Plugin::isLazyLoadActive() ? ['data-no-lazy' => '1'] : [];
 ?>
 
 <div class="gallerya gallerya--slider">
   <ul class="js-gallerya-slider js-gallerya-lightbox">
-    <?php $image_attr = Plugin::isLazyLoadActive() ? ['data-no-lazy' => '1'] : []; ?>
     <?php foreach ($images as $index => $image):
       $caption = apply_filters('gallerya/image_caption', $image->post_excerpt, $image->ID);
     ?>
