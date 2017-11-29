@@ -121,7 +121,7 @@ class Plugin {
    *
    * @return bool
    */
-  public static function lazyLoadIsActive() {
+  public static function isLazyLoadActive() {
     return is_plugin_active('wp-rocket/wp-rocket.php') && get_rocket_option('lazyload');
   }
 
