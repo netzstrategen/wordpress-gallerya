@@ -2,6 +2,7 @@
 namespace Netzstrategen\Gallerya;
 
 $group_size = 6;
+$image_attr = Plugin::isLazyLoadActive() ? ['data-no-lazy' => '1'] : [];
 ?>
 
 <div class="gallerya gallerya--slider">
@@ -9,7 +10,6 @@ $group_size = 6;
     <?php foreach (array_chunk($images, $group_size) as $image_group): ?>
       <li>
         <div class="gallerya__image-group">
-        <?php $image_attr = Plugin::lazyLoadIsActive() ? ['data-no-lazy' => '1'] : []; ?>
         <?php foreach ($image_group as $image): ?>
           <figure class="gallerya__image">
             <a href="<?= wp_get_attachment_image_src($image->ID, apply_filters('gallerya/image_size_lightbox', 'large'))[0] ?>">
