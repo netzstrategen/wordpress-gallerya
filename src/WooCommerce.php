@@ -8,12 +8,12 @@
 namespace Netzstrategen\Gallerya;
 
 /**
- * WooCommerce custom functionality.
+ * WooCommerce integration.
  */
 class WooCommerce {
 
   /**
-   * Adds srcset attributes to image links to make them reponsive on lightgallery.
+   * Adds data-srcset attributes to image links to make them reponsive in lightGallery.
    *
    * @see https://sachinchoolur.github.io/lightGallery/demos/responsive.html
    *
