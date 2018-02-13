@@ -46,7 +46,7 @@
         subHtmlSelectorRelative: true,
         selector: '.gallerya__image > a'
       });
-      $('.woocommerce-product-gallery').lightGallery({
+      $('.woocommerce-product-gallery__wrapper').lightGallery({
         thumbnail: true,
         showThumbByDefault: false,
         subHtmlSelectorRelative: true,
