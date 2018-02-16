@@ -50,7 +50,7 @@
         thumbnail: true,
         showThumbByDefault: false,
         subHtmlSelectorRelative: true,
-        selector: 'a'
+        selector: '.woocommerce-product-gallery__image > a'
       });
     }
 
