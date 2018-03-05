@@ -131,10 +131,7 @@ class Plugin {
    */
   public static function isLazyLoadActive() {
     $lazyLoadIsActive = is_plugin_active('wp-rocket/wp-rocket.php') && get_rocket_option('lazyload');
-    if (has_filter('gallerya_lazyload_is_active')) {
-      $lazyLoadIsActive = apply_filters('gallerya_lazyload_is_active', $lazyLoadIsActive);
-    }
-    return $lazyLoadIsActive;
+    return apply_filters('gallerya_lazyload_is_active', $lazyLoadIsActive);
   }
 
   /**
