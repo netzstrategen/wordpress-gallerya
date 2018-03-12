@@ -3,7 +3,7 @@ namespace Netzstrategen\Gallerya;
 
 $show_navigation = count($images) >= $nav_count_min;
 $slider_image_size = has_image_size('post-thumbnail') ? 'post-thumbnail' : 'large';
-$image_attr = Plugin::isLazyLoadActive() ? ['data-no-lazy' => '1'] : [];
+$image_attr = Plugin::isLazyLoadActive() ? apply_filters('gallerya_lazyload_image_attributes', ['data-no-lazy' => '1']) : [];
 ?>
 
 <div class="gallerya gallerya--slider">

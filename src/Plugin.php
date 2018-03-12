@@ -50,7 +50,7 @@ class Plugin {
     // @todo Make lightGallery properly respect srcset & sizes in JavaScript instead
     //   of duplicating that information in HTML; see
     //   https://github.com/netzstrategen/wordpress-gallerya/pull/11#issuecomment-355664739
-    if (is_plugin_active('woocommerce/woocommerce.php')) {
+    if (static::is_plugin_active('woocommerce/woocommerce.php')) {
       add_filter('woocommerce_single_product_image_thumbnail_html', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_image_thumbnail_html', 10, 2);
     }
   }
@@ -130,7 +130,25 @@ class Plugin {
    * @return bool
    */
   public static function isLazyLoadActive() {
-    return is_plugin_active('wp-rocket/wp-rocket.php') && get_rocket_option('lazyload');
+    $lazy_load_is_active = static::is_plugin_active('wp-rocket/wp-rocket.php') && get_rocket_option('lazyload');
+    return apply_filters('gallerya_lazyload_is_active', $lazy_load_is_active);
+  }
+
+  /**
+   * Checks if the given plugin is active.
+   *
+   * This replicates WordPress is_plugin_active() method, which only works
+   * in admin pages.
+   *
+   * @see https://codex.wordpress.org/Function_Reference/is_plugin_active
+   *
+   * @param string $plugin
+   *   Relative path to plugin starting from plugins folder.
+   * @return bool
+   *   TRUE if the plugin is active.
+   */
+  public static function is_plugin_active($plugin) {
+    return in_array($plugin, (array) get_option('active_plugins', []));
   }
 
   /**

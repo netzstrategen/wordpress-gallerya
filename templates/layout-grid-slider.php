@@ -2,7 +2,7 @@
 namespace Netzstrategen\Gallerya;
 
 $group_size = 6;
-$image_attr = Plugin::isLazyLoadActive() ? ['data-no-lazy' => '1'] : [];
+$image_attr = Plugin::isLazyLoadActive() ? apply_filters('gallerya_lazyload_image_attributes', ['data-no-lazy' => '1']) : [];
 ?>
 
 <div class="gallerya gallerya--slider">
