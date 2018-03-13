@@ -6,7 +6,7 @@ $slider_image_size = has_image_size('post-thumbnail') ? 'post-thumbnail' : 'larg
 // Prevent wrong images height calculation caused by lazy loading.
 $image_attr = apply_filters('gallerya_lazyload_image_attributes', [
   'data-no-lazy' => '1',
-  'class' => 'no-lazy attachment-large size-large',
+  'class' => "no-lazy attachment-$slider_image_size size-$slider_image_size",
 ]);
 ?>
 
