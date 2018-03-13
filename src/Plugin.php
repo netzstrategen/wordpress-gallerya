@@ -125,15 +125,6 @@ class Plugin {
   }
 
   /**
-   * Checks if images are being lazy loaded.
-   *
-   * @return bool
-   */
-  public static function isLazyLoadActive() {
-    return apply_filters('gallerya_lazyload_is_active', FALSE);
-  }
-
-  /**
    * Checks if the given plugin is active.
    *
    * This replicates WordPress is_plugin_active() method, which only works

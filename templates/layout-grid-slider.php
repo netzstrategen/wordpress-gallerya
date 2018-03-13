@@ -2,7 +2,11 @@
 namespace Netzstrategen\Gallerya;
 
 $group_size = 6;
-$image_attr = Plugin::isLazyLoadActive() ? apply_filters('gallerya_lazyload_image_attributes', ['data-no-lazy' => '1']) : [];
+// Prevent wrong images height calculation caused by lazy loading.
+$image_attr = apply_filters('gallerya_lazyload_image_attributes', [
+  'data-no-lazy' => '1',
+  'class' => 'no-lazy attachment-large size-large',
+]);
 ?>
 
 <div class="gallerya gallerya--slider">
