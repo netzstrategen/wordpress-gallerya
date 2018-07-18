@@ -53,6 +53,11 @@ class Plugin {
     if (static::isPluginActive('woocommerce/woocommerce.php')) {
       add_filter('woocommerce_single_product_image_thumbnail_html', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_image_thumbnail_html', 10, 2);
     }
+
+    // Adds 'no-lazy' as default class for images not to be lazy-loaded by plugin bj-lazy-load.
+    if (static::isPluginActive('woocommerce/woocommerce.php')) {
+      apply_filters('bjll/skip_classes', __CLASS__ . '::bjll_skip_classes');
+    }
   }
 
   /**
@@ -92,6 +97,18 @@ class Plugin {
    */
   public static function print_media_templates() {
     static::renderTemplate(['templates/settings.php']);
+  }
+
+  /**
+   * Adds 'no-lazy' as default class for images not to be lazy-loaded by plugin bj-lazy-load.
+   *
+   * @implements bjll/skip_classes
+   */
+  public static function bjll_skip_classes($skip_classes) {
+    if (!in_array('no-lazy', $skip_classes)) {
+      $skip_classes[] = 'no-lazy';
+    }
+    return $skip_classes;
   }
 
   /**
