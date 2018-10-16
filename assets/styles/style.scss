@@ -23,7 +23,16 @@ $color-secondary: #c4c4c4;
   }
 
   &--slider {
-    margin: 50px auto 75px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+
+    @media screen and (min-width: $screen-sm-min) {
+      margin-top: 50px;
+      margin-right: auto;
+      margin-bottom: 75px;
+      margin-left: auto;
+    }
+
     clear: both;
 
     > ul {
