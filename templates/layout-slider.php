@@ -1,7 +1,9 @@
 <?php
 namespace Netzstrategen\Gallerya;
 
-$show_navigation = count($images) >= $nav_count_min;
+$show_navigation = apply_filters('gallerya/show_slider_navigation', count($images) >= $nav_count_min);
+$show_thumbnails = apply_filters('gallerya/show_slider_thumbnails', count($images) >= $nav_count_min);
+$show_count = apply_filters('gallerya/show_slider_count', FALSE);
 $slider_image_size = has_image_size('post-thumbnail') ? 'post-thumbnail' : 'large';
 // Prevent wrong images height calculation caused by lazy loading.
 $image_attr = apply_filters('gallerya_lazyload_image_attributes', [
@@ -10,7 +12,7 @@ $image_attr = apply_filters('gallerya_lazyload_image_attributes', [
 ]);
 ?>
 
-<div class="gallerya gallerya--slider">
+<div class="gallerya gallerya--slider" data-gallerya-navigation="<?= $show_navigation ?>">
   <ul class="js-gallerya-slider js-gallerya-lightbox">
     <?php foreach ($images as $index => $image):
       $caption = apply_filters('gallerya/image_caption', $image->post_excerpt, $image->ID);
@@ -27,7 +29,7 @@ $image_attr = apply_filters('gallerya_lazyload_image_attributes', [
       </li>
     <?php endforeach; ?>
   </ul>
-  <?php if ($show_navigation): ?>
+  <?php if ($show_thumbnails): ?>
     <ul class="gallerya--slider__nav  js-gallerya-thumbnail-slider">
       <?php foreach ($images as $image): ?>
         <li>
@@ -37,5 +39,8 @@ $image_attr = apply_filters('gallerya_lazyload_image_attributes', [
         </li>
       <?php endforeach; ?>
     </ul>
+  <?php endif; ?>
+  <?php if ($show_count): ?>
+    <div class="gallerya__count" data-gallerya-count></div>
   <?php endif; ?>
 </div>

@@ -223,6 +223,11 @@ $color-secondary: #c4c4c4;
       background: $color-secondary;
     }
   }
+
+  &__count {
+    font-size: 0.875em;
+    text-align: center;
+  }
 }
 
 .lg-outer .lg-item {
