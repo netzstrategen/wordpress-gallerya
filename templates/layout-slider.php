@@ -12,7 +12,7 @@ $image_attr = apply_filters('gallerya_lazyload_image_attributes', [
 ]);
 ?>
 
-<div class="gallerya gallerya--slider" data-gallerya-navigation="<?= $show_navigation ?>">
+<div class="gallerya gallerya--slider" data-gallerya-navigation="<?= (int) $show_navigation ?>">
   <ul class="js-gallerya-slider js-gallerya-lightbox">
     <?php foreach ($images as $index => $image):
       $caption = apply_filters('gallerya/image_caption', $image->post_excerpt, $image->ID);
