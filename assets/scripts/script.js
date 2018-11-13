@@ -15,7 +15,7 @@
           watchCSS: true,
           arrowShape: arrowShape
         };
-        if (!navigation || thumbnails.length > 0) {
+        if (navigation == false || thumbnails.length > 0) {
           sliderArgs['pageDots'] = false;
         }
         $(this).flickity(sliderArgs);
