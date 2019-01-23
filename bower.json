@@ -32,10 +32,10 @@
         "./dist/fonts/lg.svg",
         "./dist/fonts/lg.ttf",
         "./dist/fonts/lg.woff",
-        "./dist/images/loading.gif",
-        "./dist/images/video-play.png",
-        "./dist/images/vimeo-play.png",
-        "./dist/images/youtube-play.png"
+        "./dist/img/loading.gif",
+        "./dist/img/video-play.png",
+        "./dist/img/vimeo-play.png",
+        "./dist/img/youtube-play.png"
       ]
     }
   }
