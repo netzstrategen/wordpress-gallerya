@@ -3,8 +3,17 @@
     "unused-because-wordpress.js": {
       "bower": ["jquery"]
     },
-    "libs.min.js": {
-      "main": true
+    "flickity.min.js": {
+      "bower": ["flickity"]
+    },
+    "flickity.min.css": {
+      "bower": ["flickity"]
+    },
+    "lightgallery.min.js": {
+      "bower": ["lightgallery"]
+    },
+    "lightgallery.min.css": {
+      "bower": ["lightgallery"]
     },
     "script.min.js": {
       "files": [

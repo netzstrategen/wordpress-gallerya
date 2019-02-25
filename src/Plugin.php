@@ -64,11 +64,13 @@ class Plugin {
    * @implements wp_enqueue_scripts
    */
   public static function wp_enqueue_scripts() {
-    wp_enqueue_style('gallerya-style-libs', static::getBaseUrl() . '/dist/styles/libs.min.css');
-    wp_enqueue_style('gallerya-style-custom', static::getBaseUrl() . '/dist/styles/style.min.css');
+    wp_enqueue_style('flickity', static::getBaseUrl() . '/dist/styles/flickity.min.css');
+    wp_enqueue_style('lightgallery', static::getBaseUrl() . '/dist/styles/lightgallery.min.css');
+    wp_enqueue_style('gallerya-style-custom', static::getBaseUrl() . '/dist/styles/style.min.css', ['flickity', 'lightgallery']);
 
-    wp_enqueue_script('gallerya-script-libs', static::getBaseUrl() . '/dist/scripts/libs.min.js', ['jquery'], FALSE, TRUE);
-    wp_enqueue_script('gallerya-script-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', ['gallerya-script-libs'], FALSE, TRUE);
+    wp_enqueue_script('flickity', static::getBaseUrl() . '/dist/scripts/flickity.min.js', ['jquery'], '2.0.9', TRUE);
+    wp_enqueue_script('lightgallery', static::getBaseUrl() . '/dist/scripts/lightgallery.min.js', ['jquery'], '1.3.9', TRUE);
+    wp_enqueue_script('gallerya-script-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', ['flickity', 'lightgallery'], FALSE, TRUE);
   }
 
   /**

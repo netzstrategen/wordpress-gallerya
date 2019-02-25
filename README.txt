@@ -24,6 +24,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 1.11.0 =
+2019-01-25
+
+* Changed register dependencies as single asset files.
+
 = 1.10.2 =
 2019-01-25
 
