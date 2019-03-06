@@ -75,12 +75,17 @@ class Plugin {
    * @implements post_gallery
    */
   public static function post_gallery($output = '', $atts) {
+    if (empty($atts)) {
+      $atts = [];
+    }
     // If gallerya is used as a widget, we need to remove the title from
     // the arguments used to retrieve the posts list otherwise, the query looks
     // for posts with name equal to the widget title.
     unset($atts['title']);
     $atts['post_type'] = 'attachment';
-    $atts['post__in'] = $atts['include'];
+    if (isset($atts['include'])) {
+      $atts['post__in'] = $atts['include'];
+    }
     $atts['orderby'] = 'post__in';
     $layout = !empty($atts['layout']) ? $atts['layout'] : apply_filters('gallerya/default_layout', self::DEFAULT_LAYOUT);
     ob_start();
