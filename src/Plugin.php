@@ -66,11 +66,11 @@ class Plugin {
   public static function wp_enqueue_scripts() {
     wp_enqueue_style('flickity', static::getBaseUrl() . '/dist/styles/flickity.min.css');
     wp_enqueue_style('lightgallery', static::getBaseUrl() . '/dist/styles/lightgallery.min.css');
-    wp_enqueue_style('gallerya-custom', static::getBaseUrl() . '/dist/styles/style.min.css', ['flickity', 'lightgallery']);
+    wp_enqueue_style('gallerya-custom', static::getBaseUrl() . '/dist/styles/style.min.css');
 
     wp_enqueue_script('flickity', static::getBaseUrl() . '/dist/scripts/flickity.min.js', ['jquery'], '2.0.9', TRUE);
     wp_enqueue_script('lightgallery', static::getBaseUrl() . '/dist/scripts/lightgallery.min.js', ['jquery'], '1.3.9', TRUE);
-    wp_enqueue_script('gallerya-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', ['flickity', 'lightgallery'], FALSE, TRUE);
+    wp_enqueue_script('gallerya-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', [], FALSE, TRUE);
   }
 
   /**
