@@ -70,7 +70,7 @@ class Plugin {
 
     wp_enqueue_script('flickity', static::getBaseUrl() . '/dist/scripts/flickity.min.js', ['jquery'], '2.0.9', TRUE);
     wp_enqueue_script('lightgallery', static::getBaseUrl() . '/dist/scripts/lightgallery.min.js', ['jquery'], '1.3.9', TRUE);
-    wp_enqueue_script('gallerya-script-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', ['flickity', 'lightgallery'], FALSE, TRUE);
+    wp_enqueue_script('gallerya-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', ['flickity', 'lightgallery'], FALSE, TRUE);
   }
 
   /**
