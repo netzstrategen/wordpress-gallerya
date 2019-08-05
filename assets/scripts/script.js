@@ -72,7 +72,9 @@
      */
     $('.variations_form').on('woocommerce_variation_has_changed', function() {
       const firstImage = $('.woocommerce-product-gallery__image img').eq(0);
-      firstImage.parent().attr('data-srcset', firstImage.attr('srcset'));
+      if (firstImage.length) {
+        firstImage.parents('[data-srcset]').attr('data-srcset', firstImage.attr('srcset'));
+      }
     });
 
   });
