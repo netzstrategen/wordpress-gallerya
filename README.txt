@@ -24,6 +24,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.0.1 =
+2019-08-06
+
+* Fixed lightGallery displays wrong product image after changing variation.
+
 = 2.0.0 =
 2019-03-08
 
@@ -57,7 +62,7 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 * Fixed lg-thumbnail and lg-zoom lightbox plugins were wrongly overridden in bower file.
 * Fixed wrong lightbox selector for woocommerce 3.x on multiple product images.
 * Updated for plugin woocommerce major version 3.x. (product gallery lightbox support)
-* Fixed original upload being used as slider image. 
+* Fixed original upload being used as slider image.
 * Updated library flickity to 2.0.9 for compatibility with WordPress 4.9.8.
 * Fixed margins of slider image due to third-party plugin overrides.
 * Fixed underscore is not always defined.
