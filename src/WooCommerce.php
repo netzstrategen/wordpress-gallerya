@@ -13,11 +13,10 @@ namespace Netzstrategen\Gallerya;
 class WooCommerce {
 
   /**
-   * Adds data-srcset attributes and data-sizes to the image wrap to make images
-   * reponsive in lightGallery.
+   * Adds data-srcset and data-sizes attributes to the wrapper to make images reponsive in lightGallery.
    *
-   * And adds data-sizes attributes to image wrap so images are not enlarged more
-   * than the original size named 'full'.
+   * Also adds data-sizes attributes to the image wrapper, so images are not
+   * enlarged more than the original size ('full').
    *
    * @see https://sachinchoolur.github.io/lightGallery/demos/responsive.html
    *
