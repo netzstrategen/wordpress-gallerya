@@ -13,8 +13,11 @@ namespace Netzstrategen\Gallerya;
 class WooCommerce {
 
   /**
-   * Adds data-srcset attributes to image links to make them reponsive in lightGallery.
-   *    * Adds data-sizes attributes to image links so they don't get enlarged more than the original size.
+   * Adds data-srcset attributes and data-sizes to the image wrap to make images
+   * reponsive in lightGallery.
+   *
+   * And adds data-sizes attributes to image wrap so images are not enlarged more
+   * than the original size named 'full'.
    *
    * @see https://sachinchoolur.github.io/lightGallery/demos/responsive.html
    *
@@ -22,7 +25,7 @@ class WooCommerce {
    */
   public static function woocommerce_single_product_image_thumbnail_html($html, $thumbnail_id) {
     $srcset = wp_get_attachment_image_srcset($thumbnail_id, 'shop_single');
-    $srcsizes = wp_get_attachment_image_sizes($thumbnail_id, 'large');
+    $srcsizes = wp_get_attachment_image_sizes($thumbnail_id, 'full');
     return preg_replace('/(<a\s+)/i', '<a data-srcset="' . $srcset . '" data-sizes="' . $srcsizes . '" ', $html);
   }
 
