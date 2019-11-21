@@ -62,6 +62,26 @@
       });
     }
 
+    if ($('.js-gallerya-product-thumbnail-slider').length > 0 && typeof $.fn.flickity === 'function') {
+      const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider .flex-control-thumbs');
+      const thumbnailSliderArgs = {
+        contain: true,
+        pageDots: false,
+        imagesLoaded: true,
+        groupCells: true,
+      };
+      $thumbnailSliderEl.addClass('flickity'); // Adjust styling before slider init.
+      const $thumbnailSlider = $thumbnailSliderEl.flickity(thumbnailSliderArgs);
+
+      // Sync thumbnail slider with gallery image changes triggered through the choice of a product variation.
+      $('.single_variation_wrap').on('show_variation', function (event, variation) {
+        // Get the index of the variation thumbnail in the thumbnail slider.
+        const thumbnailIndex = $thumbnailSliderEl.find('img[src="'+variation.image.gallery_thumbnail_src+'"]').parent().index();
+        // Select the variation thumbnail in the thumbnail slider.
+        $thumbnailSlider.flickity('select', thumbnailIndex);
+      });
+    }
+
     /**
      * Modifies data-srcset of product gallery first image on variation change.
      *
