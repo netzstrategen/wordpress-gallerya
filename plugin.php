@@ -33,4 +33,4 @@ function classloader($class) {
 spl_autoload_register(__NAMESPACE__ . '\classloader');
 
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
-add_action('admin_init', __NAMESPACE__ . '\Admin::init');
+add_filter('woocommerce_get_settings_pages', __NAMESPACE__ . '\Settings::woocommerce_get_settings_pages');
