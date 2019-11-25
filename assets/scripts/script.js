@@ -4,9 +4,12 @@
     if ($('.js-gallerya-slider').length > 0 && typeof $.fn.flickity === 'function') {
       var arrowShape = 'M85,50.36033a2.72075,2.72075,0,0,0-2.74945-2.68906H24.01177L47.61119,24.59022a2.65667,2.65667,0,0,0,0-3.80232,2.79411,2.79411,0,0,0-3.88955,0L15.80559,48.09077a2.64614,2.64614,0,0,0,0,3.80232L43.729,79.21211a2.79185,2.79185,0,0,0,3.88771,0,2.64613,2.64613,0,0,0,0-3.80233L24.756,53.04939h57.4946A2.72075,2.72075,0,0,0,85,50.36033Z';
       $('.js-gallerya-slider').each(function(index, element) {
-        var navigation = $(this).closest('.gallerya--slider').attr('data-gallerya-navigation');
-        var thumbnails = $(this).closest('.gallerya--slider').find('.js-gallerya-thumbnail-slider');
-        var count = $(this).closest('.gallerya--slider').find('[data-gallerya-count]');
+        var galleryaSlider = $(this).closest('.gallerya--slider, .gallerya--product-variation-slider');
+        var galleryaSliderData = galleryaSlider.data();
+        var navigation = galleryaSliderData['galleryaNavigation'];
+        var pageDots = galleryaSliderData['galleryaPageDots'];
+        var thumbnails = galleryaSlider.find('.js-gallerya-thumbnail-slider');
+        var count = galleryaSlider.find('[data-gallerya-count]');
         var sliderArgs = {
           cellAlign: 'left',
           contain: true,
@@ -15,11 +18,17 @@
           watchCSS: true,
           arrowShape: arrowShape
         };
-        if (navigation == false || thumbnails.length > 0) {
-          sliderArgs['pageDots'] = false;
+        if (typeof pageDots !== 'undefined') {
+          // Let the pageDots property be overriden by a data-attribute.
+          sliderArgs.pageDots = pageDots == true;
         }
+        else if (navigation == false || thumbnails.length > 0) {
+          sliderArgs.pageDots = false;
+        }
+        // Adjust styling before slider init.
+        $(this).addClass('flickity');
         $(this).flickity(sliderArgs);
-        var sliderData = $(this).data('flickity');
+        var flickityData = $(this).data('flickity');
         if (thumbnails.length > 0) {
           var thumbnailsArgs = {
             asNavFor: element,
@@ -32,7 +41,7 @@
           thumbnails.flickity(thumbnailsArgs);
 
           $(this).on('select.flickity', function () {
-            var index = sliderData.selectedIndex;
+            var index = flickityData.selectedIndex;
             var className = 'is-currently-selected';
             thumbnails.find('.flickity-slider li').removeClass(className)
               .eq(index).addClass(className);
@@ -40,9 +49,17 @@
         }
         if (count) {
           $(this).on('select.flickity', function () {
-            var slideNumber = sliderData.selectedIndex + 1;
-            count.text(slideNumber + '/' + sliderData.slides.length);
+            var slideNumber = flickityData.selectedIndex + 1;
+            count.text(slideNumber + '/' + flickityData.slides.length);
           });
+        }
+      });
+
+      $('.woocommerce-loop-product__link').on('click', function(e) {
+        // Prevent clicks onto slider arrows to bubble through to wrapping product link.
+        if ($(e.target).closest('.flickity-prev-next-button').length !== 0){
+          event.stopPropagation();
+          return false;
         }
       });
     }
