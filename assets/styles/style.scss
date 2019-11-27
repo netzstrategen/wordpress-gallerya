@@ -333,9 +333,11 @@ $color-secondary: #c4c4c4;
             margin: 0 12px;
 
             li {
-              margin-right: 10px;
+              --thumbnail-count: 6;
+              --thumbnail-spacing-unit: 10px;
+              margin-right: var(--thumbnail-spacing-unit);
               margin-bottom: 0;
-              width: calc((100% / 6) - calc(10px / 6 * 5));
+              width: calc((100% / var(--thumbnail-count)) - (var(--thumbnail-spacing-unit) / var(--thumbnail-count) * (var(--thumbnail-count) - 1)));
 
               &:nth-child(4n+1) {
                 clear: none;
