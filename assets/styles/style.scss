@@ -322,31 +322,29 @@ $color-secondary: #c4c4c4;
 }
 
 // Flickity WooCommerce Compatibility
-.single-product {
+.woocommerce {
   div.product {
-    .woocommerce-product-gallery {
-      &.woocommerce-product-gallery--columns-4 {
-        .flex-control-thumbs {
-          &.flickity {
-            white-space: nowrap;
-            overflow: visible;
-            margin: 0 12px;
+    div.images {
+      .flex-control-thumbs {
+        &.flickity {
+          white-space: nowrap;
+          overflow: visible;
+          margin: 0 12px;
 
-            li {
-              --thumbnail-count: 6;
-              --thumbnail-spacing-unit: 10px;
-              margin-right: var(--thumbnail-spacing-unit);
-              margin-bottom: 0;
-              // Take the available width, subtract the necessary gaps between thumbnails and divide the remaining space evenly among thumbnails.
-              width: calc((100% - (var(--thumbnail-spacing-unit) * (var(--thumbnail-count) - 1))) / var(--thumbnail-count));
+          li {
+            --thumbnail-count: 6;
+            --thumbnail-spacing-unit: 10px;
+            margin-right: var(--thumbnail-spacing-unit);
+            margin-bottom: 0;
+            // Take the available width, subtract the necessary gaps between thumbnails and divide the remaining space evenly among thumbnails.
+            width: calc((100% - (var(--thumbnail-spacing-unit) * (var(--thumbnail-count) - 1))) / var(--thumbnail-count));
 
-              &:nth-child(4n+1) {
-                clear: none;
-              }
+            &:nth-child(4n+1) {
+              clear: none;
+            }
 
-              &:nth-child(4n) {
-                margin-right: 10px;
-              }
+            &:nth-child(4n) {
+              margin-right: 10px;
             }
           }
         }

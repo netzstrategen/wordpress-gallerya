@@ -63,7 +63,7 @@
     }
 
     if ($('.js-gallerya-product-thumbnail-slider').length > 0 && typeof $.fn.flickity === 'function') {
-      const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider .flex-control-thumbs');
+      const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider').parent().find('.flex-control-thumbs').first();
       const thumbnailSliderArgs = {
         contain: true,
         pageDots: false,
