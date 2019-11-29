@@ -337,7 +337,8 @@ $color-secondary: #c4c4c4;
               --thumbnail-spacing-unit: 10px;
               margin-right: var(--thumbnail-spacing-unit);
               margin-bottom: 0;
-              width: calc((100% / var(--thumbnail-count)) - (var(--thumbnail-spacing-unit) / var(--thumbnail-count) * (var(--thumbnail-count) - 1)));
+              // Take the available width, subtract the necessary gaps between thumbnails and divide the remaining space evenly among thumbnails.
+              width: calc((100% - (var(--thumbnail-spacing-unit) * (var(--thumbnail-count) - 1))) / var(--thumbnail-count));
 
               &:nth-child(4n+1) {
                 clear: none;
