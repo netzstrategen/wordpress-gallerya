@@ -46,27 +46,21 @@ class Plugin {
     add_filter('post_gallery', __CLASS__ . '::post_gallery', 10, 2);
     add_action('print_media_templates', __CLASS__ . '::print_media_templates');
 
-    // Adds woocommerce specific settings (product thumbnail slider settings).
+    // Adds WooCommerce specific features.
     if (static::isPluginActive('woocommerce/woocommerce.php')) {
       add_filter('woocommerce_get_settings_gallerya', __NAMESPACE__ . '\WooCommerce::woocommerce_get_settings_gallerya');
-    }
 
-    // Adds CSS class to single product image galleries to enable thumbnail slider via JS.
-    if (static::isPluginActive('woocommerce/woocommerce.php') && get_option('_' . Plugin::L10N . '_product_thumbnail_slider_enabled') === 'yes' && get_option('_' . Plugin::L10N . '_product_thumbnail_slider_bullet_nav_enabled') !== 'yes') {
-      add_filter('woocommerce_single_product_image_gallery_classes', function ($classes) {
-        if (in_array('woocommerce-product-gallery--with-images', $classes)) {
-          $classes[] = 'js-gallerya-product-thumbnail-slider';
-        }
-        return $classes;
-      });
-    }
+      $slider_bullet_nav_enabled = get_option('_' . Plugin::L10N . '_product_thumbnail_slider_bullet_nav_enabled');
 
-    // Exchanges thumbnails with bullets as control nav for the single product galleries.
-    if (static::isPluginActive('woocommerce/woocommerce.php') && get_option('_' . Plugin::L10N . '_product_thumbnail_slider_bullet_nav_enabled') === 'yes') {
-      add_filter('woocommerce_single_product_carousel_options', function ($args) {
-        $args['controlNav'] = TRUE;
-        return $args;
-      });
+      // Adds CSS class to single product image galleries to enable thumbnail slider via JS.
+      if (get_option('_' . Plugin::L10N . '_product_thumbnail_slider_enabled') === 'yes' && $slider_bullet_nav_enabled !== 'yes') {
+        add_filter('woocommerce_single_product_image_gallery_classes', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_image_gallery_classes');
+      }
+
+      // Exchanges thumbnails with bullets as control nav for the single product galleries.
+      if ($slider_bullet_nav_enabled === 'yes') {
+        add_filter('woocommerce_single_product_carousel_options', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_carousel_options');
+      }
     }
 
     // Adds data-srcset attributes to image links to make them reponsive in lightGallery.

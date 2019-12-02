@@ -39,7 +39,6 @@ class WooCommerce {
     return $settings;
   }
 
-
   /**
    * Adds data-srcset and data-sizes attributes to the wrapper to make images reponsive in lightGallery.
    *
@@ -54,6 +53,29 @@ class WooCommerce {
     $srcset = wp_get_attachment_image_srcset($thumbnail_id, 'shop_single');
     $srcsizes = wp_get_attachment_image_sizes($thumbnail_id, 'full');
     return preg_replace('/(<a\s+)/i', '<a data-srcset="' . $srcset . '" data-sizes="' . $srcsizes . '" ', $html);
+  }
+
+  /**
+   * Adds CSS class to single product image galleries to enable thumbnail slider via JS.
+   *
+   * @implements woocommerce_single_product_image_gallery_classes
+   */
+  public static function woocommerce_single_product_image_gallery_classes($classes) {
+    if (in_array('woocommerce-product-gallery--with-images', $classes)) {
+      $classes[] = 'js-gallerya-product-thumbnail-slider';
+    }
+    return $classes;
+  }
+
+  /**
+   * Exchanges thumbnails with bullets as control nav for the single product galleries.
+   *
+   * @implements woocommerce_single_product_carousel_options
+   */
+  public static function woocommerce_single_product_carousel_options($options) {
+    $options['controlNav'] = TRUE;
+    unset($options['manualControls']);
+    return $options;
   }
 
 }
