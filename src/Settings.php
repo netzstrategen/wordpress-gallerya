@@ -14,10 +14,16 @@ use WC_Admin_Settings;
  */
 class Settings {
 
-  public static function init() {
+  /**
+   * Initializes all our backend settings.
+   *
+   * @implements woocommerce_get_settings_pages
+   */
+  public static function woocommerce_get_settings_pages($settings) {
     add_action('woocommerce_settings_tabs_array', __CLASS__ . '::woocommerce_settings_tabs_array', 30);
     add_action('woocommerce_settings_gallerya', __CLASS__ . '::woocommerce_settings_gallerya');
     add_action('woocommerce_settings_save_gallerya', __CLASS__ . '::woocommerce_settings_save_gallerya');
+    return $settings;
   }
 
   /**
