@@ -70,6 +70,25 @@
         imagesLoaded: true,
         groupCells: true,
       };
+
+      // Calculate # of cols, given the initial images' width as the minimum, at least 4 cols.
+      const thumbnailSpacingUnit  = parseInt(getComputedStyle($thumbnailSliderEl.get(0)).getPropertyValue('--thumbnail-spacing-unit'), 10);
+      const thumbnailSliderMargin = parseInt(getComputedStyle($thumbnailSliderEl.get(0)).getPropertyValue('--thumbnail-slider-margin'), 10);
+      const initialImgsWidth = $thumbnailSliderEl.find('li').first().width();
+      const thumbnailSliderWidth = $thumbnailSliderEl.width();
+      const maxCols = 7;
+      var noCols = 4;
+      if (initialImgsWidth > 0 && thumbnailSliderWidth > initialImgsWidth) {
+        while (((thumbnailSliderWidth - (2 * thumbnailSliderMargin)) - (thumbnailSpacingUnit * noCols)) / (noCols + 1) >= initialImgsWidth) {
+          noCols++;
+          if (noCols === maxCols) {
+            break;
+          }
+        }
+        // Update # of cols in css vars.
+        $thumbnailSliderEl.get(0).style.setProperty('--thumbnail-count', noCols);
+      }
+
       // Adjust styling before slider init.
       $thumbnailSliderEl.addClass('flickity');
       const $thumbnailSlider = $thumbnailSliderEl.flickity(thumbnailSliderArgs);
