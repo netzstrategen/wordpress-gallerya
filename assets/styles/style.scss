@@ -331,7 +331,7 @@ $color-secondary: #c4c4c4;
   .product {
     .flex-control-thumbs {
       --thumbnail-count: 6;
-      --thumbnail-spacing-unit: 10px;
+      --thumbnail-spacing-unit: 9px;
       --thumbnail-slider-margin: 12px;
 
       &.flickity {
@@ -350,6 +350,17 @@ $color-secondary: #c4c4c4;
           width: calc((100% - (var(--thumbnail-spacing-unit) * (var(--thumbnail-count) - 1))) / var(--thumbnail-count)) !important;
         }
 
+        img {
+          opacity: 0.7;
+          border: 1px solid transparent;
+
+          &:hover,
+          &.flex-active {
+            opacity: 1;
+            border: 1px solid rgba(0,0,0,0.5);
+          }
+        }
+
         &:after {
           content: " ";
           display: table;
@@ -364,7 +375,7 @@ $color-secondary: #c4c4c4;
   width: 24px;
   height: 24px;
   padding: 0;
-  background: #615757;
+  background: #575757;
   color: #ffffff;
 
   .arrow {
