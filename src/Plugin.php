@@ -46,6 +46,23 @@ class Plugin {
     add_filter('post_gallery', __CLASS__ . '::post_gallery', 10, 2);
     add_action('print_media_templates', __CLASS__ . '::print_media_templates');
 
+    // Adds WooCommerce specific features.
+    if (static::isPluginActive('woocommerce/woocommerce.php')) {
+      add_filter('woocommerce_get_settings_gallerya', __NAMESPACE__ . '\WooCommerce::woocommerce_get_settings_gallerya');
+
+      $slider_bullet_nav_enabled = get_option('_' . Plugin::L10N . '_product_thumbnail_slider_bullet_nav_enabled');
+
+      // Adds CSS class to single product image galleries to enable thumbnail slider via JS.
+      if (get_option('_' . Plugin::L10N . '_product_thumbnail_slider_enabled') === 'yes' && $slider_bullet_nav_enabled !== 'yes') {
+        add_filter('woocommerce_single_product_image_gallery_classes', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_image_gallery_classes');
+      }
+
+      // Exchanges thumbnails with bullets as control nav for the single product galleries.
+      if ($slider_bullet_nav_enabled === 'yes') {
+        add_filter('woocommerce_single_product_carousel_options', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_carousel_options');
+      }
+    }
+
     // Adds data-srcset attributes to image links to make them reponsive in lightGallery.
     // @todo Make lightGallery properly respect srcset & sizes in JavaScript instead
     //   of duplicating that information in HTML; see

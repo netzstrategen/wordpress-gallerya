@@ -1,3 +1,10 @@
+/**
+ * Gallerya layout and styling.
+ *
+ * 1. Take the available width, subtract the necessary gaps between thumbnails
+ *    and divide the remaining space evenly among thumbnails.
+ */
+
 $screen-xs-min: 480px;
 $screen-sm-min: 768px;
 $screen-md-min: 992px;
@@ -247,3 +254,151 @@ $color-secondary: #c4c4c4;
     }
   }
 }
+
+// Single Product Gallery Bullet Nav
+.flex-control-paging {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 19px;
+  margin: 16px 0 0px;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+
+  li {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0;
+    padding: .25rem;
+    line-height: 0;
+    vertical-align: top;
+
+    a {
+      position: relative;
+      display: inline-block;
+      height: 11px !important;
+      width: 11px !important;
+      margin: 0;
+      padding: 0;
+      border-radius: 50%;
+      border: 2px solid $color-secondary;
+      background: 0 0;
+      background-color: transparent;
+      outline: 0;
+      line-height: 0;
+      vertical-align: top;
+      font-size: 0;
+      text-indent: -99999px;
+      color: transparent;
+      cursor: pointer;
+
+      &:focus,
+      &:hover {
+        outline: 0;
+
+        &:before {
+          opacity: .5;
+        }
+      }
+
+      &:hover {
+        &:before {
+          background-color: $color-secondary !important;
+        }
+        &:after {
+          content: "";
+          display: none !important;
+        }
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 11px;
+        height: 11px;
+        top: -2px;
+        left: -2px;
+        border-radius: 50%;
+        color: $color-secondary;
+        transition: background .1s ease-out;
+      }
+
+      &.flex-active {
+        background-color: $color-secondary;
+      }
+    }
+  }
+}
+
+// Flickity WooCommerce Compatibility
+.woocommerce {
+  .product {
+    .flex-control-thumbs {
+      --thumbnail-count: 6;
+      --thumbnail-spacing-unit: 9px;
+      --thumbnail-slider-margin: 12px;
+
+      &.flickity {
+        display: block;
+        white-space: nowrap;
+        overflow: visible !important;
+        margin-left: var(--thumbnail-slider-margin) !important;
+        margin-right: var(--thumbnail-slider-margin) !important;
+
+        li {
+          float: none !important;
+          display: inline-block;
+          margin-right: var(--thumbnail-spacing-unit) !important;
+          margin-bottom: 0;
+          width: calc((100% - (var(--thumbnail-spacing-unit) * (var(--thumbnail-count) - 1))) / var(--thumbnail-count)) !important; // [1]
+        }
+
+        img {
+          opacity: 0.7;
+          border: 1px solid transparent;
+
+          &:hover,
+          &.flex-active {
+            opacity: 1;
+            border: 1px solid rgba(0,0,0,0.5);
+          }
+        }
+
+        &:after {
+          content: " ";
+          display: table;
+          clear: both;
+        }
+      }
+    }
+  }
+}
+
+.flickity-prev-next-button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: #575757;
+  color: #ffffff;
+
+  .arrow {
+    fill: currentColor;
+  }
+
+  &:hover {
+    background: $color-dark;
+    color: #ffffff;
+  }
+
+  &.previous {
+    left: -12px;
+  }
+
+  &.next {
+    right: -12px;
+  }
+}
+
