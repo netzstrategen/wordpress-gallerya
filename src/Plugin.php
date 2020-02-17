@@ -61,6 +61,12 @@ class Plugin {
       if ($slider_bullet_nav_enabled === 'yes') {
         add_filter('woocommerce_single_product_carousel_options', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_carousel_options');
       }
+
+      // Adds thumbnail slider with variation images to products on listing pages.
+      if (get_option('_' . Plugin::L10N . '_product_variation_slider_enabled') === 'yes') {
+        remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10);
+        add_action( 'woocommerce_before_shop_loop_item_title', __NAMESPACE__ . '\WooCommerce::woocommerce_template_loop_product_thumbnail', 10);
+      }
     }
 
     // Adds data-srcset attributes to image links to make them reponsive in lightGallery.
@@ -75,6 +81,7 @@ class Plugin {
     if (static::isPluginActive('woocommerce/woocommerce.php')) {
       apply_filters('bjll/skip_classes', __CLASS__ . '::bjll_skip_classes');
     }
+
   }
 
   /**

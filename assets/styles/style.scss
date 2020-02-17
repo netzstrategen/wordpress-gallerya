@@ -18,25 +18,23 @@ $color-secondary: #c4c4c4;
 .gallerya {
 
   &--slider,
+  &--product-variation-slider,
   &--grid {
 
     > ul {
-
       &:after {
-        content: 'flickity';
-        display: none;
+        // Prevent this from being overriden by clearfixes through using !important.
+        content: 'flickity' !important;
+        display: none !important;
       }
     }
   }
 
+  &--product-variation-slider,
   &--slider {
-    margin-top: 20px;
-    margin-bottom: 40px;
 
     @media screen and (min-width: $screen-sm-min) {
-      margin-top: 50px;
       margin-right: auto;
-      margin-bottom: 75px;
       margin-left: auto;
     }
 
@@ -49,6 +47,29 @@ $color-secondary: #c4c4c4;
 
       li {
         width: 100%;
+      }
+    }
+
+
+    .gallerya__image {
+      @media screen and (min-width: $screen-sm-min) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+
+  &--slider {
+    margin-top: 20px;
+    margin-bottom: 40px;
+
+    @media screen and (min-width: $screen-sm-min) {
+      margin-top: 50px;
+      margin-bottom: 75px;
+    }
+
+    > ul {
+      li {
         top: 50%;
         transform: translateY(-50%);
       }
@@ -59,48 +80,90 @@ $color-secondary: #c4c4c4;
 
       @media screen and (min-width: $screen-sm-min) {
         width: 75%;
-        margin-left: auto;
-        margin-right: auto;
       }
     }
 
-    .gallerya--slider__nav {
+    li {
+      width: auto;
+      padding: 0 5px;
+    }
 
-      .flickity-prev-next-button {
-        width: 20px;
-        height: 20px;
-        top: 50%;
-        transform: translateY(-50%);
+    .gallerya__image {
+      width: 100%;
+      margin: initial;
+      display: block;
+      max-height: 90px;
 
-        &.previous {
-          left: 4px;
-        }
-
-        &.next {
-          right: 4px;
-        }
-
-        &[disabled] {
-          opacity: .5;
-        }
+      img {
+        width: auto;
+        display: block;
+        max-width: none;
+        max-height: inherit;
       }
+    }
+  }
+
+  .flickity-prev-next-button {
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    transform: translateY(-50%);
+    background: $color-primary;
+
+    &:hover {
+      background: $color-secondary;
+    }
+
+    &.previous {
+      left: 4px;
+    }
+
+    &.next {
+      right: 4px;
+    }
+
+    &[disabled] {
+      opacity: .5;
+    }
+
+    .arrow {
+      fill: #fff;
+    }
+  }
+
+  &--product-variation-slider {
+    width: 100%;
+
+    // Hide all slides but first before Flickity is initialized to prevent reflows.
+    li:not(:first-of-type) {
+      display: none;
+    }
+    .flickity-enabled {
+      li:not(:first-of-type) {
+        display: block;
+      }
+    }
+
+    .flickity {
+      white-space: nowrap;
+      overflow: visible;
 
       li {
-        width: auto;
-        padding: 0 5px;
+        display: inline-block;
       }
 
-      .gallerya__image {
-        width: 100%;
-        margin: initial;
-        display: block;
-        max-height: 90px;
+      &-prev-next-button {
+        @media screen and (min-width: $screen-sm-min) {
+          &.previous {
+            left: 10px;
+          }
 
-        img {
-          width: auto;
-          display: block;
-          max-width: none;
-          max-height: inherit;
+          &.next {
+            right: 10px;
+          }
         }
       }
     }
@@ -206,23 +269,12 @@ $color-secondary: #c4c4c4;
     }
   }
 
-  .flickity-prev-next-button {
-    top: auto;
-    width: 28px;
-    height: 28px;
-    @media screen and (min-width: $screen-sm-min) {
-      top: 50%;
-    }
-  }
-
-  .flickity-page-dots,
-  .flickity-prev-next-button {
+  .flickity-page-dots {
     margin: 0;
     padding: 0;
     outline: none;
   }
 
-  .flickity-prev-next-button,
   .flickity-page-dots .dot {
     background: $color-primary;
 
@@ -376,29 +428,3 @@ $color-secondary: #c4c4c4;
     }
   }
 }
-
-.flickity-prev-next-button {
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  background: #575757;
-  color: #ffffff;
-
-  .arrow {
-    fill: currentColor;
-  }
-
-  &:hover {
-    background: $color-dark;
-    color: #ffffff;
-  }
-
-  &.previous {
-    left: -12px;
-  }
-
-  &.next {
-    right: -12px;
-  }
-}
-
