@@ -83,7 +83,7 @@
 
     if ($('.js-gallerya-product-thumbnail-slider').length > 0 && typeof $.fn.flickity === 'function') {
       const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider').parent().find('.flex-control-thumbs').first();
-      if (!$thumbnailSliderEl.count) {
+      if (!$thumbnailSliderEl.length) {
         return;
       }
 
@@ -113,7 +113,37 @@
       }
 
       // Adjust styling before slider init.
-      $thumbnailSliderEl.addClass('flickity');
+      $thumbnailSliderEl
+        .addClass('flickity')
+        .on('ready.flickity', function(event) {
+          // Video should be the second element in the product gallery.
+          const $galleryWraper = $('.sidebar-single-product .woocommerce-product-gallery__wrapper');
+          const $galleryElements = $galleryWraper.children('div');
+          if ($galleryElements.length <= 1) {
+            return;
+          }
+          const $firstGalleryElement = $galleryElements.first();
+          if ($firstGalleryElement.hasClass('has-video')) {
+            $firstGalleryElement.detach().insertAfter($galleryWraper.children('div').first());
+          }
+        })
+        .on('settle.flickity', function(event, index) {
+          // Insert the video thumbnail in the thumbs slider.
+          const $videoContent = $('.sidebar-single-product .gallerya__video-content');
+          if ($videoContent.length) {
+            const $sliderThumbs = $('.sidebar-single-product .flickity-slider li img');
+            // Insert the video thumb in second position, if posible.
+            const videoThumbPos = $sliderThumbs.length > 1 ? 1 : 0;
+            const videoThumbSrc = $videoContent.data('video-thumb');
+
+            $sliderThumb = $sliderThumbs.eq(videoThumbPos);
+            $sliderThumb
+              .attr('src', videoThumbSrc)
+              // Ensure lazy loaded image is the video thumbnail.
+              .attr('data-lazy-src',videoThumbSrc)
+              .parent().addClass('slider-thumb-video');
+          }
+        });
       const $thumbnailSlider = $thumbnailSliderEl.flickity(thumbnailSliderArgs);
 
       // Sync thumbnail slider with gallery image changes triggered through the choice of a product variation.
