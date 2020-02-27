@@ -67,6 +67,14 @@ class Plugin {
         remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10);
         add_action( 'woocommerce_before_shop_loop_item_title', __NAMESPACE__ . '\WooCommerce::woocommerce_template_loop_product_thumbnail', 10);
       }
+
+      // Ensures new product are saved before updating its meta data.
+      add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::saveNewProductBeforeMetaUpdate', 1);
+      // Saves custom fields for simple products.
+      add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_process_product_meta');
+
+      // Adds video support to product gallery.
+      Video::init();
     }
 
     // Adds data-srcset attributes to image links to make them reponsive in lightGallery.

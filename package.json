@@ -1,6 +1,6 @@
 {
   "name": "gallerya",
-  "version": "2.2.10",
+  "version": "2.3.0",
   "author": "netzstrategen <hallo@netzstrategen.com>",
   "license": "GPL-2.0",
   "devDependencies": {

@@ -24,17 +24,17 @@ class WooCommerce {
     ];
     $settings[] = [
       'type' => 'checkbox',
-      'id' => '_' . Plugin::L10N . '_product_thumbnail_slider_enabled',
+      'id' => '_' . Plugin::PREFIX . '_product_thumbnail_slider_enabled',
       'name' => __('Enable thumbnails slider for all product image galleries', Plugin::L10N),
     ];
     $settings[] = [
       'type' => 'checkbox',
-      'id' => '_' . Plugin::L10N . '_product_thumbnail_slider_bullet_nav_enabled',
+      'id' => '_' . Plugin::PREFIX . '_product_thumbnail_slider_bullet_nav_enabled',
       'name' => __('Use bullets instead of thumbnails', Plugin::L10N),
     ];
     $settings[] = [
       'type' => 'sectionend',
-      'id' => Plugin::L10N,
+      'id' => Plugin::PREFIX,
     ];
     $settings[] = [
       'type' => 'title',
@@ -42,14 +42,74 @@ class WooCommerce {
     ];
     $settings[] = [
       'type' => 'checkbox',
-      'id' => '_' . Plugin::L10N . '_product_variation_slider_enabled',
+      'id' => '_' . Plugin::PREFIX . '_product_variation_slider_enabled',
       'name' => __('Enable thumbnails slider on product listing pages', Plugin::L10N),
     ];
     $settings[] = [
       'type' => 'sectionend',
-      'id' => Plugin::L10N,
+      'id' => Plugin::PREFIX,
     ];
     return $settings;
+  }
+
+  /**
+   * Ensures new product are saved before updating its meta data.
+   *
+   * New products are still not saved when updated_post_meta hook is called.
+   * Since we can not check if the meta keys were changed before running
+   * our custom functions (see updateDeliveryTime and updateSalePercentage),
+   * we are forcing the post to be saved before updating the meta keys.
+   *
+   * @implements woocommerce_process_product_meta
+   */
+  public static function saveNewProductBeforeMetaUpdate($post_id) {
+    $product = wc_get_product($post_id);
+    $product->save();
+  }
+
+  /**
+   * Saves custom fields for simple products.
+   *
+   * @implements woocommerce_process_product_meta
+   */
+  public static function woocommerce_process_product_meta($post_id) {
+    $transients = [
+      '_' . Plugin::PREFIX . '_video_id' => Plugin::PREFIX . '_video_thumb_',
+    ];
+
+    $custom_fields = [
+      '_' . Plugin::PREFIX . '_video_id',
+      '_' . Plugin::PREFIX . '_video_source',
+    ];
+
+    foreach ($custom_fields as $field) {
+      if (isset($_POST[$field])) {
+        if (!is_array($_POST[$field]) && $_POST[$field]) {
+          update_post_meta($post_id, $field, $_POST[$field]);
+        }
+        else {
+          delete_post_meta($post_id, $field);
+        }
+        if (isset($transients[$field])) {
+          // Flush related transients.
+          delete_site_transient($transients[$field] . $post_id);
+        }
+      }
+    }
+
+    $custom_fields_checkbox = [
+      '_' . Plugin::PREFIX . '_video_display',
+    ];
+
+    foreach ($custom_fields_checkbox as $field) {
+      if (isset($_POST[$field])) {
+        $value = !is_array($_POST[$field]) && wc_string_to_bool($_POST[$field]) ? 'yes' : 'no';
+        update_post_meta($post_id, $field, $value);
+      }
+      else {
+        delete_post_meta($post_id, $field);
+      }
+    }
   }
 
   /**
