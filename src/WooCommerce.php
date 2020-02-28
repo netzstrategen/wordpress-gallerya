@@ -132,8 +132,9 @@ class WooCommerce {
       ]);
     }
     else {
-      // This either has no more than one thumbnail or isn't a variable product, output default thumbnail markup.
-      echo woocommerce_get_product_thumbnail();
+      // This either has no more than one thumbnail or isn't a variable product,
+      // output default thumbnail markup.
+      woocommerce_template_loop_product_thumbnail();
     }
   }
 
