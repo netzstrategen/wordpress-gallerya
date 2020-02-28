@@ -12,7 +12,7 @@
   ],
   "private": true,
   "dependencies": {
-    "flickity": "2.0.9",
+    "flickity": "2.1.0",
     "lightgallery": "1.4.0"
   },
   "overrides": {
