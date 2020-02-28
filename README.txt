@@ -24,6 +24,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.2.3 =
+2020-03-09
+
+* Fixed simple product thumbnails were not lazy loaded.
+
 = 2.2.2 =
 2020-03-04
 
