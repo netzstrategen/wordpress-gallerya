@@ -16,7 +16,8 @@
           wrapAround: true,
           imagesLoaded: true,
           watchCSS: true,
-          arrowShape: arrowShape
+          arrowShape: arrowShape,
+          lazyLoad: true,
         };
         if (typeof pageDots !== 'undefined') {
           // Let the pageDots property be overriden by a data-attribute.
@@ -36,7 +37,7 @@
             pageDots: false,
             imagesLoaded: true,
             groupCells: true,
-            arrowShape: arrowShape
+            arrowShape: arrowShape,
           };
           thumbnails.flickity(thumbnailsArgs);
 
