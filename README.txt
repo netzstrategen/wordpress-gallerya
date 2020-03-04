@@ -3,7 +3,7 @@ Contributors: netzstrategen, fabianmarz, juanlopez4691, lucapipolo, tha_sun
 Tags: gallery, galleries, image, images, photo, album, responsive, responsive gallery, image gallery, photo gallery, carousel, image carousel, slider, image slider, slideshow, lightbox, fullscreen, zoom, media, foto, fotos, thumbnail, thumbnails, video, video gallery, lightgallery, flickity, jquery
 Requires at least: 4.5
 Tested up to: 5.3.2
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,16 +24,20 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.2.2 =
+2020-03-04
+
+* Fixed readme file.
+
 = 2.2.1 =
 2020-03-04
 
-
+* Added lazy loading to product variation sliders on products listing pages.
 * Updated library flickity to 2.1.0 to add lazyLoad support.
 
 = 2.2.0 =
 2020-02-13
 
-* Added lazy loading to product variation sliders on products listing pages.
 * Added product variation thumbnails slider in product listing pages.
 
 = 2.1.1 =
