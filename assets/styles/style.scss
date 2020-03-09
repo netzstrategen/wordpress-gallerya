@@ -51,7 +51,8 @@ $color-secondary: #c4c4c4;
     }
 
 
-    .gallerya__image {
+    .gallerya__image,
+    .gallerya__image img {
       @media screen and (min-width: $screen-sm-min) {
         margin-left: auto;
         margin-right: auto;
@@ -83,59 +84,66 @@ $color-secondary: #c4c4c4;
       }
     }
 
-    li {
-      width: auto;
-      padding: 0 5px;
-    }
+    .gallerya--slider__nav {
+      .flickity-prev-next-button {
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        transform: translateY(-50%);
 
-    .gallerya__image {
-      width: 100%;
-      margin: initial;
-      display: block;
-      max-height: 90px;
+        &.previous {
+          left: 4px;
+        }
 
-      img {
-        width: auto;
-        display: block;
-        max-width: none;
-        max-height: inherit;
+        &.next {
+          right: 4px;
+        }
+
+        &[disabled] {
+          opacity: 0.5;
+        }
       }
-    }
-  }
 
-  .flickity-prev-next-button {
-    top: 50%;
-    width: 28px;
-    height: 28px;
-    margin: 0;
-    padding: 0;
-    outline: none;
-    transform: translateY(-50%);
-    background: $color-primary;
+      li {
+        width: auto;
+        padding: 0 5px;
+      }
 
-    &:hover {
-      background: $color-secondary;
-    }
+      .gallerya__image {
+        width: 100%;
+        margin: initial;
+        display: block;
+        max-height: 90px;
 
-    &.previous {
-      left: 4px;
-    }
-
-    &.next {
-      right: 4px;
-    }
-
-    &[disabled] {
-      opacity: .5;
-    }
-
-    .arrow {
-      fill: #fff;
+        img {
+          display: block;
+          width: auto;
+          max-width: none;
+          max-height: inherit;
+        }
+      }
     }
   }
 
   &--product-variation-slider {
     width: 100%;
+
+    .flickity-prev-next-button {
+      width: 28px;
+      height: 28px;
+      margin: 0;
+      padding: 0;
+      outline: none;
+      background: $color-primary;
+
+      &:hover {
+        background: $color-secondary;
+      }
+
+      .arrow {
+        fill: #fff;
+      }
+    }
 
     // Hide all slides but first before Flickity is initialized to prevent reflows.
     li:not(:first-of-type) {
@@ -269,13 +277,25 @@ $color-secondary: #c4c4c4;
     }
   }
 
-  .flickity-page-dots {
+  .flickity-prev-next-button {
+    top: auto;
+    width: 28px;
+    height: 28px;
+
+    @media screen and (min-width: $screen-sm-min) {
+      top: 50%;
+    }
+  }
+
+  .flickity-page-dots,
+  .flickity-prev-next-button {
     margin: 0;
     padding: 0;
     outline: none;
   }
 
-  .flickity-page-dots .dot {
+  .flickity-page-dots .dot,
+  .flickity-prev-next-button {
     background: $color-primary;
 
     &:hover {
@@ -423,6 +443,31 @@ $color-secondary: #c4c4c4;
           content: " ";
           display: table;
           clear: both;
+        }
+      }
+
+      .flickity-prev-next-button {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        background: #575757;
+        color: #ffffff;
+
+        .arrow {
+          fill: currentColor;
+        }
+
+        &:hover {
+          background: $color-dark;
+          color: #ffffff;
+        }
+
+        &.previous {
+          left: -12px;
+        }
+
+        &.next {
+          right: -12px;
         }
       }
     }
