@@ -16,9 +16,11 @@
           wrapAround: true,
           imagesLoaded: true,
           watchCSS: true,
-          arrowShape: arrowShape,
           lazyLoad: true,
         };
+        if (!galleryaSlider.hasClass('gallerya--product-variation-slider')) {
+          sliderArgs.arrowShape = arrowShape;
+        }
         if (typeof pageDots !== 'undefined') {
           // Let the pageDots property be overriden by a data-attribute.
           sliderArgs.pageDots = pageDots == true;
