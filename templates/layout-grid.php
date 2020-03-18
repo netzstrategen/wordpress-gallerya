@@ -3,7 +3,7 @@ namespace Netzstrategen\Gallerya;
 ?>
 
 <div class="gallerya gallerya--grid">
-  <ul class="js-gallerya-slider js-gallerya-lightbox">
+  <ul class="js-gallerya-lightbox">
     <?php foreach ($images as $image):
       $caption = apply_filters('gallerya/image_caption', $image->post_excerpt, $image->ID);
     ?>
