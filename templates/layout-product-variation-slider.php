@@ -13,6 +13,9 @@ $transparent_pixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAA
     ?>
       <li>
         <figure class="gallerya__image">
+          <?php
+            $markup
+          ?>
           <?= wp_get_attachment_image($image->ID, $slider_image_src, FALSE, $index ? [
             'src' => $transparent_pixel,
             'srcset' => $transparent_pixel,

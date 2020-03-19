@@ -99,18 +99,26 @@ class WooCommerce {
   public static function woocommerce_template_loop_product_thumbnail() {
     global $product;
     $render_slider = FALSE;
-    $attachment_ids = [];
 
     if ($product->is_type('variable')) {
-      // Get the main product image.
-      $attachment_ids[] = $product->get_image_id();
-
-      // Get the first image of each product variation.
-      $variations = $product->get_available_variations();
-      foreach ($variations as $variation) {
-        $attachment_ids[] = $variation['image_id'];
+      // Checks for transient attachment ids, avoiding too many queries.
+      $attachment_ids = get_transient('gallerya_attachment_ids_for_' . $product->get_id());
+      if (!empty($attachment_ids)) {
+        $attachment_ids = (array) json_decode($attachment_ids);
       }
-      $attachment_ids = array_unique($attachment_ids);
+      else {
+        $attachment_ids = [];
+        // Gets the main product image.
+        $attachment_ids[] = $product->get_image_id();
+
+        // Gets the first image of each product variation.
+        $variations = $product->get_available_variations();
+        foreach ($variations as $variation) {
+          $attachment_ids[] = $variation['image_id'];
+        }
+        $attachment_ids = array_unique($attachment_ids);
+        set_transient('gallerya_attachment_ids_for_' . $product->get_id(), json_encode($attachment_ids));
+      }
 
       if (count($attachment_ids) > 1) {
         // TODO: Remove wrapping product link if we have multiple images.
@@ -123,6 +131,7 @@ class WooCommerce {
     }
 
     if ($render_slider) {
+      // Checks for transient attachment ids, avoiding too many queries.
       $args['post_type'] = 'attachment';
       $args['include'] = $attachment_ids;
       $args['orderby'] = 'post__in';
