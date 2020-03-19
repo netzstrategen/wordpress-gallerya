@@ -30,7 +30,12 @@ function classloader($class) {
     include __DIR__ . '/src/' . strtr(substr($class, $ns_offset), '\\', '/') . '.php';
   }
 }
+
 spl_autoload_register(__NAMESPACE__ . '\classloader');
 
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_filter('woocommerce_get_settings_pages', __NAMESPACE__ . '\Settings::woocommerce_get_settings_pages');
+
+// Create/drop 'cache' table.
+register_activation_hook(__FILE__, __NAMESPACE__ . '\Cache::createCacheTable');
+register_uninstall_hook(__FILE__, __NAMESPACE__ . '\Cache::dropCacheTable');

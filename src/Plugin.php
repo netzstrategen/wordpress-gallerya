@@ -82,6 +82,10 @@ class Plugin {
       apply_filters('bjll/skip_classes', __CLASS__ . '::bjll_skip_classes');
     }
 
+    if (static::isPluginActive('woocommerce/woocommerce.php')) {
+      add_action('woocommerce_update_product', __NAMESPACE__ . '\Cache::updateObjectCache', 10, 3);
+    }
+
   }
 
   /**

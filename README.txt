@@ -24,6 +24,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.2.6 =
+2020-03-19
+
+* Added custom caching table product variation sliders on the product listing templates.
+
 = 2.2.5 =
 2020-03-17
 
