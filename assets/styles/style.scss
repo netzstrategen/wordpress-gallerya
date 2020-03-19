@@ -179,6 +179,14 @@ $color-secondary: #c4c4c4;
 
   &--grid {
     @extend .gallerya--slider;
+
+    > ul {
+      li {
+        top: auto;
+        transform: none;
+      }
+    }
+
     @media screen and (min-width: $screen-sm-min) {
       ul {
         display: flex;
