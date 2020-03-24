@@ -20,6 +20,7 @@ $color-secondary: #c4c4c4;
   &--slider,
   &--product-variation-slider,
   &--grid {
+    width: 100%;
 
     > ul {
       &:after {
