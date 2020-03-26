@@ -101,43 +101,18 @@ class WooCommerce {
     $render_slider = FALSE;
 
     if ($product->is_type('variable')) {
-      // Checks for transient attachment ids, avoiding too many queries.
-      $attachment_ids = get_transient('gallerya_attachment_ids_for_' . $product->get_id());
-      if (!empty($attachment_ids)) {
-        $attachment_ids = (array) json_decode($attachment_ids);
-      }
-      else {
-        $attachment_ids = [];
-        // Gets the main product image.
-        $attachment_ids[] = $product->get_image_id();
+      // Checks for cached content, avoiding too many queries.
+      $variation_attachments = Cache::get_cached_variation_slider_markup($product);
 
-        // Gets the first image of each product variation.
-        $variations = $product->get_available_variations();
-        foreach ($variations as $variation) {
-          $attachment_ids[] = $variation['image_id'];
-        }
-        $attachment_ids = array_unique($attachment_ids);
-        set_transient('gallerya_attachment_ids_for_' . $product->get_id(), json_encode($attachment_ids));
-      }
-
-      if (count($attachment_ids) > 1) {
-        // TODO: Remove wrapping product link if we have multiple images.
-        // Needs to be done through removing and re-adding hooks in Plugin.php:
-        // woocommerce_template_loop_product_link_open() needs to be removed from woocommerce_before_shop_loop_item
-        // and re-added to woocommerce_bevore_shop_look_item_title with low priority like 20
-
+      // Only render slider if there are more than one images.
+      if (count($variation_attachments) > 1) {
         $render_slider = TRUE;
       }
     }
 
     if ($render_slider) {
-      // Checks for transient attachment ids, avoiding too many queries.
-      $args['post_type'] = 'attachment';
-      $args['include'] = $attachment_ids;
-      $args['orderby'] = 'post__in';
-
       Plugin::renderTemplate(['templates/layout-product-variation-slider.php'], [
-        'images' => get_posts($args),
+        'images' => $variation_attachments,
       ]);
     }
     else {
