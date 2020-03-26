@@ -22,7 +22,7 @@ class Cache {
   /**
    * Queries for cached markup, if none found, creates it for next time.
    */
-  public static function get_cached_variation_slider_markup($product) {
+  public static function getCachedVariationSliderMarkup($product) {
     // Checks for cached content, avoiding too many queries.
     $variation_attachments = get_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product->get_id());
     if (!empty($variation_attachments)) {
@@ -30,7 +30,7 @@ class Cache {
     }
     else {
       // Builds cache data, so next time it will load faster.
-      $variation_attachments = self::set_product_variation_transients($product);
+      $variation_attachments = self::setProductVariationTransients($product);
     }
     return $variation_attachments;
   }
@@ -38,7 +38,7 @@ class Cache {
   /**
    * Builds transient record for this variation slider.
    */
-  private static function set_product_variation_transients($product) {
+  private static function setProductVariationTransients($product) {
     $attachment_ids = [];
     // Gets the main product image.
     $attachment_ids[] = $product->get_image_id();
@@ -60,15 +60,15 @@ class Cache {
 
     // Builds cache data and sets transient.
     $slider_image_size = has_image_size('woocommerce_thumbnail') ? 'woocommerce_thumbnail' : 'medium';
-    $slider_image_src = apply_filters('gallerya/image_size_product_variation_slider', $slider_image_size);
+    $slider_image_src = apply_filters(Plugin::PREFIX . '/image_size_product_variation_slider', $slider_image_size);
     $transparent_pixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-    foreach ($images as $k => $image) {
+    foreach ($images as $key => $image) {
       // TODO: Remove wrapping product link if we have multiple images.
       // Needs to be done through removing and re-adding hooks in Plugin.php:
       // woocommerce_template_loop_product_link_open() needs to be removed from woocommerce_before_shop_loop_item
-      // and re-added to woocommerce_bevore_shop_look_item_title with low priority like 20.
-      $variation_attachments[$k]['id'] = $image->ID;
-      $variation_attachments[$k]['markup'] = wp_get_attachment_image($image->ID, $slider_image_src, FALSE, $k ? [
+      // and re-added to woocommerce_bevore_shop_look_item_title with lower priority, eg. like 20.
+      $variation_attachments[$key]['id'] = $image->ID;
+      $variation_attachments[$key]['markup'] = wp_get_attachment_image($image->ID, $slider_image_src, FALSE, $key ? [
         'src' => $transparent_pixel,
         'srcset' => $transparent_pixel,
         'data-flickity-lazyload-src' => wp_get_attachment_image_url($image->ID, $slider_image_src),
@@ -83,7 +83,7 @@ class Cache {
   /**
    * Deletes variation slider transient certain product id.
    */
-  public static function flush_variation_attachments_transients($product_id) {
+  public static function flushVariationAttachmentsTransients($product_id) {
     delete_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product_id);
   }
 
