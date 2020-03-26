@@ -67,7 +67,7 @@ class Cache {
       // Needs to be done through removing and re-adding hooks in Plugin.php:
       // woocommerce_template_loop_product_link_open() needs to be removed from woocommerce_before_shop_loop_item
       // and re-added to woocommerce_bevore_shop_look_item_title with lower priority, eg. like 20.
-      $variation_attachments[$key]['id'] = $image->ID;
+      $variation_attachments[$key]['media-id-handle'] = Plugin::PREFIX . '-variation-attachment-handle-' . $image->ID;
       $variation_attachments[$key]['markup'] = wp_get_attachment_image($image->ID, $slider_image_src, FALSE, $key ? [
         'src' => $transparent_pixel,
         'srcset' => $transparent_pixel,
@@ -85,6 +85,15 @@ class Cache {
    */
   public static function flushVariationAttachmentsTransients($product_id) {
     delete_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product_id);
+  }
+
+  /**
+   * Delete according variation transient on media deletion.
+   */
+  public static function maybeDeleteVariationAttachmentTransient($id) {
+    global $wpdb;
+    $handle = Plugin::PREFIX . '-variation-attachment-handle-' . $id;
+    $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_value LIKE '%{$handle}%';");
   }
 
 }
