@@ -8,7 +8,7 @@
 namespace Netzstrategen\Gallerya;
 
 /**
- * WooCommerce integration.
+ * Adds transient cache.
  */
 class Cache {
 
