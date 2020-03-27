@@ -10,14 +10,14 @@ $transparent_pixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAA
 
 <div class="gallerya gallerya--product-variation-slider" data-gallerya-page-dots="<?= (int) $show_page_dots ?>">
   <ul class="js-gallerya-slider">
-    <?php foreach ($attachment_ids as $index => $id) : ?>
+    <?php foreach ($attachment_ids as $index => $attachment_id): ?>
       <li>
         <figure class="gallerya__image">
-          <?= wp_get_attachment_image($id, $slider_image_src, FALSE, $index ? [
+          <?= wp_get_attachment_image($attachment_id, $slider_image_src, FALSE, $index ? [
             'src' => $transparent_pixel,
             'srcset' => $transparent_pixel,
-            'data-flickity-lazyload-src' => wp_get_attachment_image_url($id, $slider_image_src),
-            'data-flickity-lazyload-srcset' => wp_get_attachment_image_srcset($id, $slider_image_src),
+            'data-flickity-lazyload-src' => wp_get_attachment_image_url($attachment_id, $slider_image_src),
+            'data-flickity-lazyload-srcset' => wp_get_attachment_image_srcset($attachment_id, $slider_image_src),
           ] : []) ?>
         </figure>
       </li>
