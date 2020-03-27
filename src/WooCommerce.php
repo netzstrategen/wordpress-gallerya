@@ -13,11 +13,11 @@ namespace Netzstrategen\Gallerya;
 class WooCommerce {
 
   /**
-   * The slider variation transient key prefix.
+   * Cache key prefix for collected product/variation teaser attachment IDs.
    *
    * @var string
    */
-  const VARIATION_SLIDER_CACHE_KEY_PREFIX = Plugin::PREFIX . '_variation_attachments_for_';
+  const CACHE_KEY_PREFIX_PRODUCT_TEASER_ATTACHMENTS = Plugin::PREFIX . '_product_teaser_attachments_';
 
   /**
    * Adds woocommerce specific settings.
@@ -108,7 +108,7 @@ class WooCommerce {
     $render_slider = FALSE;
 
     if ($product->is_type('variable')) {
-      $cache_key = self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product->get_id();
+      $cache_key = self::CACHE_KEY_PREFIX_PRODUCT_TEASER_ATTACHMENTS . $product->get_id();
       $attachment_ids = get_transient($cache_key);
       if ($attachment_ids === FALSE) {
         $attachment_ids = [];
@@ -125,7 +125,7 @@ class WooCommerce {
         set_transient($cache_key, $attachment_ids);
       }
 
-      // Only render slider if there are more than one images.
+      // Only render slider if there is more than one image.
       if (count($attachment_ids) > 1) {
         $render_slider = TRUE;
       }
@@ -144,10 +144,13 @@ class WooCommerce {
   }
 
   /**
-   * Deletes variation slider transient certain product id.
+   * Deletes product teaser attachment cache for a given product.
+   *
+   * @param int $product_id
+   *   The ID of the product to flush the cache for.
    */
   public static function flushVariationAttachmentsTransients($product_id) {
-    delete_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product_id);
+    delete_transient(self::CACHE_KEY_PREFIX_PRODUCT_TEASER_ATTACHMENTS . $product_id);
   }
 
 }
