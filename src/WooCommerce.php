@@ -102,17 +102,17 @@ class WooCommerce {
 
     if ($product->is_type('variable')) {
       // Checks for cached content, avoiding too many queries.
-      $variation_attachments = Cache::getCachedVariationSliderMarkup($product);
+      $attachment_ids = Cache::getCachedVariationSliderAttachmentIds($product);
 
       // Only render slider if there are more than one images.
-      if (count($variation_attachments) > 1) {
+      if (count($attachment_ids) > 1) {
         $render_slider = TRUE;
       }
     }
 
     if ($render_slider) {
       Plugin::renderTemplate(['templates/layout-product-variation-slider.php'], [
-        'images' => $variation_attachments,
+        'attachment_ids' => $attachment_ids,
       ]);
     }
     else {

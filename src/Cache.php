@@ -22,17 +22,14 @@ class Cache {
   /**
    * Queries for cached markup, if none found, creates it for next time.
    */
-  public static function getCachedVariationSliderMarkup($product) {
+  public static function getCachedVariationSliderAttachmentIds($product) {
     // Checks for cached content, avoiding too many queries.
-    $variation_attachments = get_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product->get_id());
-    if (!empty($variation_attachments)) {
-      $variation_attachments = json_decode($variation_attachments, TRUE);
-    }
-    else {
+    $attachment_ids = get_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product->get_id());
+    if (empty($attachment_ids)) {
       // Builds cache data, so next time it will load faster.
-      $variation_attachments = self::setProductVariationTransients($product);
+      $attachment_ids = self::setProductVariationTransients($product);
     }
-    return $variation_attachments;
+    return $attachment_ids;
   }
 
   /**
@@ -50,34 +47,8 @@ class Cache {
     }
     $attachment_ids = array_unique($attachment_ids);
 
-    // Queries for the actual attachment type posts.
-    $args = [
-      'post_type' => 'attachment',
-      'include' => $attachment_ids,
-      'orderby' => 'post__in',
-    ];
-    $images = get_posts($args);
-
-    // Builds cache data and sets transient.
-    $slider_image_size = has_image_size('woocommerce_thumbnail') ? 'woocommerce_thumbnail' : 'medium';
-    $slider_image_src = apply_filters(Plugin::PREFIX . '/image_size_product_variation_slider', $slider_image_size);
-    $transparent_pixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-    foreach ($images as $key => $image) {
-      // TODO: Remove wrapping product link if we have multiple images.
-      // Needs to be done through removing and re-adding hooks in Plugin.php:
-      // woocommerce_template_loop_product_link_open() needs to be removed from woocommerce_before_shop_loop_item
-      // and re-added to woocommerce_bevore_shop_look_item_title with lower priority, eg. like 20.
-      $variation_attachments[$key]['media-id-handle'] = Plugin::PREFIX . '-variation-attachment-handle-' . $image->ID;
-      $variation_attachments[$key]['markup'] = wp_get_attachment_image($image->ID, $slider_image_src, FALSE, $key ? [
-        'src' => $transparent_pixel,
-        'srcset' => $transparent_pixel,
-        'data-flickity-lazyload-src' => wp_get_attachment_image_url($image->ID, $slider_image_src),
-        'data-flickity-lazyload-srcset' => wp_get_attachment_image_srcset($image->ID, $slider_image_src),
-      ] : []);
-    }
-
-    set_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product->get_id(), json_encode($variation_attachments));
-    return $variation_attachments;
+    set_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product->get_id(), $attachment_ids);
+    return $attachment_ids;
   }
 
   /**
@@ -85,15 +56,6 @@ class Cache {
    */
   public static function flushVariationAttachmentsTransients($product_id) {
     delete_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product_id);
-  }
-
-  /**
-   * Delete according variation transient on media deletion.
-   */
-  public static function maybeDeleteVariationAttachmentTransient($id) {
-    global $wpdb;
-    $handle = Plugin::PREFIX . '-variation-attachment-handle-' . $id;
-    $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_value LIKE '%{$handle}%';");
   }
 
 }
