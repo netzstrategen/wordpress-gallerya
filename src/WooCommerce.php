@@ -149,7 +149,7 @@ class WooCommerce {
    * @param int $product_id
    *   The ID of the product to flush the cache for.
    */
-  public static function flushVariationAttachmentsTransients($product_id) {
+  public static function flushProductTeaserAttachmentCache($product_id) {
     delete_transient(self::CACHE_KEY_PREFIX_PRODUCT_TEASER_ATTACHMENTS . $product_id);
   }
 
