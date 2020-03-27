@@ -83,9 +83,9 @@ class Plugin {
     }
 
     // Deletes transient on product update and delete, and media delete.
-    add_action('before_delete_post', __NAMESPACE__ . '\Cache::flushVariationAttachmentsTransients', 10, 3);
-    add_action('woocommerce_update_product', __NAMESPACE__ . '\Cache::flushVariationAttachmentsTransients', 10, 3);
-    add_action('woocommerce_update_product_variation', __NAMESPACE__ . '\Cache::flushVariationAttachmentsTransients', 10, 1);
+    add_action('before_delete_post', __NAMESPACE__ . '\WooCommerce::flushVariationAttachmentsTransients', 10, 3);
+    add_action('woocommerce_update_product', __NAMESPACE__ . '\WooCommerce::flushVariationAttachmentsTransients', 10, 3);
+    add_action('woocommerce_update_product_variation', __NAMESPACE__ . '\WooCommerce::flushVariationAttachmentsTransients', 10, 1);
   }
 
   /**
