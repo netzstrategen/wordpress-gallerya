@@ -78,8 +78,8 @@ class Plugin {
     }
 
     // Adds 'no-lazy' as default class for images not to be lazy-loaded by plugin bj-lazy-load.
-    if (static::isPluginActive('woocommerce/woocommerce.php')) {
-      apply_filters('bjll/skip_classes', __CLASS__ . '::bjll_skip_classes');
+    if (static::isPluginActive('bj-lazy-load/bj-lazy-load.php')) {
+      add_filter('bjll/skip_classes', __CLASS__ . '::bjll_skip_classes');
     }
 
     // Deletes transient on product update and delete, and media delete.
