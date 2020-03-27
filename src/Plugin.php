@@ -81,11 +81,6 @@ class Plugin {
     if (static::isPluginActive('bj-lazy-load/bj-lazy-load.php')) {
       add_filter('bjll/skip_classes', __CLASS__ . '::bjll_skip_classes');
     }
-
-    // Deletes transient on product update and delete, and media delete.
-    add_action('before_delete_post', __NAMESPACE__ . '\WooCommerce::flushProductTeaserAttachmentCache');
-    add_action('woocommerce_update_product', __NAMESPACE__ . '\WooCommerce::flushProductTeaserAttachmentCache');
-    add_action('woocommerce_update_product_variation', __NAMESPACE__ . '\WooCommerce::flushProductTeaserAttachmentCache');
   }
 
   /**

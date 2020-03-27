@@ -13,13 +13,6 @@ namespace Netzstrategen\Gallerya;
 class WooCommerce {
 
   /**
-   * Cache key prefix for collected product/variation teaser attachment IDs.
-   *
-   * @var string
-   */
-  const CACHE_KEY_PREFIX_PRODUCT_TEASER_ATTACHMENTS = Plugin::PREFIX . '_product_teaser_attachments_';
-
-  /**
    * Adds woocommerce specific settings.
    *
    * @implements woocommerce_get_settings_gallerya
@@ -105,33 +98,26 @@ class WooCommerce {
    */
   public static function woocommerce_template_loop_product_thumbnail() {
     global $product;
-    $render_slider = FALSE;
+    $attachment_ids = [];
 
     if ($product->is_type('variable')) {
-      $cache_key = self::CACHE_KEY_PREFIX_PRODUCT_TEASER_ATTACHMENTS . $product->get_id();
-      $attachment_ids = get_transient($cache_key);
-      if ($attachment_ids === FALSE) {
-        $attachment_ids = [];
-        // Add the main product image.
-        $attachment_ids[] = $product->get_image_id();
+      // Add the main product image.
+      $attachment_ids[] = $product->get_image_id();
 
-        // Add the first image of each product variation.
-        $variations = $product->get_available_variations();
-        foreach ($variations as $variation) {
-          $attachment_ids[] = $variation['image_id'];
-        }
-        $attachment_ids = array_unique($attachment_ids);
-
-        set_transient($cache_key, $attachment_ids);
-      }
-
-      // Only render slider if there is more than one image.
-      if (count($attachment_ids) > 1) {
-        $render_slider = TRUE;
-      }
+      // Add the first image of each product variation.
+      // Avoid calling $product->get_available_variations() as this would fully
+      // load and render all of the product variations.
+      $variation_ids = $product->get_visible_children();
+      $attachment_ids = array_merge($attachment_ids, get_posts([
+        'fields' => 'ids',
+        'post_type' => 'attachment',
+        'posts_per_page' => -1,
+        'post_parent__in' => $variation_ids,
+      ]));
     }
 
-    if ($render_slider) {
+    // Only render slider if there is more than one image.
+    if (count($attachment_ids) > 1) {
       Plugin::renderTemplate(['templates/layout-product-variation-slider.php'], [
         'attachment_ids' => $attachment_ids,
       ]);
@@ -141,16 +127,6 @@ class WooCommerce {
       // output default thumbnail markup.
       woocommerce_template_loop_product_thumbnail();
     }
-  }
-
-  /**
-   * Deletes product teaser attachment cache for a given product.
-   *
-   * @param int $product_id
-   *   The ID of the product to flush the cache for.
-   */
-  public static function flushProductTeaserAttachmentCache($product_id) {
-    delete_transient(self::CACHE_KEY_PREFIX_PRODUCT_TEASER_ATTACHMENTS . $product_id);
   }
 
 }
