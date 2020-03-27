@@ -108,11 +108,21 @@ class WooCommerce {
     $render_slider = FALSE;
 
     if ($product->is_type('variable')) {
-      // Checks for cached content, avoiding too many queries.
-      $attachment_ids = get_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product->get_id());
-      if (empty($attachment_ids)) {
-        // Builds cache data, so next time it will load faster.
-        $attachment_ids = self::setProductVariationTransients($product);
+      $cache_key = self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product->get_id();
+      $attachment_ids = get_transient($cache_key);
+      if ($attachment_ids === FALSE) {
+        $attachment_ids = [];
+        // Add the main product image.
+        $attachment_ids[] = $product->get_image_id();
+
+        // Add the first image of each product variation.
+        $variations = $product->get_available_variations();
+        foreach ($variations as $variation) {
+          $attachment_ids[] = $variation['image_id'];
+        }
+        $attachment_ids = array_unique($attachment_ids);
+
+        set_transient($cache_key, $attachment_ids);
       }
 
       // Only render slider if there are more than one images.
@@ -131,25 +141,6 @@ class WooCommerce {
       // output default thumbnail markup.
       woocommerce_template_loop_product_thumbnail();
     }
-  }
-
-  /**
-   * Builds transient record for this variation slider.
-   */
-  private static function setProductVariationTransients($product) {
-    $attachment_ids = [];
-    // Gets the main product image.
-    $attachment_ids[] = $product->get_image_id();
-
-    // Gets the first image of each product variation.
-    $variations = $product->get_available_variations();
-    foreach ($variations as $variation) {
-      $attachment_ids[] = $variation['image_id'];
-    }
-    $attachment_ids = array_unique($attachment_ids);
-
-    set_transient(self::VARIATION_SLIDER_CACHE_KEY_PREFIX . $product->get_id(), $attachment_ids);
-    return $attachment_ids;
   }
 
   /**
