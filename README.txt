@@ -25,11 +25,13 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 == Changelog ==
 
 = 2.2.8 =
-2020-03-26
-* Added transients caching for product variation sliders on the product listing templates.
+2020-03-27
+
+* Added caching for product image/variation sliders on product listings.
 
 = 2.2.7 =
 2020-03-24
+
 * Fixed grid layout was overlapping preceding content on mobile.
 * Fixed slider layout collapsing on mobile.
 
