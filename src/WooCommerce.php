@@ -97,38 +97,31 @@ class WooCommerce {
    * @implements woocommerce_template_loop_product_thumbnail
    */
   public static function woocommerce_template_loop_product_thumbnail() {
-    global $product;
-    $render_slider = FALSE;
+    global $product, $wpdb;
     $attachment_ids = [];
 
     if ($product->is_type('variable')) {
-      // Get the main product image.
+      // Add the main product image.
       $attachment_ids[] = $product->get_image_id();
-
-      // Get the first image of each product variation.
-      $variations = $product->get_available_variations();
-      foreach ($variations as $variation) {
-        $attachment_ids[] = $variation['image_id'];
-      }
-      $attachment_ids = array_unique($attachment_ids);
-
-      if (count($attachment_ids) > 1) {
-        // TODO: Remove wrapping product link if we have multiple images.
-        // Needs to be done through removing and re-adding hooks in Plugin.php:
-        // woocommerce_template_loop_product_link_open() needs to be removed from woocommerce_before_shop_loop_item
-        // and re-added to woocommerce_bevore_shop_look_item_title with low priority like 20
-
-        $render_slider = TRUE;
-      }
+      // Add the first image of each product variation.
+      // Avoid calling $product->get_available_variations() as this would fully
+      // load and render all of the product variations.
+      $variation_ids = $product->get_visible_children();
+      $placeholders = implode(',', array_fill(0, count($variation_ids), '%d'));
+      $attachment_ids = array_merge($attachment_ids, $wpdb->get_col($wpdb->prepare(
+        "SELECT pm.meta_value AS attachment_id
+        FROM wp_posts p
+        INNER JOIN wp_postmeta pm ON pm.post_id = p.ID AND pm.meta_key = '_thumbnail_id'
+        WHERE p.ID IN ($placeholders)
+        ORDER BY p.menu_order ASC",
+        $variation_ids
+      )));
     }
 
-    if ($render_slider) {
-      $args['post_type'] = 'attachment';
-      $args['include'] = $attachment_ids;
-      $args['orderby'] = 'post__in';
-
+    // Only render slider if there is more than one image.
+    if (count($attachment_ids) > 1) {
       Plugin::renderTemplate(['templates/layout-product-variation-slider.php'], [
-        'images' => get_posts($args),
+        'attachment_ids' => $attachment_ids,
       ]);
     }
     else {
