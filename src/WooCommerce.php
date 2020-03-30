@@ -97,8 +97,7 @@ class WooCommerce {
    * @implements woocommerce_template_loop_product_thumbnail
    */
   public static function woocommerce_template_loop_product_thumbnail() {
-    global $product;
-    global $wpdb;
+    global $product, $wpdb;
     $attachment_ids = [];
 
     if ($product->is_type('variable')) {
@@ -108,13 +107,15 @@ class WooCommerce {
       // Avoid calling $product->get_available_variations() as this would fully
       // load and render all of the product variations.
       $variation_ids = $product->get_visible_children();
-      // Queries first image for each
+
+      // Queries first image for each variation.
       $placeholders = implode(',', array_fill(0, count($variation_ids), '%d'));
-      $attachment_ids = array_merge($attachment_ids, $wpdb->get_col($wpdb->prepare("SELECT wp_posts.ID
-        FROM wp_posts
-        WHERE ID IN (
-          SELECT ID FROM wp_posts WHERE post_parent IN ($placeholders) group by ID
-        )", $variation_ids
+      $attachment_ids = array_merge($attachment_ids, $wpdb->get_col($wpdb->prepare("SELECT pm.meta_value AS attachment_id
+        FROM wp_posts p
+        INNER JOIN wp_postmeta pm ON pm.post_id = p.ID AND pm.meta_key = '_thumbnail_id'
+        WHERE p.ID IN ($placeholders)
+        ORDER BY p.menu_order ASC",
+          $variation_ids
       )));
     }
 
