@@ -98,22 +98,24 @@ class WooCommerce {
    */
   public static function woocommerce_template_loop_product_thumbnail() {
     global $product;
+    global $wpdb;
     $attachment_ids = [];
 
     if ($product->is_type('variable')) {
       // Add the main product image.
       $attachment_ids[] = $product->get_image_id();
-
       // Add the first image of each product variation.
       // Avoid calling $product->get_available_variations() as this would fully
       // load and render all of the product variations.
       $variation_ids = $product->get_visible_children();
-      $attachment_ids = array_merge($attachment_ids, get_posts([
-        'fields' => 'ids',
-        'post_type' => 'attachment',
-        'posts_per_page' => -1,
-        'post_parent__in' => $variation_ids,
-      ]));
+      // Queries first image for each
+      $placeholders = implode(',', array_fill(0, count($variation_ids), '%d'));
+      $attachment_ids = array_merge($attachment_ids, $wpdb->get_col($wpdb->prepare("SELECT wp_posts.ID
+        FROM wp_posts
+        WHERE ID IN (
+          SELECT ID FROM wp_posts WHERE post_parent IN ($placeholders) group by ID
+        )", $variation_ids
+      )));
     }
 
     // Only render slider if there is more than one image.
