@@ -28,6 +28,7 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 2020-03-30
 
 * Fixed variations thumbnails retrieval to improve performance on products listing pages.
+* Bumped pugin version.
 
 = 2.2.7 =
 2020-03-24
