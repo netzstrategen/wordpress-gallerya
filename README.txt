@@ -24,11 +24,16 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.2.9 =
+2020-04-08
+
+* Fixed variations thumbnails were not unique on products listing pages.
+
 = 2.2.8 =
 2020-03-30
 
 * Fixed variations thumbnails retrieval to improve performance on products listing pages.
-* Bumped pugin version.
+* Bumped plugin version.
 
 = 2.2.7 =
 2020-03-24
