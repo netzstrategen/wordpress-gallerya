@@ -4,12 +4,12 @@
     if ($('.js-gallerya-slider').length > 0 && typeof $.fn.flickity === 'function') {
       var arrowShape = 'M85,50.36033a2.72075,2.72075,0,0,0-2.74945-2.68906H24.01177L47.61119,24.59022a2.65667,2.65667,0,0,0,0-3.80232,2.79411,2.79411,0,0,0-3.88955,0L15.80559,48.09077a2.64614,2.64614,0,0,0,0,3.80232L43.729,79.21211a2.79185,2.79185,0,0,0,3.88771,0,2.64613,2.64613,0,0,0,0-3.80233L24.756,53.04939h57.4946A2.72075,2.72075,0,0,0,85,50.36033Z';
       $('.js-gallerya-slider').each(function(index, element) {
-        var galleryaSlider = $(this).closest('.gallerya--slider, .gallerya--product-variation-slider');
-        var navigation = galleryaSlider.data('gallerya-navigation');
-        var pageDots = galleryaSlider.data('galleryaPageDots');
-        var thumbnails = galleryaSlider.find('.js-gallerya-thumbnail-slider');
-        var count = galleryaSlider.find('[data-gallerya-count]');
-        var sliderArgs = {
+        const galleryaSlider = $(this).closest('.gallerya--slider, .gallerya--product-variation-slider');
+        const navigation = galleryaSlider.data('gallerya-navigation');
+        const pageDots = galleryaSlider.data('galleryaPageDots');
+        const thumbnails = galleryaSlider.find('.js-gallerya-thumbnail-slider');
+        const count = galleryaSlider.find('[data-gallerya-count]');
+        const sliderArgs = {
           cellAlign: 'left',
           contain: true,
           wrapAround: true,
@@ -32,7 +32,7 @@
         $(this).flickity(sliderArgs);
         var flickityData = $(this).data('flickity');
         if (thumbnails.length > 0) {
-          var thumbnailsArgs = {
+          const thumbnailsArgs = {
             asNavFor: element,
             contain: true,
             pageDots: false,
@@ -43,15 +43,15 @@
           thumbnails.flickity(thumbnailsArgs);
 
           $(this).on('select.flickity', function () {
-            var index = flickityData.selectedIndex;
-            var className = 'is-currently-selected';
+            const index = flickityData.selectedIndex;
+            const className = 'is-currently-selected';
             thumbnails.find('.flickity-slider li').removeClass(className)
               .eq(index).addClass(className);
           });
         }
         if (count) {
           $(this).on('select.flickity', function () {
-            var slideNumber = flickityData.selectedIndex + 1;
+            const slideNumber = flickityData.selectedIndex + 1;
             count.text(slideNumber + '/' + flickityData.slides.length);
           });
         }
@@ -100,7 +100,7 @@
       const initialImgsWidth = $thumbnailSliderEl.find('li').first().width();
       const thumbnailSliderWidth = $thumbnailSliderEl.width();
       const maxCols = 7;
-      var noCols = 4;
+      let noCols = 4;
       if (initialImgsWidth > 0 && thumbnailSliderWidth > initialImgsWidth) {
         while (((thumbnailSliderWidth - (2 * thumbnailSliderMargin)) - (thumbnailSpacingUnit * noCols)) / (noCols + 1) >= initialImgsWidth) {
           noCols++;
