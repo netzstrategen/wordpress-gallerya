@@ -28,6 +28,8 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 2020-04-30
 
 * Added video support to product gallery and thumbnails slider.
+* Added ES6 support.
+* Refactored and recompiled scripts with ES6 support.
 
 = 2.2.10 =
 2020-04-28
