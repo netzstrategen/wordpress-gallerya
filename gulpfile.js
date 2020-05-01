@@ -7,6 +7,7 @@ var concat       = require('gulp-concat');
 var flatten      = require('gulp-flatten');
 var gulp         = require('gulp');
 var gulpif       = require('gulp-if');
+var babel        = require("gulp-babel");
 var imagemin     = require('gulp-imagemin');
 var jshint       = require('gulp-jshint');
 var lazypipe     = require('lazypipe');
@@ -143,6 +144,9 @@ var jsTasks = function(filename, configOverrides) {
   return lazypipe()
     .pipe(function() {
       return gulpif(enabled.maps, sourcemaps.init());
+    })
+    .pipe(function() {
+      return babel();
     })
     .pipe(concat, filename)
     .pipe(function () {
