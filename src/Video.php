@@ -49,7 +49,7 @@ class Video {
         ob_start();
         if ($video_source === 'youtube') {
           $video_url = sprintf(
-              'https://www.youtube-nocookie.com/embed/%s/?enablejsapi=1&origin=%s',
+              'https://www.youtube-nocookie.com/embed/%s/?enablejsapi=1&origin=%s&rel=0',
               $video_id,
               get_site_url()
             );
