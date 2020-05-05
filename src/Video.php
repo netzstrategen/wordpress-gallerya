@@ -34,6 +34,10 @@ class Video {
   public static function replaceFeaturedImageWithVideo($html, $thumbnail_id) {
     global $product;
 
+    if (!$product) {
+      return $html;
+    }
+
     // Check to make sure we're only targeting the featured image.
     $product_id = $product->get_id();
     if (
@@ -138,6 +142,10 @@ class Video {
    */
   public static function woocommerce_product_get_gallery_image_ids($value) {
     global $product;
+
+    if (!$product) {
+      return $value;
+    }
 
     $product_id = $product->get_id();
     if (static::checkDisplayVideoThumb($product_id)) {
