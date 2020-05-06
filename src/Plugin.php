@@ -73,16 +73,19 @@ class Plugin {
       // Saves custom fields for simple products.
       add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\WooCommerce::woocommerce_process_product_meta');
 
+      // Adds data-srcset attributes to image links to make them reponsive in
+      // lightGallery.
+      // @todo Make lightGallery properly respect srcset & sizes in JavaScript
+      // instead of duplicating that information in HTML.
+      // @see https://github.com/netzstrategen/wordpress-gallerya/pull/11#issuecomment-355664739
+      add_filter('woocommerce_single_product_image_thumbnail_html', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_image_thumbnail_html', 10, 2);
+
+      // Adds additional images from product variation gallery.
+      add_filter('woocommerce_product_get_gallery_image_ids', __NAMESPACE__ . '\WooCommerce::woocommerce_product_get_gallery_image_ids', 10, 2);
+      add_action('woocommerce_product_thumbnails', __NAMESPACE__ . '\WooCommerce::woocommerce_product_thumbnails', 21);
+
       // Adds video support to product gallery.
       Video::init();
-    }
-
-    // Adds data-srcset attributes to image links to make them reponsive in lightGallery.
-    // @todo Make lightGallery properly respect srcset & sizes in JavaScript instead
-    //   of duplicating that information in HTML; see
-    //   https://github.com/netzstrategen/wordpress-gallerya/pull/11#issuecomment-355664739
-    if (static::isPluginActive('woocommerce/woocommerce.php')) {
-      add_filter('woocommerce_single_product_image_thumbnail_html', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_image_thumbnail_html', 10, 2);
     }
 
     // Adds 'no-lazy' as default class for images not to be lazy-loaded by plugin bj-lazy-load.

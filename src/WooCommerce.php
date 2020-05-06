@@ -129,6 +129,156 @@ class WooCommerce {
   }
 
   /**
+   * Adds additional images from product variation gallery.
+   *
+   * @implements woocommerce_product_get_gallery_image_ids
+   */
+  public static function woocommerce_product_get_gallery_image_ids($value, $obj) {
+    global $product;
+
+    if (!$product || $product->get_type() !== 'variable') {
+      return $value;
+    }
+    return array_merge($value, static::getProductVariationsImages($product->get_id()));
+  }
+
+  /**
+   * Collects all related images URLs of a variable product variations.
+   *
+   * If current product has variations, we collect the URLs for its featured
+   * image, the general gallery images and the images in each of its variations
+   * galleries. We print this data as a JS object.
+   *
+   * When the user selects a variation in the frontend UI, we hide all images in
+   * the product image gallery slider, except for the product features image,
+   * the general gallery images and the selected variation gallery images (if
+   * those exist).
+   */
+  public static function woocommerce_product_thumbnails() {
+    global $product;
+
+    if (!$product || $product->get_type() !== 'variable') {
+      return;
+    }
+
+    // Get size of images for the produt thumbnails slider.
+    $gallery_thumbnail = wc_get_image_size('gallery_thumbnail');
+    $thumbnail_size = apply_filters('woocommerce_gallery_thumbnail_size', [$gallery_thumbnail['width'], $gallery_thumbnail['height']]);
+    $variation_images = [];
+    // Collect product main image and general images gallery.
+    $variation_images['gallery'] = [
+      wp_get_attachment_image_src(get_post_thumbnail_id($product->get_id()), $thumbnail_size)[0],
+    ];
+    foreach ($product->get_gallery_image_ids('edit') as $image_id) {
+      $variation_images['gallery'][] = wp_get_attachment_image_src($image_id, $thumbnail_size)[0];
+    }
+
+    // Collect product variations images.
+    $variation_ids = $product->get_visible_children();
+    foreach ($variation_ids as $variation_id) {
+      $variation_images[$variation_id] =
+        static::getVariationImagesUrls($variation_id, $thumbnail_size);
+    }
+
+    echo sprintf('<script>var product_variation_images = %s;</script>', json_encode($variation_images));
+  }
+
+  /**
+   * Retrieves the images URLs for a given product variation.
+   *
+   * Collects the URLs of the variation main image and the images in the
+   * variation gallery.
+   *
+   * @param int $variation_id
+   *   The product variation ID.
+   * @param string $size
+   *   The size of the images to be retrieved.
+   *
+   * @return array
+   *   The product variation images URls.
+   */
+  public static function getVariationImagesUrls($variation_id, $size = 'thumbnail'): array {
+    $images_urls = [];
+    foreach (static::getVariationImages($variation_id) as $image_id) {
+      if ($image_src = wp_get_attachment_image_src($image_id, $size)) {
+        $images_urls[] = $image_src[0];
+      }
+    }
+
+    return $images_urls;
+  }
+
+  /**
+   * Retrieves the images IDs for a given product variation.
+   *
+   * Collects the IDs of the variation main image and the images in the
+   * variation gallery.
+   *
+   * @param int $variation_id
+   *   The product variation ID.
+   *
+   * @return array
+   *   The product variation images.
+   */
+  public static function getVariationImages($variation_id): array {
+    $variation = wc_get_product($variation_id);
+    return array_merge([$variation->get_image_id()], static::getVariationGalleryImages($variation_id));
+  }
+
+  /**
+   * Retrieves the images IDs for all the variations of a given product.
+   *
+   * Collects the IDs of the variation main image and the images in the
+   * variation gallery.
+   *
+   * @param array $product_id
+   *   The parent product ID.
+   *
+   * @return array
+   *   The product variation images IDs.
+   */
+  public static function getProductVariationsImages($product_id) {
+    global $wpdb;
+
+    $results = array_map('maybe_unserialize',
+      $wpdb->get_col($wpdb->prepare(
+        "
+        SELECT pm.meta_value
+        FROM wp_postmeta pm
+        INNER JOIN wp_posts p ON p.ID = pm.post_id AND p.post_parent = %d
+        WHERE pm.meta_key IN ('_thumbnail_id', '_gallerya_attachment_ids')
+        ",
+        $product_id
+      ))
+    );
+
+    $images = [];
+    foreach ($results as $result) {
+      if (is_array($result)) {
+        $images = array_merge($images, $result);
+      }
+      else {
+        $images[] = $result;
+      }
+    }
+
+    return $images;
+  }
+
+  /**
+   * Retrieves the IDs of the gallery images for a given product variation.
+   *
+   * @param int $variation_id
+   *   The product variation ID.
+   *
+   * @return array
+   *   The product variation gallery images.
+   */
+  public static function getVariationGalleryImages($variation_id): array {
+    return get_post_meta($variation_id, '_' . Plugin::PREFIX . '_attachment_ids', TRUE) ?: [];
+  }
+
+  /**
    * Adds CSS class to single product image galleries to enable thumbnail slider via JS.
    *
    * @implements woocommerce_single_product_image_gallery_classes

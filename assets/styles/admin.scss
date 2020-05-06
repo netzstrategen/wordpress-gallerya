@@ -1,0 +1,53 @@
+@mixin gallery-thumbnail($color, $content) {
+  position: absolute;
+  line-height: var(--variation-gallery-thumbnail-height);
+  font-size: var(--variation-gallery-thumbnail-height);
+  font-family: dashicons;
+  color: $color;
+  content: $content;
+}
+
+.variation_gallery {
+  --variation-gallery-thumbnail-width: 64px;
+  --variation-gallery-thumbnail-height: 64px;
+
+  border-bottom: 1px #ddd solid;
+  clear: both;
+}
+
+.variation_gallery__images {
+  display:flex;
+  flex-direction:row;
+}
+
+.variation_gallery__image {
+  position: relative;
+  overflow: hidden;
+  width: var(--variation-gallery-thumbnail-width);
+  height: var(--variation-gallery-thumbnail-height);
+  margin-right: 4px;
+  border: 1px #ddd solid;
+  cursor: pointer;
+
+  img {
+    width: auto;
+    height: var(--variation-gallery-thumbnail-height);
+  }
+
+  &.disabled {
+    cursor: default;
+  }
+
+  &:not(.disabled):hover:before {
+    @include gallery-thumbnail(#00a0d2, '\f335');
+  }
+}
+
+.variation_gallery__image--placeholder {
+  background: #f4f4f4;
+
+  &:before,
+  &:hover:before {
+    @include gallery-thumbnail(#fff, '\f129');
+  }
+}
