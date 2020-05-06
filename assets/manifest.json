@@ -20,9 +20,19 @@
         "scripts/script.js"
       ]
     },
+    "admin.min.js": {
+      "files": [
+        "scripts/admin.js"
+      ]
+    },
     "style.min.css": {
       "files": [
         "styles/style.scss"
+      ]
+    },
+    "admin.min.css": {
+      "files": [
+        "styles/admin.scss"
       ]
     },
     "libs.min.css": {
