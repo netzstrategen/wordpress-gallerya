@@ -1,8 +1,11 @@
 (function($) {
   $(document).ready(function () {
 
+    // Adds slide navigation through variation thumbnails for variable products
+    // displayed in products listings.
     if ($('.js-gallerya-slider').length > 0 && typeof $.fn.flickity === 'function') {
-      var arrowShape = 'M85,50.36033a2.72075,2.72075,0,0,0-2.74945-2.68906H24.01177L47.61119,24.59022a2.65667,2.65667,0,0,0,0-3.80232,2.79411,2.79411,0,0,0-3.88955,0L15.80559,48.09077a2.64614,2.64614,0,0,0,0,3.80232L43.729,79.21211a2.79185,2.79185,0,0,0,3.88771,0,2.64613,2.64613,0,0,0,0-3.80233L24.756,53.04939h57.4946A2.72075,2.72075,0,0,0,85,50.36033Z';
+      const arrowShape = 'M85,50.36033a2.72075,2.72075,0,0,0-2.74945-2.68906H24.01177L47.61119,24.59022a2.65667,2.65667,0,0,0,0-3.80232,2.79411,2.79411,0,0,0-3.88955,0L15.80559,48.09077a2.64614,2.64614,0,0,0,0,3.80232L43.729,79.21211a2.79185,2.79185,0,0,0,3.88771,0,2.64613,2.64613,0,0,0,0-3.80233L24.756,53.04939h57.4946A2.72075,2.72075,0,0,0,85,50.36033Z';
+
       $('.js-gallerya-slider').each(function(index, element) {
         const galleryaSlider = $(this).closest('.gallerya--slider, .gallerya--product-variation-slider');
         const navigation = galleryaSlider.data('gallerya-navigation');
@@ -17,6 +20,7 @@
           watchCSS: true,
           lazyLoad: true,
         };
+
         if (!galleryaSlider.hasClass('gallerya--product-variation-slider')) {
           sliderArgs.arrowShape = arrowShape;
         }
@@ -27,10 +31,12 @@
         else if (typeof navigation === 'undefined' || navigation == false || thumbnails.length > 0) {
           sliderArgs.pageDots = false;
         }
+
         // Adjust styling before slider init.
         $(this).addClass('flickity');
         $(this).flickity(sliderArgs);
-        var flickityData = $(this).data('flickity');
+
+        const flickityData = $(this).data('flickity');
         if (thumbnails.length > 0) {
           const thumbnailsArgs = {
             asNavFor: element,
@@ -66,6 +72,7 @@
       });
     }
 
+    // Adds lightbox functionality to product gallery.
     if (typeof $.fn.lightGallery === 'function') {
       $('.js-gallerya-lightbox').lightGallery({
         thumbnail: true,
@@ -81,8 +88,10 @@
       });
     }
 
+    // Adds thumbnails slider to product gallery in product detail page.
     if ($('.js-gallerya-product-thumbnail-slider').length > 0 && typeof $.fn.flickity === 'function') {
       const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider').parent().find('.flex-control-thumbs').first();
+
       if (!$thumbnailSliderEl.length) {
         return;
       }
@@ -101,6 +110,7 @@
       const thumbnailSliderWidth = $thumbnailSliderEl.width();
       const maxCols = 7;
       let noCols = 4;
+
       if (initialImgsWidth > 0 && thumbnailSliderWidth > initialImgsWidth) {
         while (((thumbnailSliderWidth - (2 * thumbnailSliderMargin)) - (thumbnailSpacingUnit * noCols)) / (noCols + 1) >= initialImgsWidth) {
           noCols++;
@@ -133,7 +143,7 @@
         // Get the index of the variation thumbnail in the thumbnail slider.
         const thumbnailIndex = $thumbnailSliderEl.find('img[src="' + variation.image.gallery_thumbnail_src + '"]').parent().index();
         // Select the variation thumbnail in the thumbnail slider.
-        $thumbnailSlider.flickity('select', thumbnailIndex);
+        $thumbnailSlider.flickity('selectCell', thumbnailIndex);
       });
     }
     else {
