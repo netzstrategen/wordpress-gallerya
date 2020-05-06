@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
   $(document).ready(function () {
 
     // Adds slide navigation through variation thumbnails for variable products
@@ -6,7 +6,7 @@
     if ($('.js-gallerya-slider').length > 0 && typeof $.fn.flickity === 'function') {
       const arrowShape = 'M85,50.36033a2.72075,2.72075,0,0,0-2.74945-2.68906H24.01177L47.61119,24.59022a2.65667,2.65667,0,0,0,0-3.80232,2.79411,2.79411,0,0,0-3.88955,0L15.80559,48.09077a2.64614,2.64614,0,0,0,0,3.80232L43.729,79.21211a2.79185,2.79185,0,0,0,3.88771,0,2.64613,2.64613,0,0,0,0-3.80233L24.756,53.04939h57.4946A2.72075,2.72075,0,0,0,85,50.36033Z';
 
-      $('.js-gallerya-slider').each(function(index, element) {
+      $('.js-gallerya-slider').each(function (index, element) {
         const galleryaSlider = $(this).closest('.gallerya--slider, .gallerya--product-variation-slider');
         const navigation = galleryaSlider.data('gallerya-navigation');
         const pageDots = galleryaSlider.data('galleryaPageDots');
@@ -63,7 +63,7 @@
         }
       });
 
-      $('.woocommerce-loop-product__link').on('click', function(e) {
+      $('.woocommerce-loop-product__link').on('click', function (e) {
         // Prevent clicks onto slider arrows to bubble through to wrapping product link.
         if ($(e.target).closest('.flickity-prev-next-button').length !== 0){
           event.stopPropagation();
@@ -88,7 +88,7 @@
       });
     }
 
-    // Adds thumbnails slider to product gallery in product detail page.
+    // Adds thumbnails slider to product gallery on product detail page.
     if ($('.js-gallerya-product-thumbnail-slider').length > 0 && typeof $.fn.flickity === 'function') {
       const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider').parent().find('.flex-control-thumbs').first();
 
@@ -125,32 +125,66 @@
       // Add video player and video thumbnail to the product gallery.
       $thumbnailSliderEl
         .addClass('flickity')
-        .on('ready.flickity', function() {
+        .on('ready.flickity', function () {
           setProductGalleryVideoSlide();
         })
-        .on('settle.flickity', function() {
+        .on('settle.flickity', function () {
           setProductGalleryVideoThumbnail();
         })
-        .on('staticClick.flickity', function(event, pointer, cellElement, cellIndex) {
+        .on('staticClick.flickity', function (event, pointer, cellElement, cellIndex) {
           if ($(cellElement).hasClass('slider-thumb-video')) {
             setVideoPlayerUrl(cellIndex);
           }
         });
+      // Initialise the thumbnail slider.
       const $thumbnailSlider = $thumbnailSliderEl.flickity(thumbnailSliderArgs);
+      const $singleVariation = $('.single_variation_wrap');
+      // Initially no slide is hidden.
+      $thumbnailSliderEl.hiddenSlides = 0;
 
-      // Sync thumbnail slider with gallery image changes triggered through the choice of a product variation.
-      $('.single_variation_wrap').on('show_variation', function (event, variation) {
+      // Reacts to product variation selection.
+      $singleVariation.on('show_variation', function (event, variation) {
+        restoreSliderThumbs($thumbnailSliderEl);
+        // If selected variation has its own images gallery, only show those
+        // and hide any other thumbnails.
+        const productGallery = product_variation_images.gallery;
+        const selectedVariationImages = product_variation_images[variation.variation_id];
+        if (selectedVariationImages.length > 1) {
+          $thumbnailSliderEl.find('img').each(function () {
+            const $this = $(this);
+            const thumb = $this.attr('src');
+            // Hide the image if its not in the selected variation gallery.
+            if (!selectedVariationImages.includes(thumb)) {
+              $this.parent().hide();
+              $thumbnailSliderEl.hiddenSlides++;
+            }
+          });
+          if ($thumbnailSliderEl.hiddenSlides) {
+            $thumbnailSliderEl.flickity('reposition');
+          }
+        }
         // Get the index of the variation thumbnail in the thumbnail slider.
-        const thumbnailIndex = $thumbnailSliderEl.find('img[src="' + variation.image.gallery_thumbnail_src + '"]').parent().index();
+        const thumbnailIndex = $thumbnailSliderEl
+          .find('img[src="' + variation.image.gallery_thumbnail_src + '"]')
+          .parent()
+          .index();
         // Select the variation thumbnail in the thumbnail slider.
-        $thumbnailSlider.flickity('selectCell', thumbnailIndex);
+        $thumbnailSliderEl.flickity('selectCell', thumbnailIndex);
+      });
+
+      // Reacts to product variation selection reset.
+      $singleVariation.on('hide_variation', function (event) {
+        if ($thumbnailSliderEl.hiddenSlides) {
+          restoreSliderThumbs($thumbnailSliderEl);
+          $thumbnailSliderEl.hiddenSlides = 0;
+        }
       });
     }
     else {
       // Flickity is not active.
       setProductGalleryVideoSlide();
       setProductGalleryVideoThumbnail();
-      $('.single-product-summary .flex-control-nav li').on('click', function() {
+      $('.single-product-summary .flex-control-nav li').on('click', function () {
         const $this = $(this);
         if ($this.hasClass('slider-thumb-video')) {
           setVideoPlayerUrl($this.index());
@@ -166,7 +200,7 @@
      * product image with the variation one, but not the srcset of the wrapping
      * anchor element.
      */
-    $('.variations_form').on('woocommerce_variation_has_changed', function() {
+    $('.variations_form').on('woocommerce_variation_has_changed', function () {
       const firstImage = $('.woocommerce-product-gallery__image img').eq(0);
       if (firstImage.length) {
         firstImage.parents('[data-srcset]').attr('data-srcset', firstImage.attr('srcset'));
@@ -237,6 +271,21 @@
       const $videoPlayer = $(slide).find('iframe').first();
       if (!$videoPlayer.attr('src')) {
         $videoPlayer.attr('src', $(slide).data('video-url'));
+      }
+    }
+
+    /**
+     * Restores hidden slides in the given flickity slider.
+     *
+     * @param {object} $slider
+     *   jQuery object for the flickity slider.
+     */
+    function restoreSliderThumbs($slider) {
+      if ($slider.hiddenSlides) {
+        $slider.find('li').show();
+        $slider.flickity('reposition');
+        $slider.flickity('selectCell', 0);
+        $slider.hiddenSlides = 0;
       }
     }
 

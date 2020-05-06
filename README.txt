@@ -3,7 +3,7 @@ Contributors: netzstrategen, fabianmarz, juanlopez4691, lucapipolo, tha_sun
 Tags: gallery, galleries, image, images, photo, album, responsive, responsive gallery, image gallery, photo gallery, carousel, image carousel, slider, image slider, slideshow, lightbox, fullscreen, zoom, media, foto, fotos, thumbnail, thumbnails, video, video gallery, lightgallery, flickity, jquery
 Requires at least: 4.5
 Tested up to: 5.4
-Stable tag: 2.3.3
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,8 +24,15 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.4.0 =
+2020-05-25
+
+* Fixed product gallery video support compatibility with themes.
+* Added additional images to product variations gallery.
+* Refactored JS scripts.
+
 = 2.3.3 =
-2020-05-29
+2020-05-19
 
 * Fixed video thumbnail was not correctly added to the slider.
 * Fixed styling of video thumbnail.
