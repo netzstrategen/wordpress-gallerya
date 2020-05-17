@@ -112,37 +112,14 @@
         $thumbnailSliderEl.get(0).style.setProperty('--thumbnail-count', noCols);
       }
 
-      // Adjust styling before slider init.
+      // Add video player and video thumbnail to the product gallery.
       $thumbnailSliderEl
         .addClass('flickity')
-        .on('ready.flickity', function(event) {
-          // Video should be the second element in the product gallery.
-          const $galleryWraper = $('.sidebar-single-product .woocommerce-product-gallery__wrapper');
-          const $galleryElements = $galleryWraper.children('div');
-          if ($galleryElements.length <= 1) {
-            return;
-          }
-          const $firstGalleryElement = $galleryElements.first();
-          if ($firstGalleryElement.hasClass('has-video')) {
-            $firstGalleryElement.detach().insertAfter($galleryWraper.children('div').first());
-          }
+        .on('ready.flickity', function() {
+          setProductGalleryVideoSlide();
         })
-        .on('settle.flickity', function(event, index) {
-          // Insert the video thumbnail in the thumbs slider.
-          const $videoContent = $('.sidebar-single-product .gallerya__video-content');
-          if ($videoContent.length) {
-            const $sliderThumbs = $('.sidebar-single-product .flickity-slider li img');
-            // Insert the video thumb in second position, if posible.
-            const videoThumbPos = $sliderThumbs.length > 1 ? 1 : 0;
-            const videoThumbSrc = $videoContent.data('video-thumb');
-
-            $sliderThumb = $sliderThumbs.eq(videoThumbPos);
-            $sliderThumb
-              .attr('src', videoThumbSrc)
-              // Ensure lazy loaded image is the video thumbnail.
-              .attr('data-lazy-src',videoThumbSrc)
-              .parent().addClass('slider-thumb-video');
-          }
+        .on('settle.flickity', function() {
+          setProductGalleryVideoThumbnail();
         });
       const $thumbnailSlider = $thumbnailSliderEl.flickity(thumbnailSliderArgs);
 
@@ -153,6 +130,11 @@
         // Select the variation thumbnail in the thumbnail slider.
         $thumbnailSlider.flickity('select', thumbnailIndex);
       });
+    }
+    else {
+      // Flickity is not active.
+      setProductGalleryVideoSlide();
+      setProductGalleryVideoThumbnail();
     }
 
     /**
@@ -169,6 +151,52 @@
         firstImage.parents('[data-srcset]').attr('data-srcset', firstImage.attr('srcset'));
       }
     });
+
+    /**
+     * Swaps first and second slide of product gallery, if first is a video.
+     */
+    function setProductGalleryVideoSlide() {
+      // Video should be the second element in the product gallery.
+      const $galleryWraper = $('.single-product-summary .woocommerce-product-gallery__wrapper');
+      const $galleryElements = $galleryWraper.children('div');
+      if ($galleryElements.length <= 1) {
+        return;
+      }
+      const $firstGalleryElement = $galleryElements.first();
+      if ($firstGalleryElement.hasClass('has-video')) {
+        // Set video as second slide and ensure viewport heigth is correct.
+        $firstGalleryElement
+          .detach()
+          .insertAfter($galleryWraper.children('div').first())
+          .height($galleryElements.eq(1).height());
+      }
+    }
+
+    /**
+     * Swaps first and second thumbnail of product gallery, if first is a video.
+     */
+    function setProductGalleryVideoThumbnail() {
+      const $videoContent = $('.single-product-summary .gallerya__video-content').first();
+      // If there's no video content, exit.
+      if ($videoContent.length < 1) {
+        return;
+      }
+      const videoThumbSrc = $videoContent.data('video-thumb');
+      const $sliderThumbs = $('.single-product-summary .flex-control-nav li img');
+      // Video thumb should be the second element in the slider,
+      // unless there's only one slide.
+      const videoThumbPos = $sliderThumbs.length > 1 ? 1 : 0;
+      const videoThumb = $sliderThumbs.eq(videoThumbPos);
+      // Avoid switching thumbnails if second thumb is already the video.
+      if (videoThumb.attr('src') !== videoThumbSrc) {
+        $sliderThumbs.first().attr('src', videoThumb.attr('src'));
+        videoThumb
+          .attr('src', videoThumbSrc)
+          // Ensure lazy loaded image is the video thumbnail.
+          .attr('data-lazy-src', videoThumbSrc)
+          .parent().addClass('slider-thumb-video');
+      }
+    }
 
   });
 })(jQuery);
