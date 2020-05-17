@@ -64,7 +64,10 @@ class Video {
           $video_thumb = static::getVimeoThumb($product_id, $video_id);
         }
         ?>
-        <div class="woocommerce-product-gallery__image has-video gallerya__featured-content">
+        <div
+          class="woocommerce-product-gallery__image has-video gallerya__featured-content"
+          data-thumb="<?= $video_thumb; ?>"
+        >
           <div
             class="gallerya__video-content <?= $video_source ?>"
             data-video-thumb="<?= $video_thumb; ?>"
