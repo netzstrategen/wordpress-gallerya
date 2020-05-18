@@ -120,6 +120,11 @@
         })
         .on('settle.flickity', function() {
           setProductGalleryVideoThumbnail();
+        })
+        .on('staticClick.flickity', function(event, pointer, cellElement, cellIndex) {
+          if ($(cellElement).hasClass('slider-thumb-video')) {
+            setVideoPlayerUrl(cellIndex);
+          }
         });
       const $thumbnailSlider = $thumbnailSliderEl.flickity(thumbnailSliderArgs);
 
@@ -135,6 +140,12 @@
       // Flickity is not active.
       setProductGalleryVideoSlide();
       setProductGalleryVideoThumbnail();
+      $('.single-product-summary .flex-control-nav li').on('click', function() {
+        const $this = $(this);
+        if ($this.hasClass('slider-thumb-video')) {
+          setVideoPlayerUrl($this.index());
+        }
+      });
     }
 
     /**
@@ -195,6 +206,28 @@
           // Ensure lazy loaded image is the video thumbnail.
           .attr('data-lazy-src', videoThumbSrc)
           .parent().addClass('slider-thumb-video');
+      }
+    }
+
+    /**
+     * Sets the URL of the video slide referred by a video thumbnail.
+     *
+     * Initially we don't set video URL in the video slide iframe to avoid
+     * loading it if unless it is displayed.
+     * If the thumbnail clicked refers to a video slide, then we assign
+     * the video URL to the player iframe.
+     *
+     * @param {int} slideIndex
+     *   Index of the thumbnail and the slide in the product gallery.
+     */
+    function setVideoPlayerUrl(slideIndex) {
+      const slide = $('.single-product-summary .woocommerce-product-gallery__image').eq(slideIndex);
+      if (!$(slide).hasClass('has-video')) {
+        return;
+      }
+      const $videoPlayer = $(slide).find('iframe').first();
+      if (!$videoPlayer.attr('src')) {
+        $videoPlayer.attr('src', $(slide).data('video-url'));
       }
     }
 

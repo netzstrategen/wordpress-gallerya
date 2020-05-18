@@ -29,6 +29,9 @@ class Video {
   /**
    * Adds video player to single product gallery.
    *
+   * Video URL is not assign to the player iframe until it has to be displayed,
+   * to avoid loading the player unless needed.
+   *
    * @implements woocommerce_single_product_image_thumbnail_html
    */
   public static function replaceFeaturedImageWithVideo($html, $thumbnail_id) {
@@ -67,14 +70,15 @@ class Video {
         <div
           class="woocommerce-product-gallery__image has-video gallerya__featured-content"
           data-thumb="<?= $video_thumb; ?>"
+          data-video-url="<?= $video_url; ?>"
         >
           <div
             class="gallerya__video-content <?= $video_source ?>"
             data-video-thumb="<?= $video_thumb; ?>"
           >
             <iframe
-              id="video_<?php echo $product_id; ?>"
-              src="<?php echo $video_url; ?>"
+              id="video_<?= $product_id; ?>"
+              src=""
               frameborder="0"
               allow="autoplay; fullscreen"
               allowfullscreen
