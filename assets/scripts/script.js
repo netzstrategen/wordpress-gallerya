@@ -178,18 +178,17 @@
      */
     function setProductGalleryVideoSlide() {
       // Video should be the second element in the product gallery.
-      const $galleryWraper = $('.single-product-summary .woocommerce-product-gallery__wrapper');
+      const $galleryWraper = $('.woocommerce-product-gallery .woocommerce-product-gallery__wrapper');
       const $galleryElements = $galleryWraper.children('div');
       if ($galleryElements.length <= 1) {
         return;
       }
       const $firstGalleryElement = $galleryElements.first();
       if ($firstGalleryElement.hasClass('has-video')) {
-        // Set video as second slide and ensure viewport heigth is correct.
+        // Set video as second slide.
         $firstGalleryElement
           .detach()
-          .insertAfter($galleryWraper.children('div').first())
-          .height($galleryElements.eq(1).height());
+          .insertAfter($galleryWraper.children('div').first());
       }
     }
 
@@ -197,13 +196,13 @@
      * Swaps first and second thumbnail of product gallery, if first is a video.
      */
     function setProductGalleryVideoThumbnail() {
-      const $videoContent = $('.single-product-summary .gallerya__video-content').first();
+      const $videoContent = $('.woocommerce-product-gallery .gallerya__video-content').first();
       // If there's no video content, exit.
       if ($videoContent.length < 1) {
         return;
       }
       const videoThumbSrc = $videoContent.data('video-thumb');
-      const $sliderThumbs = $('.single-product-summary .flex-control-nav li img');
+      const $sliderThumbs = $('.flex-control-nav li img');
       // Video thumb should be the second element in the slider,
       // unless there's only one slide.
       const videoThumbPos = $sliderThumbs.length > 1 ? 1 : 0;
@@ -231,7 +230,7 @@
      *   Index of the thumbnail and the slide in the product gallery.
      */
     function setVideoPlayerUrl(slideIndex) {
-      const slide = $('.single-product-summary .woocommerce-product-gallery__image').eq(slideIndex);
+      const slide = $('.woocommerce-product-gallery .woocommerce-product-gallery__image').eq(slideIndex);
       if (!$(slide).hasClass('has-video')) {
         return;
       }
