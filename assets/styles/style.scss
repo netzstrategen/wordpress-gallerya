@@ -528,10 +528,11 @@ $color-secondary: #c4c4c4;
 
         iframe {
           position: absolute;
-          top: 0;
+          top: 50%;
           left: 0;
           width: 100%;
-          height: 100%;
+          height: 56.25%;
+          transform: translateY(-50%);
         }
       }
     }
