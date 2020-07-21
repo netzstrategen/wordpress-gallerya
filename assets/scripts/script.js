@@ -142,6 +142,15 @@
       // Initially no slide is hidden.
       $thumbnailSliderEl.hiddenSlides = 0;
 
+      // Selects the slide in the product gallery when the user hovers over the
+      // thumbnail images.
+      const productGallery = $('.woocommerce-product-gallery').data('flexslider');
+      if (productGallery) {
+        $thumbnailSlider.on('mouseover', 'li', function (event) {
+          productGallery.flexslider($(event.currentTarget).index());
+        });
+      }
+
       // Reacts to product variation selection.
       $singleVariation.on('show_variation', function (event, variation) {
         restoreSliderThumbs($thumbnailSliderEl);
