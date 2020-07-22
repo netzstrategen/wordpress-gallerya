@@ -24,6 +24,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.5.0 =
+2020-06-22
+
+* Updated thumbnails to select the product gallery image on mouseover.
+
 = 2.4.0 =
 2020-05-25
 
