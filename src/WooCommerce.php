@@ -139,7 +139,7 @@ class WooCommerce {
     if (!$product || $product->get_type() !== 'variable') {
       return $value;
     }
-    return array_merge($value, static::getProductVariationsImages($product->get_id()));
+    return array_unique(array_merge($value, static::getProductVariationsImages($product->get_id())));
   }
 
   /**
@@ -243,7 +243,7 @@ class WooCommerce {
     $results = array_map('maybe_unserialize',
       $wpdb->get_col($wpdb->prepare(
         "
-        SELECT pm.meta_value
+        SELECT DISTINCT pm.meta_value
         FROM wp_postmeta pm
         INNER JOIN wp_posts p ON p.ID = pm.post_id AND p.post_parent = %d
         WHERE pm.meta_key IN ('_thumbnail_id', '_gallerya_attachment_ids')
