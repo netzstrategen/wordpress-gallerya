@@ -24,6 +24,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.6.0 =
+2020-07-30
+
+* Fixed thumbnail slider prev/next arrows shown even when disabled because not enough thumbnails.
+
 = 2.5.0 =
 2020-06-22
 
