@@ -122,6 +122,10 @@
         $thumbnailSliderEl.get(0).style.setProperty('--thumbnail-count', noCols);
       }
 
+      // If less thumbs than slider viewport, don't show prev/next arrows.
+      const numberOfThumbnails = $thumbnailSliderEl.find('li').length;
+      thumbnailSliderArgs.prevNextButtons = numberOfThumbnails > noCols;
+
       // Add video player and video thumbnail to the product gallery.
       $thumbnailSliderEl
         .addClass('flickity')
