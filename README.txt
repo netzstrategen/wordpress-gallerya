@@ -24,6 +24,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.6.2 =
+2020-09-01
+
+* Fixed pinch to zoom image was not working on Android devices.
+
 = 2.6.1 =
 2020-08-04
 

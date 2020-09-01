@@ -1,3 +1,23 @@
+/*! lightgallery - v1.4.0 - 2017-06-04
+* http://sachinchoolur.github.io/lightGallery/
+* Copyright (c) 2017 Sachin N; Licensed GPLv3 */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define(['jquery'], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(root["jQuery"]);
+  }
+}(this, function ($) {
+
 (function() {
     'use strict';
 
@@ -1090,11 +1110,15 @@
         var startCoords = 0;
         var endCoords = 0;
         var isMoved = false;
+        var isPinch = false;
 
         if (_this.s.enableSwipe && _this.isTouch && _this.doCss()) {
 
             _this.$slide.on('touchstart.lg', function(e) {
-                if (!_this.$outer.hasClass('lg-zoomed') && !_this.lgBusy) {
+                if (e.originalEvent.touches.length === 2) {
+                    isPinch = true;
+                    _this.modules.zoom.pinchStart(e.originalEvent);
+                } else if (!_this.$outer.hasClass('lg-zoomed') && !_this.lgBusy) {
                     e.preventDefault();
                     _this.manageSwipeClass();
                     startCoords = e.originalEvent.targetTouches[0].pageX;
@@ -1102,7 +1126,9 @@
             });
 
             _this.$slide.on('touchmove.lg', function(e) {
-                if (!_this.$outer.hasClass('lg-zoomed')) {
+                if (isPinch && e.originalEvent.touches.length === 2) {
+                    _this.modules.zoom.pinchMove(e.originalEvent);
+                } else if (!_this.$outer.hasClass('lg-zoomed')) {
                     e.preventDefault();
                     endCoords = e.originalEvent.targetTouches[0].pageX;
                     _this.touchMove(startCoords, endCoords);
@@ -1111,7 +1137,9 @@
             });
 
             _this.$slide.on('touchend.lg', function() {
-                if (!_this.$outer.hasClass('lg-zoomed')) {
+                if (isPinch) {
+                    isPinch = false;
+                } else if (!_this.$outer.hasClass('lg-zoomed')) {
                     if (isMoved) {
                         isMoved = false;
                         _this.touchEnd(endCoords - startCoords);
@@ -1339,3 +1367,6 @@
     $.fn.lightGallery.modules = {};
 
 })();
+
+
+}));

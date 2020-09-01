@@ -9,9 +9,6 @@
     "flickity.min.css": {
       "bower": ["flickity"]
     },
-    "lightgallery.min.js": {
-      "bower": ["lightgallery"]
-    },
     "lightgallery.min.css": {
       "bower": ["lightgallery"]
     },
@@ -37,6 +34,11 @@
     },
     "libs.min.css": {
       "main": true
+    },
+    "lightgallery.min.js": {
+      "files": [
+        "scripts/lightgallery.js"
+      ]
     }
   }
 }
