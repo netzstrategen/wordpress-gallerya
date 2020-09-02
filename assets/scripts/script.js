@@ -88,6 +88,10 @@
       animationEffect: 'zoom',
       animationDuration: 250,
       transitionEffect: 'slide',
+      thumbs: {
+        autoStart: false,
+        axis: 'x'
+      },
       lang: fancyboxTranslations.language,
       i18n: {
         de: {
