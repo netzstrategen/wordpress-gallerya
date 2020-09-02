@@ -3,6 +3,12 @@
     "unused-because-wordpress.js": {
       "bower": ["jquery"]
     },
+    "jquery.fancybox.min.js": {
+      "bower": ["fancybox"]
+    },
+    "jquery.fancybox.min.css": {
+      "bower": ["fancybox"]
+    },
     "flickity.min.js": {
       "bower": ["flickity"]
     },

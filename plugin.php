@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Gallerya
-  Version: 2.6.1
+  Version: 2.7.0
   Text Domain: gallerya
   Description: Change the native post gallery to be displayed as a slider with lightbox support.
   Author: netzstrategen
@@ -32,6 +32,7 @@ function classloader($class) {
 }
 spl_autoload_register(__NAMESPACE__ . '\classloader');
 
+add_action('plugins_loaded', __NAMESPACE__ . '\Plugin::loadTextdomain');
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_filter('woocommerce_get_settings_pages', __NAMESPACE__ . '\Settings::woocommerce_get_settings_pages');
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
