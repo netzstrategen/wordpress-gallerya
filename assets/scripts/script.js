@@ -81,6 +81,7 @@
       buttons: [
         'zoom',
         'fullScreen',
+        'share',
         'download',
         'thumbs',
         'close'
