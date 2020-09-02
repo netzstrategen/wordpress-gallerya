@@ -12,30 +12,13 @@
   ],
   "private": true,
   "dependencies": {
-    "flickity": "2.1.0",
-    "lightgallery": "1.4.0"
+    "flickity": "2.1.0"
   },
   "overrides": {
     "flickity": {
       "main": [
         "./dist/flickity.pkgd.min.js",
         "./dist/flickity.min.css"
-      ]
-    },
-    "lightgallery": {
-      "main": [
-        "./demo/js/lightgallery.js",
-        "./demo/js/lg-thumbnail.min.js",
-        "./demo/js/lg-zoom.min.js",
-        "./dist/css/lightgallery.min.css",
-        "./dist/fonts/lg.eot",
-        "./dist/fonts/lg.svg",
-        "./dist/fonts/lg.ttf",
-        "./dist/fonts/lg.woff",
-        "./dist/img/loading.gif",
-        "./dist/img/video-play.png",
-        "./dist/img/vimeo-play.png",
-        "./dist/img/youtube-play.png"
       ]
     }
   }

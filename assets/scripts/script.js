@@ -72,22 +72,6 @@
       });
     }
 
-    // Adds lightbox functionality to product gallery.
-    if (typeof $.fn.lightGallery === 'function') {
-      $('.js-gallerya-lightbox').lightGallery({
-        thumbnail: true,
-        showThumbByDefault: false,
-        subHtmlSelectorRelative: true,
-        selector: '.gallerya__image > a'
-      });
-      $('.woocommerce-product-gallery').lightGallery({
-        thumbnail: true,
-        showThumbByDefault: false,
-        subHtmlSelectorRelative: true,
-        selector: '.woocommerce-product-gallery__image > a'
-      });
-    }
-
     // Adds thumbnails slider to product gallery on product detail page.
     if ($('.js-gallerya-product-thumbnail-slider').length > 0 && typeof $.fn.flickity === 'function') {
       const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider').parent().find('.flex-control-thumbs').first();
@@ -204,21 +188,6 @@
         }
       });
     }
-
-    /**
-     * Modifies data-srcset of product gallery first image on variation change.
-     *
-     * lightGallery gets the srcset from the anchor element that wraps the
-     * image. On variation change, WooCommerce changes the srcset of the first
-     * product image with the variation one, but not the srcset of the wrapping
-     * anchor element.
-     */
-    $('.variations_form').on('woocommerce_variation_has_changed', function () {
-      const firstImage = $('.woocommerce-product-gallery__image img').eq(0);
-      if (firstImage.length) {
-        firstImage.parents('[data-srcset]').attr('data-srcset', firstImage.attr('srcset'));
-      }
-    });
 
     /**
      * Swaps first and second slide of product gallery, if first is a video.
