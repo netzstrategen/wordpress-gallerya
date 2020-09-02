@@ -99,9 +99,27 @@ class Plugin {
    */
   public static function wp_enqueue_scripts() {
     wp_enqueue_style('flickity', static::getBaseUrl() . '/dist/styles/flickity.min.css');
+    wp_enqueue_style('fancybox', static::getBaseUrl() . '/dist/styles/jquery.fancybox.min.css');
     wp_enqueue_style('gallerya-custom', static::getBaseUrl() . '/dist/styles/style.min.css');
 
     wp_enqueue_script('flickity', static::getBaseUrl() . '/dist/scripts/flickity.min.js', ['jquery'], '2.0.9', TRUE);
+    wp_enqueue_script('fancybox', static::getBaseUrl() . '/dist/scripts/jquery.fancybox.min.js', ['jquery'], '3.5.7', TRUE);
+    wp_localize_script('fancybox', 'fancyboxTranslations', [
+      'language' => strstr(get_bloginfo('language'), '-', TRUE),
+      'de' => [
+        'close' => __('Close', Plugin::L10N),
+        'next' => __('Next', Plugin::L10N),
+        'prev' => __('Previous', Plugin::L10N),
+        'error' => __('The requested content cannot be loaded. <br/> Please try again later.', Plugin::L10N),
+        'play_start' => __('Start slideshow', Plugin::L10N),
+        'play_stop' => __('Pause slideshow', Plugin::L10N),
+        'full_screen' => __('Full screen', Plugin::L10N),
+        'thumbs' => __('Thumbnails', Plugin::L10N),
+        'download' => __('Download', Plugin::L10N),
+        'share' => __('Share', Plugin::L10N),
+        'zoom' => __('Zoom', Plugin::L10N),
+      ]
+    ]);
     wp_enqueue_script('gallerya-custom', static::getBaseUrl() . '/dist/scripts/script.min.js', [], FALSE, TRUE);
   }
 
@@ -176,6 +194,13 @@ class Plugin {
       }
       throw new \InvalidArgumentException("Missing template '$template_pathname'");
     }
+  }
+
+  /**
+   * Loads the plugin textdomain.
+   */
+  public static function loadTextdomain() {
+    load_plugin_textdomain(static::L10N, FALSE, static::L10N . '/languages/');
   }
 
   /**

@@ -1,0 +1,138 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gallerya\n"
+"POT-Creation-Date: 2020-09-04 11:13+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joan López <joan@netzstrategen.com>\n"
+"Language-Team: netzstrategen\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: src/Admin.php:71
+msgid "Additional images"
+msgstr ""
+
+#: src/Admin.php:74
+msgid "Add image"
+msgstr ""
+
+#: src/Admin.php:87 src/Admin.php:124
+msgid "Nonce value cannot be verified."
+msgstr ""
+
+#: src/Plugin.php:110
+msgid "Close"
+msgstr "Schliessen"
+
+#: src/Plugin.php:111
+msgid "Next"
+msgstr "Weiter"
+
+#: src/Plugin.php:112
+msgid "Previous"
+msgstr "Zurück"
+
+#: src/Plugin.php:113
+msgid "The requested content cannot be loaded. <br/> Please try again later."
+msgstr "Die angeforderten Daten konnten nicht geladen werden. <br/> Bitte versuchen Sie es später nochmal."
+
+#: src/Plugin.php:114
+msgid "Start slideshow"
+msgstr "Diaschau starten"
+
+#: src/Plugin.php:115
+msgid "Pause slideshow"
+msgstr "Diaschau beenden"
+
+#: src/Plugin.php:116
+msgid "Full screen"
+msgstr "Vollbild"
+
+#: src/Plugin.php:117
+msgid "Thumbnails"
+msgstr "Vorschaubilder"
+
+#: src/Plugin.php:118
+msgid "Download"
+msgstr "Herunterladen"
+
+#: src/Plugin.php:119
+msgid "Share"
+msgstr "Teilen"
+
+#: src/Plugin.php:120
+msgid "Zoom"
+msgstr "Maßstab"
+
+#: src/Settings.php:44
+msgid "Gallerya"
+msgstr ""
+
+#: src/Video.php:180
+msgid "Video ID"
+msgstr ""
+
+#: src/Video.php:181
+msgid "ID of video for Vimeo or YouTube"
+msgstr ""
+
+#: src/Video.php:186
+msgid "Video source"
+msgstr ""
+
+#: src/Video.php:188
+msgid "Please select"
+msgstr ""
+
+#: src/Video.php:196
+msgid "Display video"
+msgstr ""
+
+#: src/Video.php:209
+msgid "Videos"
+msgstr ""
+
+#: src/WooCommerce.php:23
+msgid "Product thumbnails slider settings"
+msgstr ""
+
+#: src/WooCommerce.php:28
+msgid "Enable thumbnails slider for all product image galleries"
+msgstr ""
+
+#: src/WooCommerce.php:33
+msgid "Use bullets instead of thumbnails"
+msgstr ""
+
+#: src/WooCommerce.php:41
+msgid "Product variation slider settings"
+msgstr ""
+
+#: src/WooCommerce.php:46
+msgid "Enable thumbnails slider on product listing pages"
+msgstr ""
+
+#: templates/settings.php:9
+msgid "Layout"
+msgstr ""
+
+#: templates/settings.php:11
+#, php-format
+msgid "- Default (%s) -"
+msgstr ""
+
+#: templates/settings.php:12
+msgid "Slider"
+msgstr ""
+
+#: templates/settings.php:13
+msgid "Grid"
+msgstr ""
+
+#: templates/settings.php:14
+msgid "Grid slider"
+msgstr ""

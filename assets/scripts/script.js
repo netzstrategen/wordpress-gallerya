@@ -72,6 +72,42 @@
       });
     }
 
+    // Adds lightbox functionality to product gallery.
+    $().fancybox({
+      selector : '.js-gallerya-lightbox .gallerya__image > a, .woocommerce-product-gallery .woocommerce-product-gallery__image > a',
+      closeExisting: false,
+      loop: true,
+      keyboard: true,
+      buttons: [
+        'zoom',
+        'fullScreen',
+        'download',
+        'thumbs',
+        'close'
+      ],
+      animationEffect: 'zoom',
+      animationDuration: 250,
+      transitionEffect: 'slide',
+      lang: fancyboxTranslations.language,
+      i18n: {
+        de: {
+          CLOSE: fancyboxTranslations.de.close,
+          NEXT: fancyboxTranslations.de.next,
+          PREV: fancyboxTranslations.de.prev,
+          ERROR: fancyboxTranslations.de.error,
+          PLAY_START: fancyboxTranslations.de.play_start,
+          PLAY_STOP: fancyboxTranslations.de.play_stop,
+          FULL_SCREEN: fancyboxTranslations.de.full_screen,
+          THUMBS: fancyboxTranslations.de.thumbs,
+          DOWNLOAD: fancyboxTranslations.de.download,
+          SHARE: fancyboxTranslations.de.share,
+          ZOOM: fancyboxTranslations.de.zoom
+        }
+      }
+    });
+
+    console.dir(fancyboxTranslations.de);
+
     // Adds thumbnails slider to product gallery on product detail page.
     if ($('.js-gallerya-product-thumbnail-slider').length > 0 && typeof $.fn.flickity === 'function') {
       const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider').parent().find('.flex-control-thumbs').first();

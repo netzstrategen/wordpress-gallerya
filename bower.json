@@ -12,13 +12,20 @@
   ],
   "private": true,
   "dependencies": {
-    "flickity": "2.1.0"
+    "flickity": "2.1.0",
+    "fancybox": "3.5.7"
   },
   "overrides": {
     "flickity": {
       "main": [
         "./dist/flickity.pkgd.min.js",
         "./dist/flickity.min.css"
+      ]
+    },
+    "fancybox": {
+      "main": [
+        "./dist/jquery.fancybox.min.js",
+        "./dist/jquery.fancybox.min.css"
       ]
     }
   }

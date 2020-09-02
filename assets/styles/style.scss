@@ -416,6 +416,28 @@ $color-secondary: #c4c4c4;
   }
 }
 
+// Fancybox thumbnails stripe styling.
+.fancybox-thumbs {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: auto;
+  height: 95px;
+  padding: 10px 10px 5px 10px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.fancybox-show-thumbs .fancybox-inner {
+  right: 0;
+  bottom: 95px;
+}
+
+.fancybox-thumbs__list {
+  margin: 0 auto;
+}
+
 // Flickity WooCommerce Compatibility
 .woocommerce {
   .product {
