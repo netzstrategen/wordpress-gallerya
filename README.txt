@@ -24,6 +24,19 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.7.0 =
+2020-09-04
+
+* Activated social sharing from lightbox popup.
+* Fixed position of lightbox thumbnails.
+* Added fancybox library.
+* Removed lightgallery.
+
+= 2.6.1 =
+2020-08-04
+
+* Fixed product variations images were duplicated.
+
 = 2.6.0 =
 2020-07-30
 
