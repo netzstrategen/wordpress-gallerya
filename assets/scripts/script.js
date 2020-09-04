@@ -111,8 +111,6 @@
       }
     });
 
-    console.dir(fancyboxTranslations.de);
-
     // Adds thumbnails slider to product gallery on product detail page.
     if ($('.js-gallerya-product-thumbnail-slider').length > 0 && typeof $.fn.flickity === 'function') {
       const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider').parent().find('.flex-control-thumbs').first();
