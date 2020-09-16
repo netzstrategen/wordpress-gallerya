@@ -259,7 +259,7 @@ class WooCommerce {
       if (is_array($result)) {
         $images = array_merge($images, $result);
       }
-      else {
+      elseif ($result) {
         $images[] = $result;
       }
     }
