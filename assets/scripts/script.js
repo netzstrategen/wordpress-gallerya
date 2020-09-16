@@ -66,7 +66,7 @@
       $('.woocommerce-loop-product__link').on('click', function (e) {
         // Prevent clicks onto slider arrows to bubble through to wrapping product link.
         if ($(e.target).closest('.flickity-prev-next-button').length !== 0){
-          event.stopPropagation();
+          e.stopPropagation();
           return false;
         }
       });
