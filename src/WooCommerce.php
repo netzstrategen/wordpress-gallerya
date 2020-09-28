@@ -319,7 +319,6 @@ class WooCommerce {
       // Avoid calling $product->get_available_variations() as this would fully
       // load and render all of the product variations.
       $variation_ids = $product->get_visible_children();
-      $attachment_ids = [];
 
       if (count($variation_ids)) {
         $placeholders = implode(',', array_fill(0, count($variation_ids), '%d'));
