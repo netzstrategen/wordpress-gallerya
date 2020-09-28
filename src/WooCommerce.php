@@ -130,7 +130,7 @@ class WooCommerce {
     $image_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', TRUE);
     $caption = apply_filters('gallerya/image_caption', $image_alt ?: get_the_title($thumbnail_id), $thumbnail_id);
 
-    return preg_replace('/(<a\s+)/i', '<a data-caption="' . $caption . '" data-srcset="' . $srcset . '" data-sizes="' . $srcsizes . '" ', $html);
+    return preg_replace('/(<a\s+)/i', '<a data-caption="' . esc_attr($caption) . '" data-srcset="' . $srcset . '" data-sizes="' . $srcsizes . '" ', $html);
   }
 
   /**
