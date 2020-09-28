@@ -127,7 +127,10 @@ class WooCommerce {
 
     $srcset = wp_get_attachment_image_srcset($thumbnail_id, 'shop_single');
     $srcsizes = wp_get_attachment_image_sizes($thumbnail_id, 'full');
-    return preg_replace('/(<a\s+)/i', '<a data-caption="' . get_the_title($thumbnail_id) . '" data-srcset="' . $srcset . '" data-sizes="' . $srcsizes . '" ', $html);
+    $image_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', TRUE);
+    $caption = apply_filters('gallerya/image_caption', $image_alt ?: get_the_title($thumbnail_id), $thumbnail_id);
+
+    return preg_replace('/(<a\s+)/i', '<a data-caption="' . esc_attr($caption) . '" data-srcset="' . $srcset . '" data-sizes="' . $srcsizes . '" ', $html);
   }
 
   /**
