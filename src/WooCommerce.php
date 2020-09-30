@@ -250,8 +250,10 @@ class WooCommerce {
         "
         SELECT DISTINCT pm.meta_value
         FROM wp_postmeta pm
-        INNER JOIN wp_posts p ON p.ID = pm.post_id AND p.post_parent = %d
+        INNER JOIN wp_posts p ON p.ID = pm.post_id
         WHERE pm.meta_key IN ('_thumbnail_id', '_gallerya_attachment_ids')
+        AND p.post_parent = %d
+        AND p.post_status = 'publish'
         ",
         $product_id
       ))
