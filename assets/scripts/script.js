@@ -76,7 +76,7 @@
     $().fancybox({
       selector : '.js-gallerya-lightbox .gallerya__image > a, .woocommerce-product-gallery .woocommerce-product-gallery__image > a',
       closeExisting: false,
-      loop: true,
+      loop: false,
       keyboard: true,
       buttons: [
         'zoom',
@@ -177,6 +177,14 @@
           productGallery.flexslider($(event.currentTarget).index());
         });
       }
+
+      // Keep the thumbnails slider in sync with the lightbox navigation.
+      // When we jump to a previous/next slide, the corresponding thumbnail
+      // should also be selected and the slider repositioned.
+      $(document).on('afterShow.fb', function(e, instance, slide) {
+        productGallery.flexslider(slide.index);
+        $thumbnailSliderEl.flickity('selectCell', slide.index);
+      });
 
       // Reacts to product variation selection.
       $singleVariation.on('show_variation', function (event, variation) {
