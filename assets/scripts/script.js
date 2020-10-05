@@ -189,17 +189,17 @@
       // Reacts to product variation selection.
       $singleVariation.on('show_variation', function (event, variation) {
         restoreSliderThumbs($thumbnailSliderEl);
-        // If selected variation has its own images gallery, only show those
-        // and hide any other thumbnails.
+        // If selected variation has its own images gallery, lower the opacity
+        // of all other thumbnails.
         const productGallery = product_variation_images.gallery;
         const selectedVariationImages = product_variation_images[variation.variation_id];
         if (selectedVariationImages.length > 1) {
           $thumbnailSliderEl.find('img').each(function () {
             const $this = $(this);
             const thumb = $this.attr('src');
-            // Hide the image if its not in the selected variation gallery.
+            // Lower the opaciy of the image if its not in the selected variation gallery.
             if (!selectedVariationImages.includes(thumb)) {
-              $this.parent().hide();
+              $this.parent().css('opacity', 0.15);
               $thumbnailSliderEl.hiddenSlides++;
             }
           });
@@ -304,14 +304,14 @@
     }
 
     /**
-     * Restores hidden slides in the given flickity slider.
+     * Restores opacity of slides in the given flickity slider.
      *
      * @param {object} $slider
      *   jQuery object for the flickity slider.
      */
     function restoreSliderThumbs($slider) {
       if ($slider.hiddenSlides) {
-        $slider.find('li').show();
+        $slider.find('li').css('opacity', 1);
         $slider.flickity('reposition');
         $slider.flickity('selectCell', 0);
         $slider.hiddenSlides = 0;
