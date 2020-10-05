@@ -259,12 +259,17 @@ class WooCommerce {
     );
 
     $images = [];
+    $thumbs_count = 0;
     foreach ($results as $result) {
       if (is_array($result)) {
+        // Extra gallery images for the variation.
+        $thumbs_count = count($result);
         $images = array_merge($images, $result);
       }
       elseif ($result) {
-        $images[] = $result;
+        // Main variation image. Ensure it is added before the extra ones.
+        array_splice($images, -$thumbs_count, 0, $result);
+        $thumbs_count = 0;
       }
     }
 
