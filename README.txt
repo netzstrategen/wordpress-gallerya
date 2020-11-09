@@ -25,7 +25,7 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 == Changelog ==
 
 = 2.7.7 =
-2020-11-06
+2020-11-09
 
 * Fixed first product image showing blank square when a video is added.
 
