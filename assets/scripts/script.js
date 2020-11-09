@@ -196,7 +196,7 @@
         // If selected variation has its own images gallery, lower the opacity
         // of all other thumbnails.
         const productGallery = product_variation_images.gallery;
-        const selectedVariationImages = product_variation_images[variation.variation_id];
+        const selectedVariationImages = product_variation_images[variation.variation_id] || [];
         if (selectedVariationImages.length > 1) {
           $thumbnailSliderEl.find('img').each(function () {
             const $this = $(this);
