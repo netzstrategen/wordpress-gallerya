@@ -174,7 +174,11 @@
       const productGallery = $('.woocommerce-product-gallery').data('flexslider');
       if (productGallery) {
         $thumbnailSlider.on('mouseover', 'li', function (event) {
-          productGallery.flexslider($(event.currentTarget).index());
+          const target = $(event.currentTarget);
+          productGallery.flexslider(target.index());
+          if (target.hasClass('slider-thumb-video')) {
+            setVideoPlayerUrl(target.index());
+          }
         });
       }
 
@@ -242,16 +246,18 @@
     function setProductGalleryVideoSlide() {
       // Video should be the second element in the product gallery.
       const $galleryWraper = $('.woocommerce-product-gallery .woocommerce-product-gallery__wrapper');
-      const $galleryElements = $galleryWraper.children('div');
+      const $galleryElements = $galleryWraper
+        .children('.woocommerce-product-gallery__image');
       if ($galleryElements.length <= 1) {
         return;
       }
       const $firstGalleryElement = $galleryElements.first();
       if ($firstGalleryElement.hasClass('has-video')) {
         // Set video as second slide.
-        $firstGalleryElement
-          .detach()
-          .insertAfter($galleryWraper.children('div').first());
+        const firstImage = $galleryWraper
+          .children('.woocommerce-product-gallery__image:not(.has-video)')
+          .first();
+        $firstGalleryElement.detach().insertAfter(firstImage);
       }
     }
 
