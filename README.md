@@ -13,6 +13,19 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 ## Development
 
+Install dependencies:
+
+```bash
+npm install
+bower install
+```
+
+Build the assets and watch for changes:
+
+```bash
+npm run watch
+```
+
 NPM Commands
 
 | Command   | Description                   |
