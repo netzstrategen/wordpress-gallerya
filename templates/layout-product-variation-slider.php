@@ -18,7 +18,9 @@ $transparent_pixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAA
             'srcset' => $transparent_pixel,
             'data-flickity-lazyload-src' => wp_get_attachment_image_url($attachment_id, $slider_image_src),
             'data-flickity-lazyload-srcset' => wp_get_attachment_image_srcset($attachment_id, $slider_image_src),
-          ] : []) ?>
+          ] : [
+            'loading' => 'lazy',
+          ]) ?>
         </figure>
       </li>
     <?php endforeach; ?>
