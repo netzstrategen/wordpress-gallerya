@@ -151,7 +151,6 @@ class WooCommerce {
     $variations_images = static::getProductVariationsImages($product_id);
     // Prevent the main product image to appear duplicated, if it is also used
     // in some of the variations.
-    $product_id = $product->get_id();
     if ($product_image = get_post_thumbnail_id($product_id)) {
       $variations_images = array_diff($variations_images, [$product_image]);
     }
