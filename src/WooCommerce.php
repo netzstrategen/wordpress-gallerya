@@ -144,7 +144,19 @@ class WooCommerce {
     if (!$product || $product->get_type() !== 'variable') {
       return $value;
     }
-    return array_unique(array_merge($value, static::getProductVariationsImages($product->get_id())));
+
+    $product_id = $product->get_id();
+
+    // Retrieve all the variations images.
+    $variations_images = static::getProductVariationsImages($product_id);
+    // Prevent the main product image to appear duplicated, if it is also used
+    // in some of the variations.
+    $product_id = $product->get_id();
+    if ($product_image = get_post_thumbnail_id($product_id)) {
+      $variations_images = array_diff($variations_images, [$product_image]);
+    }
+
+    return array_unique(array_merge($value, $variations_images));
   }
 
   /**
