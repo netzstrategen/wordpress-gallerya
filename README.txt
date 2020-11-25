@@ -27,7 +27,7 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 = 2.7.10 =
 2020-11-25
 
-* Fixed main product image was duplicated if also used in a variation..
+* Fixed main product image was duplicated if also used in a variation.
 
 = 2.7.9 =
 2020-11-24
