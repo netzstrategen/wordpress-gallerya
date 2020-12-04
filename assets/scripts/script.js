@@ -76,7 +76,7 @@
     $().fancybox({
       selector : '.js-gallerya-lightbox .gallerya__image > a, .woocommerce-product-gallery .woocommerce-product-gallery__image > a',
       closeExisting: false,
-      loop: false,
+      loop: true,
       keyboard: true,
       buttons: [
         'zoom',
