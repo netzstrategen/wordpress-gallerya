@@ -93,6 +93,12 @@
         autoStart: false,
         axis: 'x'
       },
+      image: {
+        preload: true
+      },
+      iframe: {
+        preload: true,
+      },
       lang: fancyboxTranslations.language,
       i18n: {
         de: {
