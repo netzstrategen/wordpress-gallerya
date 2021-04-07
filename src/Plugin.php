@@ -180,6 +180,7 @@ class Plugin {
    */
   public static function renderTemplate(array $template_subpathnames, array $variables = []) {
     $template_pathname = locate_template($template_subpathnames, FALSE, FALSE);
+    $group_id = uniqid('gallerya-', true); // Used to "group" images when open.
     extract($variables, EXTR_SKIP | EXTR_REFS);
     if ($template_pathname !== '') {
       include $template_pathname;
