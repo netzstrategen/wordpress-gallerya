@@ -138,6 +138,7 @@ class Plugin {
     static::renderTemplate(['templates/layout-' . $layout . '.php'], [
       'images' => get_posts($args),
       'nav_count_min' => apply_filters('gallerya/nav_count_min', 6),
+      'group_id' => uniqid('gallerya-', TRUE),
     ]);
     $output = ob_get_clean();
     return $output;
