@@ -138,6 +138,7 @@ class Plugin {
     static::renderTemplate(['templates/layout-' . $layout . '.php'], [
       'images' => get_posts($args),
       'nav_count_min' => apply_filters('gallerya/nav_count_min', 6),
+      'group_id' => uniqid('gallerya-', TRUE),
     ]);
     $output = ob_get_clean();
     return $output;
@@ -180,7 +181,6 @@ class Plugin {
    */
   public static function renderTemplate(array $template_subpathnames, array $variables = []) {
     $template_pathname = locate_template($template_subpathnames, FALSE, FALSE);
-    $group_id = uniqid('gallerya-', true); // Used to "group" images when open.
     extract($variables, EXTR_SKIP | EXTR_REFS);
     if ($template_pathname !== '') {
       include $template_pathname;
