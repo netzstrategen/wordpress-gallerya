@@ -343,18 +343,16 @@ class WooCommerce {
       if (count($variation_ids)) {
         $placeholders = implode(',', array_fill(0, count($variation_ids), '%d'));
         $attachment_ids = array_filter(
-          array_unique(
-            array_merge(
-              $attachment_ids,
-              $wpdb->get_col(
-                $wpdb->prepare(
-                  "SELECT pm.meta_value AS attachment_id
-                  FROM wp_posts p
-                  INNER JOIN wp_postmeta pm ON pm.post_id = p.ID AND pm.meta_key = '_thumbnail_id'
-                  WHERE p.ID IN ($placeholders)
-                  ORDER BY p.menu_order ASC",
-                  $variation_ids
-                )
+          array_merge(
+            $attachment_ids,
+            $wpdb->get_col(
+              $wpdb->prepare(
+                "SELECT DISTINCT pm.meta_value AS attachment_id
+                FROM wp_posts p
+                INNER JOIN wp_postmeta pm ON pm.post_id = p.ID AND pm.meta_key = '_thumbnail_id'
+                WHERE p.ID IN ($placeholders)
+                ORDER BY p.menu_order ASC",
+                $variation_ids
               )
             )
           )
