@@ -350,7 +350,7 @@ class WooCommerce {
                 "SELECT pm.meta_value AS attachment_id
                 FROM wp_posts p
                 INNER JOIN wp_postmeta pm ON pm.post_id = p.ID AND pm.meta_key = '_thumbnail_id'
-                WHERE p.ID IN ($placeholders)
+                WHERE p.ID IN ($placeholders) AND pm.meta_value > 0
                 ORDER BY p.menu_order ASC",
                 $variation_ids
               )
