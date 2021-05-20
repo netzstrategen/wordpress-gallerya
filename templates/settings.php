@@ -18,7 +18,7 @@ $default_layout = apply_filters('gallerya/default_layout', Plugin::DEFAULT_LAYOU
 
 <script>
   jQuery(document).ready(function($) {
-    if (typeof _ !== 'function') {
+    if (typeof _ !== 'function' || typeof wp.media === 'undefined') {
       return;
     }
     _.extend(wp.media.gallery.defaults, {
