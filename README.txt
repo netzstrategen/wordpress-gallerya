@@ -24,8 +24,14 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.8.0 =
+2021-10-20
+
+* Added link to variation in product teaser slider.
+
 = 2.7.14 =
 2021-05-20
+
 * Fixed backend javascript error on advanced-bulk-editor plugin.
 
 = 2.7.13 =
