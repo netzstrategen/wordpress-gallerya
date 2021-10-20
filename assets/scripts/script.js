@@ -12,6 +12,7 @@
         const pageDots = galleryaSlider.data('galleryaPageDots');
         const thumbnails = galleryaSlider.find('.js-gallerya-thumbnail-slider');
         const count = galleryaSlider.find('[data-gallerya-count]');
+        const productLink = galleryaSlider.parents('a.woocommerce-loop-product__link');
         const sliderArgs = {
           cellAlign: 'left',
           contain: true,
@@ -35,6 +36,14 @@
         // Adjust styling before slider init.
         $(this).addClass('flickity');
         $(this).flickity(sliderArgs);
+
+        // Handle the slide changing to update the variant url
+        $(this).on('change.flickity', function (event, index) {
+          const variantURL = $(this).find('li.is-selected').data('gallerya-variant-permalink');
+          if (variantURL) {
+            productLink.prop('href', variantURL);
+          }
+        });
 
         const flickityData = $(this).data('flickity');
         if (thumbnails.length > 0) {

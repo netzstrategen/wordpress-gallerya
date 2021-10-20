@@ -358,12 +358,18 @@ class WooCommerce {
           )
         );
       }
+      // Include the main product link at the beginning.
+      $variation_permalinks = [$product->get_permalink()];
+      foreach ($variation_ids as $id) {
+        $variation_permalinks[] = get_permalink($id);
+      }
     }
 
     // Only render slider if there is more than one image.
     if (count($attachment_ids) > 1) {
       Plugin::renderTemplate(['templates/layout-product-variation-slider.php'], [
         'attachment_ids' => $attachment_ids,
+        'variation_permalinks' => $variation_permalinks ?? [],
       ]);
     }
     else {
