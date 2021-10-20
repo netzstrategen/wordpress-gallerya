@@ -11,7 +11,7 @@ $transparent_pixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAA
 <div class="gallerya gallerya--product-variation-slider" data-gallerya-page-dots="<?= (int) $show_page_dots ?>">
   <ul class="js-gallerya-slider">
     <?php foreach ($attachment_ids as $index => $attachment_id): ?>
-      <li>
+      <li data-gallerya-variant-permalink="<?= $variation_permalinks[$index] ?>">
         <figure class="gallerya__image">
           <?= wp_get_attachment_image($attachment_id, $slider_image_src, FALSE, $index ? [
             'src' => $transparent_pixel,
