@@ -12,6 +12,9 @@ namespace Netzstrategen\Gallerya;
  */
 class Video {
 
+  const SOURCE_YOUTUBE = 'youtube';
+  const SOURCE_VIMEO = 'vimeo';
+
   /**
    * TRUE when product featured image has been replaced with video.
    *
@@ -49,22 +52,26 @@ class Video {
       !static::$featuredImageReplaced
     ) {
       static::$featuredImageReplaced = TRUE;
-      $video_id = get_post_meta($product_id, '_' . Plugin::PREFIX . '_video_id', TRUE);
-      $video_source = get_post_meta($product_id, '_' . Plugin::PREFIX . '_video_source', TRUE);
+      $video_id = get_post_meta($product_id, '_' . Plugin::PREFIX . '_video_id', TRUE) ?: NULL;
+      $video_source = get_post_meta($product_id, '_' . Plugin::PREFIX . '_video_source', TRUE) ?: NULL;
 
-      if ($video_id && $video_source) {
+      if ($video_id && self::isValidSource($video_source)) {
         ob_start();
-        if ($video_source === 'youtube') {
-          $video_url = sprintf(
+        switch ($video_source){
+          case self::SOURCE_YOUTUBE:
+            $video_url = sprintf(
               'https://www.youtube-nocookie.com/embed/%s/?enablejsapi=1&origin=%s&rel=0',
               $video_id,
               get_site_url()
             );
-          $video_thumb = sprintf('https://img.youtube.com/vi/%s/mqdefault.jpg', $video_id);
-        }
-        elseif ($video_source === 'vimeo') {
-          $video_url = sprintf('https://player.vimeo.com/video/%s', $video_id);
-          $video_thumb = static::getVimeoThumb($product_id, $video_id);
+            $video_thumb = sprintf('https://img.youtube.com/vi/%s/mqdefault.jpg', $video_id);
+            $video_modal_url = sprintf('https://www.youtube.com/watch?v=%s', $video_id);
+            break;
+          case self::SOURCE_VIMEO:
+            $video_url = sprintf('https://player.vimeo.com/video/%s', $video_id);
+            $video_thumb = static::getVimeoThumb($product_id, $video_id);
+            $video_modal_url = sprintf('https://vimeo.com/%s', $video_id);
+            break;
         }
         ?>
         <div
@@ -72,6 +79,9 @@ class Video {
           data-thumb="<?= $video_thumb; ?>"
           data-video-url="<?= $video_url; ?>"
         >
+          <!-- To be used by the gallery light modal -->
+          <a data-fancybox href="<?=$video_modal_url?>"></a>
+
           <div
             class="gallerya__video-content <?= $video_source ?>"
             data-video-thumb="<?= $video_thumb; ?>"
@@ -91,6 +101,17 @@ class Video {
       }
     }
     return $html;
+  }
+
+  /**
+   * @param string|null $source
+   *  The video source stored
+   *
+   * @return bool
+   *  TRUE if the video source selected is supported
+   */
+  public static function isValidSource(?string $source): bool {
+    return isset($source) && in_array($source, [self::SOURCE_VIMEO, self::SOURCE_YOUTUBE]);
   }
 
   /**
