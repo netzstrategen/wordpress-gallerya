@@ -24,6 +24,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.8.2 =
+2021-11-24
+
+* Fixed no thumbnail on initial video slide.
+
 = 2.8.1 =
 2021-11-16
 
