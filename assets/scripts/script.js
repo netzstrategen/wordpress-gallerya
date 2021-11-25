@@ -273,6 +273,7 @@
           .children('.woocommerce-product-gallery__image:not(.has-video)')
           .first();
         $firstGalleryElement.detach().insertAfter(firstImage);
+        setVideoPlayerUrl(1);
       }
     }
 
