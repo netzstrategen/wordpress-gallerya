@@ -123,6 +123,14 @@
           SHARE: fancyboxTranslations.de.share,
           ZOOM: fancyboxTranslations.de.zoom
         }
+      },
+      // Hide the gallery in the background when the modal is open to avoid distraction to the user.
+      afterShow: function (instance, current) {
+        const trigger = current.opts.$orig;
+        $(trigger).parents('.woocommerce-product-gallery').addClass('gallerya-hidden');
+      },
+      beforeClose: function (instance, current) {
+        $('.gallerya-hidden').removeClass('gallerya-hidden');
       }
     });
 
