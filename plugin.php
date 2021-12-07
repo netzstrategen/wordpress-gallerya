@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Gallerya
-  Version: 2.8.2
+  Version: 2.8.3
   Text Domain: gallerya
   Description: Change the native post gallery to be displayed as a slider with lightbox support.
   Author: netzstrategen
