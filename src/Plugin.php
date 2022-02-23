@@ -126,7 +126,7 @@ class Plugin {
   /**
    * @implements post_gallery
    */
-  public static function post_gallery($output = '', $atts) {
+  public static function post_gallery($output, $atts) {
     extract(shortcode_atts([
       'include' => '',
       'layout' => apply_filters('gallerya/default_layout', self::DEFAULT_LAYOUT),
