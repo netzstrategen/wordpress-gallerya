@@ -24,6 +24,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 2.8.5.=
+2022-05-18
+
+* Fixed fatal error in single product view.
+
 = 2.8.4 =
 2022-05-16
 
