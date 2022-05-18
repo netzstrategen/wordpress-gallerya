@@ -141,7 +141,7 @@ class WooCommerce {
   public static function woocommerce_product_get_gallery_image_ids($value, $obj) {
     global $product;
 
-    if (!$product || $product->get_type() !== 'variable') {
+    if (!$product || !is_a($product, 'WC_Product') || $product->get_type() !== 'variable') {
       return $value;
     }
 

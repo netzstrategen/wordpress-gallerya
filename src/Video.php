@@ -171,7 +171,7 @@ class Video {
   public static function woocommerce_product_get_gallery_image_ids($value) {
     global $product;
 
-    if (!$product) {
+    if (!$product || !is_a($product, 'WC_Product')) {
       return $value;
     }
 
