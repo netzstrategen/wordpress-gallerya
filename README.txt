@@ -29,6 +29,11 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 * Fixed fatal error in single product view.
 
+= 2.8.6 =
+2022-05-27
+
+* Fixed product variation slider overriding images where srcset is not available.
+
 = 2.8.4 =
 2022-05-16
 
