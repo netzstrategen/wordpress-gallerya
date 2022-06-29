@@ -1,8 +1,8 @@
 === Gallerya ===
 Contributors: netzstrategen, fabianmarz, juanlopez4691, lucapipolo, tha_sun, gyopiazza, Mauricio-Urrego, christianbaltazar, bogdanarizancu
-Tags: gallery, galleries, image, images, photo, album, responsive, responsive gallery, image gallery, photo gallery, carousel, image carousel, slider, image slider, slideshow, lightbox, fullscreen, zoom, media, foto, fotos, thumbnail, thumbnails, video, video gallery, lightgallery, flickity, jquery
+Tags: gallery, image gallery, video gallery, carousel, lightbox, slider, responsive gallery, image slider, lightgallery, flickity
 Requires at least: 4.5
-Tested up to: 5.6
+Tested up to: 6.0
 Stable tag: 2.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -24,15 +24,15 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
-= 2.8.5.=
-2022-05-18
-
-* Fixed fatal error in single product view.
-
 = 2.8.6 =
 2022-05-27
 
 * Fixed product variation slider overriding images where srcset is not available.
+
+= 2.8.5 =
+2022-05-18
+
+* Fixed fatal error in single product view.
 
 = 2.8.4 =
 2022-05-16
