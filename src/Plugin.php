@@ -92,6 +92,14 @@ class Plugin {
     if (static::isPluginActive('bj-lazy-load/bj-lazy-load.php')) {
       add_filter('bjll/skip_classes', __CLASS__ . '::bjll_skip_classes');
     }
+
+    // Adds wp-graphql support for product variation additional gallery images.
+    if (static::isPluginActive('wp-graphql/wp-graphql.php')
+    && static::isPluginActive('wp-graphql-woocommerce/wp-graphql-woocommerce.php')
+    ) {
+      add_filter('graphql_register_types', __CLASS__ . '::graphql_register_types');
+    }
+
   }
 
   /**
@@ -240,6 +248,31 @@ class Plugin {
    */
   public static function getBasePath() {
     return dirname(__DIR__);
+  }
+
+  /**
+   * @implements graphql_register_types
+   */
+  public static function graphql_register_types() {
+    register_graphql_connection(
+      [
+        'fromType' => 'ProductVariation',
+        'toType' => 'MediaItem',
+        'fromFieldName' => 'galleryImages',
+        'resolve'       => function ($source, array $args, $context, $info) {
+          $resolver = new \WPGraphQL\Data\Connection\PostObjectConnectionResolver($source, $args, $context, $info, 'attachment');
+          $resolver->set_query_arg('post_type', 'attachment');
+          $resolver->set_query_arg('post__in', Woocommerce::getVariationGalleryImages($source->databaseId) ?: ['0']);
+
+          // Change default ordering.
+          if (!in_array('orderby', array_keys($resolver->get_query_args()), TRUE)) {
+            $resolver->set_query_arg('orderby', 'post__in');
+          }
+
+          return $resolver->get_connection();
+        },
+      ]
+    );
   }
 
 }
