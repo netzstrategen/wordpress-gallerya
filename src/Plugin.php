@@ -259,7 +259,7 @@ class Plugin {
         'fromType' => 'ProductVariation',
         'toType' => 'MediaItem',
         'fromFieldName' => 'galleryImages',
-        'resolve'       => function ($source, array $args, $context, $info) {
+        'resolve' => function ($source, array $args, $context, $info) {
           $resolver = new \WPGraphQL\Data\Connection\PostObjectConnectionResolver($source, $args, $context, $info, 'attachment');
           $resolver->set_query_arg('post_type', 'attachment');
           $resolver->set_query_arg('post__in', Woocommerce::getVariationGalleryImages($source->databaseId) ?: ['0']);
