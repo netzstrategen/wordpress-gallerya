@@ -92,6 +92,10 @@ class Plugin {
     if (static::isPluginActive('bj-lazy-load/bj-lazy-load.php')) {
       add_filter('bjll/skip_classes', __CLASS__ . '::bjll_skip_classes');
     }
+
+    // Adds wp-graphql support for product variation additional gallery images.
+    add_filter('graphql_register_types', __NAMESPACE__ . '\GraphQL::graphql_register_types');
+
   }
 
   /**
