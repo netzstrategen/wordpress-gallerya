@@ -25,7 +25,7 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 == Changelog ==
 
 = 2.9.0 =
-2022-09-214
+2022-09-14
 
 * Added wp-graphql support for product variation additional gallery images.
 
