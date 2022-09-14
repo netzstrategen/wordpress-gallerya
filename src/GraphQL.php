@@ -7,6 +7,8 @@
 
 namespace Netzstrategen\Gallerya;
 
+use WPGraphQL\Data\Connection\PostObjectConnectionResolver;
+
 /**
  * GraphQL integration.
  */
@@ -26,7 +28,7 @@ class GraphQL {
           if (empty($variation_gallery_image_ids)) {
             return ['nodes' => []];
           }
-          $resolver = new \WPGraphQL\Data\Connection\PostObjectConnectionResolver($source, $args, $context, $info, 'attachment');
+          $resolver = new PostObjectConnectionResolver($source, $args, $context, $info, 'attachment');
           $resolver->set_query_arg('post_type', 'attachment');
           $resolver->set_query_arg('post__in', $variation_gallery_image_ids);
 
