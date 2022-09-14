@@ -3,7 +3,7 @@ Contributors: netzstrategen, fabianmarz, juanlopez4691, lucapipolo, tha_sun, gyo
 Tags: gallery, image gallery, video gallery, carousel, lightbox, slider, responsive gallery, image slider, lightgallery, flickity
 Requires at least: 4.5
 Tested up to: 6.0
-Stable tag: 2.8.6
+Stable tag: 2.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
