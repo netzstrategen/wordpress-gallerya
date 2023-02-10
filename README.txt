@@ -24,7 +24,7 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
-= 2.9.1 =
+= 2.9.2 =
 2023-02-23
 
 * Fix contributors Readme.txt.
