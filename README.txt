@@ -1,9 +1,9 @@
 === Gallerya ===
-Contributors: netzstrategen, fabianmarz, juanlopez4691, lucapipolo, tha_sun, gyopiazza, Mauricio-Urrego, christianbaltazar, bogdanarizancu, geistahnen
+Contributors: netzstrategen, fabianmarz, juanlopez4691, lucapipolo, tha_sun, gyopiazza, Mauricio-Urrego, christianbaltazar, bogdanarizancu, geisthanen
 Tags: gallery, image gallery, video gallery, carousel, lightbox, slider, responsive gallery, image slider, lightgallery, flickity
 Requires at least: 4.5
 Tested up to: 6.0
-Stable tag: 2.9.2
+Stable tag: 2.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,7 +24,7 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
-= 2.9.2 =
+= 2.9.2 && 2.9.3 =
 2023-02-23
 
 * Fix contributors Readme.txt.
