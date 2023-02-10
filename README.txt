@@ -1,5 +1,5 @@
 === Gallerya ===
-Contributors: netzstrategen, fabianmarz, juanlopez4691, lucapipolo, tha_sun, gyopiazza, Mauricio-Urrego, christianbaltazar, bogdanarizancu
+Contributors: netzstrategen, fabianmarz, juanlopez4691, lucapipolo, tha_sun, gyopiazza, Mauricio-Urrego, christianbaltazar, bogdanarizancu, geistahnen
 Tags: gallery, image gallery, video gallery, carousel, lightbox, slider, responsive gallery, image slider, lightgallery, flickity
 Requires at least: 4.5
 Tested up to: 6.0
