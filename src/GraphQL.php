@@ -24,9 +24,9 @@ class GraphQL {
         'toType' => 'MediaItem',
         'fromFieldName' => 'galleryImages',
         'resolve' => function ($source, array $args, $context, $info) {
-          $variation_gallery_image_ids = Woocommerce::getVariationGalleryImages($source->databaseId);
+          $variation_gallery_image_ids = WooCommerce::getVariationGalleryImages($source->databaseId);
           if (empty($variation_gallery_image_ids)) {
-            return ['nodes' => []];
+            return;
           }
           $resolver = new PostObjectConnectionResolver($source, $args, $context, $info, 'attachment');
           $resolver->set_query_arg('post_type', 'attachment');
