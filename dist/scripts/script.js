@@ -1,11 +1,11 @@
+/******/ (function() { // webpackBootstrap
+var __webpack_exports__ = {};
 (function ($) {
   $(document).ready(function () {
-
     // Adds slide navigation through variation thumbnails for variable products
     // displayed in products listings.
     if ($('.js-gallerya-slider').length > 0 && typeof $.fn.flickity === 'function') {
       const arrowShape = 'M85,50.36033a2.72075,2.72075,0,0,0-2.74945-2.68906H24.01177L47.61119,24.59022a2.65667,2.65667,0,0,0,0-3.80232,2.79411,2.79411,0,0,0-3.88955,0L15.80559,48.09077a2.64614,2.64614,0,0,0,0,3.80232L43.729,79.21211a2.79185,2.79185,0,0,0,3.88771,0,2.64613,2.64613,0,0,0,0-3.80233L24.756,53.04939h57.4946A2.72075,2.72075,0,0,0,85,50.36033Z';
-
       $('.js-gallerya-slider').each(function (index, element) {
         const galleryaSlider = $(this).closest('.gallerya--slider, .gallerya--product-variation-slider');
         const navigation = galleryaSlider.data('gallerya-navigation');
@@ -19,17 +19,15 @@
           wrapAround: true,
           imagesLoaded: true,
           watchCSS: true,
-          lazyLoad: true,
+          lazyLoad: true
         };
-
         if (!galleryaSlider.hasClass('gallerya--product-variation-slider')) {
           sliderArgs.arrowShape = arrowShape;
         }
         if (typeof pageDots !== 'undefined') {
           // Let the pageDots property be overriden by a data-attribute.
           sliderArgs.pageDots = pageDots == true;
-        }
-        else if (typeof navigation === 'undefined' || navigation == false || thumbnails.length > 0) {
+        } else if (typeof navigation === 'undefined' || navigation == false || thumbnails.length > 0) {
           sliderArgs.pageDots = false;
         }
 
@@ -44,7 +42,6 @@
             productLink.prop('href', variantURL);
           }
         });
-
         const flickityData = $(this).data('flickity');
         if (thumbnails.length > 0) {
           const thumbnailsArgs = {
@@ -53,15 +50,13 @@
             pageDots: false,
             imagesLoaded: true,
             groupCells: true,
-            arrowShape: arrowShape,
+            arrowShape: arrowShape
           };
           thumbnails.flickity(thumbnailsArgs);
-
           $(this).on('select.flickity', function () {
             const index = flickityData.selectedIndex;
             const className = 'is-currently-selected';
-            thumbnails.find('.flickity-slider li').removeClass(className)
-              .eq(index).addClass(className);
+            thumbnails.find('.flickity-slider li').removeClass(className).eq(index).addClass(className);
           });
         }
         if (count) {
@@ -71,10 +66,9 @@
           });
         }
       });
-
       $('.woocommerce-loop-product__link').on('click', function (e) {
         // Prevent clicks onto slider arrows to bubble through to wrapping product link.
-        if ($(e.target).closest('.flickity-prev-next-button').length !== 0){
+        if ($(e.target).closest('.flickity-prev-next-button').length !== 0) {
           e.stopPropagation();
           return false;
         }
@@ -83,18 +77,11 @@
 
     // Adds lightbox functionality to product gallery.
     $().fancybox({
-      selector : '[data-fancybox], .js-gallerya-lightbox .gallerya__image > a, .woocommerce-product-gallery .woocommerce-product-gallery__image > a',
+      selector: '[data-fancybox], .js-gallerya-lightbox .gallerya__image > a, .woocommerce-product-gallery .woocommerce-product-gallery__image > a',
       closeExisting: false,
       loop: true,
       keyboard: true,
-      buttons: [
-        'zoom',
-        'fullScreen',
-        'share',
-        'download',
-        'thumbs',
-        'close'
-      ],
+      buttons: ['zoom', 'fullScreen', 'share', 'download', 'thumbs', 'close'],
       animationEffect: 'zoom',
       animationDuration: 250,
       transitionEffect: 'slide',
@@ -106,7 +93,7 @@
         preload: true
       },
       iframe: {
-        preload: true,
+        preload: true
       },
       lang: fancyboxTranslations.language,
       i18n: {
@@ -137,28 +124,25 @@
     // Adds thumbnails slider to product gallery on product detail page.
     if ($('.js-gallerya-product-thumbnail-slider').length > 0 && typeof $.fn.flickity === 'function') {
       const $thumbnailSliderEl = $('.js-gallerya-product-thumbnail-slider').parent().find('.flex-control-thumbs').first();
-
       if (!$thumbnailSliderEl.length) {
         return;
       }
-
       const thumbnailSliderArgs = {
         contain: true,
         pageDots: false,
         imagesLoaded: true,
-        groupCells: true,
+        groupCells: true
       };
 
       // Calculate # of cols, given the initial images width as the minimum, at least 4 cols.
-      const thumbnailSpacingUnit  = parseInt(getComputedStyle($thumbnailSliderEl.get(0)).getPropertyValue('--thumbnail-spacing-unit'), 10);
+      const thumbnailSpacingUnit = parseInt(getComputedStyle($thumbnailSliderEl.get(0)).getPropertyValue('--thumbnail-spacing-unit'), 10);
       const thumbnailSliderMargin = parseInt(getComputedStyle($thumbnailSliderEl.get(0)).getPropertyValue('--thumbnail-slider-margin'), 10);
       const initialImgsWidth = $thumbnailSliderEl.find('li').first().width();
       const thumbnailSliderWidth = $thumbnailSliderEl.width();
       const maxCols = 7;
       let noCols = 4;
-
       if (initialImgsWidth > 0 && thumbnailSliderWidth > initialImgsWidth) {
-        while (((thumbnailSliderWidth - (2 * thumbnailSliderMargin)) - (thumbnailSpacingUnit * noCols)) / (noCols + 1) >= initialImgsWidth) {
+        while ((thumbnailSliderWidth - 2 * thumbnailSliderMargin - thumbnailSpacingUnit * noCols) / (noCols + 1) >= initialImgsWidth) {
           noCols++;
           if (noCols === maxCols) {
             break;
@@ -173,19 +157,15 @@
       thumbnailSliderArgs.prevNextButtons = numberOfThumbnails > noCols;
 
       // Add video player and video thumbnail to the product gallery.
-      $thumbnailSliderEl
-        .addClass('flickity')
-        .on('ready.flickity', function () {
-          setProductGalleryVideoSlide();
-        })
-        .on('settle.flickity', function () {
-          setProductGalleryVideoThumbnail();
-        })
-        .on('staticClick.flickity', function (event, pointer, cellElement, cellIndex) {
-          if ($(cellElement).hasClass('slider-thumb-video')) {
-            setVideoPlayerUrl(cellIndex);
-          }
-        });
+      $thumbnailSliderEl.addClass('flickity').on('ready.flickity', function () {
+        setProductGalleryVideoSlide();
+      }).on('settle.flickity', function () {
+        setProductGalleryVideoThumbnail();
+      }).on('staticClick.flickity', function (event, pointer, cellElement, cellIndex) {
+        if ($(cellElement).hasClass('slider-thumb-video')) {
+          setVideoPlayerUrl(cellIndex);
+        }
+      });
       // Initialise the thumbnail slider.
       const $thumbnailSlider = $thumbnailSliderEl.flickity(thumbnailSliderArgs);
       const $singleVariation = $('.single_variation_wrap');
@@ -208,7 +188,7 @@
       // Keep the thumbnails slider in sync with the lightbox navigation.
       // When we jump to a previous/next slide, the corresponding thumbnail
       // should also be selected and the slider repositioned.
-      $(document).on('afterShow.fb', function(e, instance, slide) {
+      $(document).on('afterShow.fb', function (e, instance, slide) {
         productGallery.flexslider(slide.index);
         $thumbnailSliderEl.flickity('selectCell', slide.index);
       });
@@ -235,10 +215,7 @@
           }
         }
         // Get the index of the variation thumbnail in the thumbnail slider.
-        const thumbnailIndex = $thumbnailSliderEl
-          .find('img[src="' + variation.image.gallery_thumbnail_src + '"]')
-          .parent()
-          .index();
+        const thumbnailIndex = $thumbnailSliderEl.find('img[src="' + variation.image.gallery_thumbnail_src + '"]').parent().index();
         // Select the variation thumbnail in the thumbnail slider.
         $thumbnailSliderEl.flickity('selectCell', thumbnailIndex);
       });
@@ -250,8 +227,7 @@
           $thumbnailSliderEl.hiddenSlides = 0;
         }
       });
-    }
-    else {
+    } else {
       // Flickity is not active.
       setProductGalleryVideoSlide();
       setProductGalleryVideoThumbnail();
@@ -298,19 +274,13 @@
       if ($sliderThumbs.length <= 1) {
         return;
       }
-
       const $firstSliderThumb = $sliderThumbs.first();
       const $secondSliderThumb = $sliderThumbs.eq(1);
-
       if ($secondSliderThumb.attr('src') === videoThumbSrc) {
         return;
       }
-
       $firstSliderThumb.attr('src', $secondSliderThumb.attr('src'));
-      $secondSliderThumb
-          .attr('src', videoThumbSrc)
-          .attr('data-lazy-src', videoThumbSrc)
-          .parent().addClass('slider-thumb-video');
+      $secondSliderThumb.attr('src', videoThumbSrc).attr('data-lazy-src', videoThumbSrc).parent().addClass('slider-thumb-video');
     }
 
     /**
@@ -349,6 +319,7 @@
         $slider.hiddenSlides = 0;
       }
     }
-
   });
 })(jQuery);
+/******/ })()
+;

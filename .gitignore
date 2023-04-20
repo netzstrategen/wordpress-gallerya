@@ -3,3 +3,7 @@ bower_components
 .sass-cache
 unused-because-wordpress.js*
 .wp-svn
+.DS_Store
+.vscode
+.idea
+dotfiles/
