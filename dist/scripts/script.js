@@ -244,18 +244,18 @@ var __webpack_exports__ = {};
      */
     function setProductGalleryVideoSlide() {
       // Video should be the second element in the product gallery.
-      const $galleryWraper = $('.woocommerce-product-gallery .woocommerce-product-gallery__wrapper');
-      const $galleryElements = $galleryWraper.children('.woocommerce-product-gallery__image');
+      const $galleryElements = $('.woocommerce-product-gallery .woocommerce-product-gallery__wrapper .woocommerce-product-gallery__image');
       if ($galleryElements.length <= 1) {
         return;
       }
       const $firstGalleryElement = $galleryElements.first();
-      if ($firstGalleryElement.hasClass('has-video')) {
-        // Set video as second slide.
-        const firstImage = $galleryWraper.children('.woocommerce-product-gallery__image:not(.has-video)').first();
-        $firstGalleryElement.detach().insertAfter(firstImage);
-        setVideoPlayerUrl(1);
+      if (!$firstGalleryElement.hasClass('has-video')) {
+        return;
       }
+      // Set video as second slide.
+      const $secondGalleryElement = $galleryElements.eq(1);
+      $firstGalleryElement.detach().insertAfter($secondGalleryElement);
+      setVideoPlayerUrl(1);
     }
 
     /**
@@ -271,15 +271,16 @@ var __webpack_exports__ = {};
       const $sliderThumbs = $('.flex-control-nav li img');
       // Video thumb should be the second element in the slider,
       // unless there's only one slide.
-      const videoThumbPos = $sliderThumbs.length > 1 ? 1 : 0;
-      const videoThumb = $sliderThumbs.eq(videoThumbPos);
-      // Avoid switching thumbnails if second thumb is already the video.
-      if (videoThumb.attr('src') !== videoThumbSrc) {
-        $sliderThumbs.first().attr('src', videoThumb.attr('src'));
-        videoThumb.attr('src', videoThumbSrc)
-        // Ensure lazy loaded image is the video thumbnail.
-        .attr('data-lazy-src', videoThumbSrc).parent().addClass('slider-thumb-video');
+      if ($sliderThumbs.length <= 1) {
+        return;
       }
+      const $firstSliderThumb = $sliderThumbs.first();
+      const $secondSliderThumb = $sliderThumbs.eq(1);
+      if ($secondSliderThumb.attr('src') === videoThumbSrc) {
+        return;
+      }
+      $firstSliderThumb.attr('src', $secondSliderThumb.attr('src'));
+      $secondSliderThumb.attr('src', videoThumbSrc).attr('data-lazy-src', videoThumbSrc).parent().addClass('slider-thumb-video');
     }
 
     /**
