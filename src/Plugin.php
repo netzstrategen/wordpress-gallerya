@@ -102,12 +102,12 @@ class Plugin {
    * @implements wp_enqueue_scripts
    */
   public static function wp_enqueue_scripts() {
-    wp_enqueue_style('flickity', static::getBaseUrl() . '/dist/styles/flickity.min.css');
-    wp_enqueue_style('fancybox', static::getBaseUrl() . '/dist/styles/jquery.fancybox.min.css');
+    wp_enqueue_style('flickity', static::getBaseUrl() . '/assets/lib/styles/flickity.min.css');
+    wp_enqueue_style('fancybox', static::getBaseUrl() . '/assets/lib/styles/jquery.fancybox.min.css');
     wp_enqueue_style('gallerya-custom', static::getBaseUrl() . '/dist/styles/style.min.css');
 
-    wp_enqueue_script('flickity', static::getBaseUrl() . '/dist/scripts/flickity.min.js', ['jquery'], '2.0.9', TRUE);
-    wp_enqueue_script('fancybox', static::getBaseUrl() . '/dist/scripts/jquery.fancybox.min.js', ['jquery'], '3.5.7', TRUE);
+    wp_enqueue_script('flickity', static::getBaseUrl() . '/assets/lib/scripts/flickity.min.js', ['jquery'], '2.0.9', TRUE);
+    wp_enqueue_script('fancybox', static::getBaseUrl() . '/assets/lib/scripts/jquery.fancybox.min.js', ['jquery'], '3.5.7', TRUE);
     wp_localize_script('fancybox', 'fancyboxTranslations', [
       'language' => strstr(get_bloginfo('language'), '-', TRUE),
       'de' => [
