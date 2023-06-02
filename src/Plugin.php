@@ -78,7 +78,7 @@ class Plugin {
       // @todo Make lightGallery properly respect srcset & sizes in JavaScript
       // instead of duplicating that information in HTML.
       // @see https://github.com/netzstrategen/wordpress-gallerya/pull/11#issuecomment-355664739
-      // Only add the filter if the plugin woo-product-gallery-slider is not active as it already include this and creates a conflict.
+      // Only add the filter if the plugin woo-product-gallery-slider is not active as it already includes this and creates a conflict.
       if (!is_plugin_active('woo-product-gallery-slider/woo-product-gallery-slider.php')) {
         add_filter('woocommerce_single_product_image_thumbnail_html', __NAMESPACE__ . '\WooCommerce::woocommerce_single_product_image_thumbnail_html', 10, 2);
       }
