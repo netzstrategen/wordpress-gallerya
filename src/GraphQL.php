@@ -18,6 +18,40 @@ class GraphQL {
    * @implements graphql_register_types
    */
   public static function graphql_register_types() {
+    register_graphql_enum_type('GalleryaVideoSourceEnum', [
+      'values' => [
+        'YOUTUBE' => [
+          'value' => 'youtube'
+        ],
+        'VIMEO' => [
+          'value' => 'vimeo'
+        ],
+      ],
+    ]);
+
+    register_graphql_object_type('GalleryaVideo', [
+      'fields' => [
+        'videoId' => [
+          'type' => 'string',
+        ],
+        'videoSource' => [
+          'type' => 'GalleryaVideoSourceEnum',
+        ],
+        'videoDisplay' => [
+          'type' => 'boolean',
+        ],
+      ],
+    ]);
+
+    register_graphql_field('Product', 'galleryaVideo', [
+      'type' => 'GalleryaVideo',
+      'resolve' => fn ($source): array => [
+        'videoId' => $source?->get_meta('_gallerya_video_id'),
+        'videoSource' => $source?->get_meta('_gallerya_video_source'),
+        'videoDisplay' => $source?->get_meta('_gallerya_video_display'),
+      ],
+    ]);
+
     register_graphql_connection(
       [
         'fromType' => 'ProductVariation',
