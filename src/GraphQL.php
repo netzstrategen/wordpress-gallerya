@@ -47,8 +47,8 @@ class GraphQL {
       'type' => 'GalleryaVideo',
       'resolve' => fn ($source): array => [
         'videoId' => $source?->get_meta('_gallerya_video_id'),
-        'videoSource' => $source?->get_meta('_gallerya_video_source'),
-        'videoDisplay' => $source?->get_meta('_gallerya_video_display'),
+        'videoSource' => $source?->get_meta('_gallerya_video_source') ?: NULL,
+        'videoDisplay' => $source?->get_meta('_gallerya_video_display') ?? NULL,
       ],
     ]);
 
