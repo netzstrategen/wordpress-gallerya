@@ -8,11 +8,20 @@
 namespace Netzstrategen\Gallerya;
 
 use WPGraphQL\Data\Connection\PostObjectConnectionResolver;
+use WPGraphQL\Router;
 
 /**
  * GraphQL integration.
  */
 class GraphQL {
+
+  public static function init() {
+    add_action('graphql_register_types', __CLASS__ . '::graphql_register_types');
+    // Prevent adding variant images to the main gallery.
+    if (Router::is_graphql_http_request()) {
+      remove_filter('woocommerce_product_get_gallery_image_ids', __NAMESPACE__ . '\WooCommerce::woocommerce_product_get_gallery_image_ids', 10);
+    }
+  }
 
   /**
    * @implements graphql_register_types

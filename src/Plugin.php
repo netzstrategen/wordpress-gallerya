@@ -96,7 +96,9 @@ class Plugin {
     }
 
     // Adds wp-graphql support for product variation additional gallery images.
-    add_filter('graphql_register_types', __NAMESPACE__ . '\GraphQL::graphql_register_types');
+    if (static::isPluginActive('wp-graphql/wp-graphql.php')) {
+      GraphQL::init();
+    }
 
   }
 
