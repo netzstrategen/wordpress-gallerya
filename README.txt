@@ -24,6 +24,9 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 
 == Changelog ==
 
+= 3.2.4 =
+Fixed error when missing product
+
 = 3.2.3 =
 Fixed missing fallback in case array key is not defined.
 
