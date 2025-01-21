@@ -332,7 +332,7 @@ class WooCommerce {
     global $product, $wpdb;
     $attachment_ids = [];
 
-    if ($product->is_type('variable')) {
+    if ($product && $product->is_type('variable')) {
       // Add the main product image.
       $attachment_ids[] = $product->get_image_id();
       // Add the first image of each product variation.
