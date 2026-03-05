@@ -65,7 +65,7 @@ class GraphQL {
       [
         'fromType' => 'ProductVariation',
         'toType' => 'MediaItem',
-        'fromFieldName' => 'galleryImages',
+        'fromFieldName' => 'galleryaImages',
         'resolve' => function ($source, array $args, $context, $info) {
           $variation_gallery_image_ids = WooCommerce::getVariationGalleryImages($source->databaseId);
           if (empty($variation_gallery_image_ids)) {
