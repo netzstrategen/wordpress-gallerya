@@ -260,8 +260,8 @@ class WooCommerce {
       $wpdb->get_col($wpdb->prepare(
         "
         SELECT DISTINCT pm.meta_value
-        FROM wp_postmeta pm
-        INNER JOIN wp_posts p ON p.ID = pm.post_id AND p.post_parent = %d
+        FROM {$wpdb->postmeta} pm
+        INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id AND p.post_parent = %d
         WHERE pm.meta_key IN ('_thumbnail_id', '_gallerya_attachment_ids')
         AND p.post_status = 'publish'
         ",
@@ -348,8 +348,8 @@ class WooCommerce {
             $wpdb->get_col(
               $wpdb->prepare(
                 "SELECT pm.meta_value AS attachment_id
-                FROM wp_posts p
-                INNER JOIN wp_postmeta pm ON pm.post_id = p.ID AND pm.meta_key = '_thumbnail_id'
+                FROM {$wpdb->posts} p
+                INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID AND pm.meta_key = '_thumbnail_id'
                 WHERE p.ID IN ($placeholders) AND pm.meta_value > 0
                 ORDER BY p.menu_order ASC",
                 $variation_ids
