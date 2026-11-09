@@ -82,10 +82,12 @@ class Admin {
    */
   public static function renderVariationImage(int $variation_id, int $image_id): string {
     $delete_label = __('Delete image', Plugin::L10N);
+    // Falls back to the ID so a deleted attachment can still be identified and removed.
+    $filename = wp_basename((string) get_attached_file($image_id)) ?: sprintf('#%d', $image_id);
 
     return sprintf('
       <li id="variation_%1$d_image_%2$d" class="variation_gallery__image" data-variation_id="%1$d" data-image_id="%2$d">
-        %3$s
+        <div class="variation_gallery__thumbnail">%3$s</div>
         <button type="button" class="variation_gallery__delete" title="%4$s"><span class="screen-reader-text">%5$s</span></button>
         <div class="variation_gallery__info">
           %6$s
@@ -99,7 +101,7 @@ class Admin {
       esc_html($delete_label),
       esc_html__('More Info...', Plugin::L10N),
       esc_html__('Name', Plugin::L10N),
-      esc_html(wp_basename((string) get_attached_file($image_id))),
+      esc_html($filename),
       esc_html__('Alt', Plugin::L10N),
       esc_html((string) get_post_meta($image_id, '_wp_attachment_image_alt', TRUE))
     );
@@ -117,7 +119,7 @@ class Admin {
     $images = [];
     foreach ((array) ($_POST['image_ids'] ?? []) as $image_id) {
       $image_id = (int) $image_id;
-      if ($image_id && !in_array($image_id, $variation_gallery)) {
+      if (wp_attachment_is_image($image_id) && !in_array($image_id, $variation_gallery)) {
         $variation_gallery[] = $image_id;
         $images[] = [
           'image_id' => $image_id,
@@ -125,7 +127,9 @@ class Admin {
         ];
       }
     }
-    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_attachment_ids', $variation_gallery);
+    if ($images) {
+      WooCommerce::setVariationGalleryImages($variation_id, $variation_gallery);
+    }
 
     wp_send_json([
       'success' => TRUE,
@@ -145,8 +149,7 @@ class Admin {
     $variation_gallery = WooCommerce::getVariationGalleryImages($variation_id);
 
     if (in_array($image_id, $variation_gallery)) {
-      $variation_gallery = array_values(array_diff($variation_gallery, [$image_id]));
-      update_post_meta($variation_id, '_' . Plugin::PREFIX . '_attachment_ids', $variation_gallery);
+      WooCommerce::setVariationGalleryImages($variation_id, array_diff($variation_gallery, [$image_id]));
     }
     wp_send_json([
       'success' => TRUE,
@@ -162,13 +165,12 @@ class Admin {
    */
   public static function galleryaSortVariationImages() {
     $variation_id = static::verifyVariationRequest();
-    $variation_gallery = array_map('intval', WooCommerce::getVariationGalleryImages($variation_id));
-    $sorted = array_unique(array_map('intval', (array) ($_POST['image_ids'] ?? [])));
+    $variation_gallery = WooCommerce::getVariationGalleryImages($variation_id);
+    $sorted = array_map('intval', (array) ($_POST['image_ids'] ?? []));
 
     // Drops unknown IDs and keeps images missing from the request at the end.
     $sorted = array_values(array_intersect($sorted, $variation_gallery));
-    $sorted = array_merge($sorted, array_values(array_diff($variation_gallery, $sorted)));
-    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_attachment_ids', $sorted);
+    $sorted = WooCommerce::setVariationGalleryImages($variation_id, array_merge($sorted, array_diff($variation_gallery, $sorted)));
 
     wp_send_json([
       'success' => TRUE,
@@ -188,7 +190,8 @@ class Admin {
       wp_send_json_error(__('Nonce value cannot be verified.', Plugin::L10N));
     }
     $variation_id = (int) ($_POST['variation_id'] ?? 0);
-    if (!$variation_id || !current_user_can('edit_products')) {
+    // Permission is checked on the parent product, as variations don't map meta capabilities.
+    if (get_post_type($variation_id) !== 'product_variation' || !current_user_can('edit_post', wp_get_post_parent_id($variation_id))) {
       wp_send_json_error(__('You are not allowed to edit this variation.', Plugin::L10N));
     }
     return $variation_id;
@@ -210,6 +213,9 @@ class Admin {
     wp_localize_script('gallerya-admin', 'gallerya_admin', [
       'ajaxurl' => admin_url('admin-ajax.php'),
       'nonce' => wp_create_nonce('gallerya-admin-ajax'),
+      'i18n' => [
+        'error' => __('The variation gallery could not be saved. Please reload the page and try again.', Plugin::L10N),
+      ],
     ]);
   }
 

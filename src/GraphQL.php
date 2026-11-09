@@ -71,11 +71,9 @@ class GraphQL {
           if (empty($variation_gallery_image_ids)) {
             return;
           }
+          // Passed as "in" so WPGraphQL keeps the gallery order and paginates by it.
+          $args['where']['in'] = array_map('intval', $variation_gallery_image_ids);
           $resolver = new PostObjectConnectionResolver($source, $args, $context, $info, 'attachment');
-          $resolver->set_query_arg('post_type', 'attachment');
-          $resolver->set_query_arg('post__in', $variation_gallery_image_ids);
-          // Keep the variation gallery order; WPGraphQL otherwise sorts by date.
-          $resolver->set_query_arg('orderby', 'post__in');
 
           return $resolver->get_connection();
         },
