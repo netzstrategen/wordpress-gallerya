@@ -301,6 +301,23 @@ class WooCommerce {
   }
 
   /**
+   * Saves the IDs of the gallery images for a given product variation.
+   *
+   * @param int $variation_id
+   *   The product variation ID.
+   * @param array $image_ids
+   *   The image IDs, in gallery order.
+   *
+   * @return array
+   *   The saved image IDs.
+   */
+  public static function setVariationGalleryImages($variation_id, array $image_ids): array {
+    $image_ids = array_values(array_unique(array_map('intval', $image_ids)));
+    update_post_meta($variation_id, '_' . Plugin::PREFIX . '_attachment_ids', $image_ids);
+    return $image_ids;
+  }
+
+  /**
    * Adds CSS class to single product image galleries to enable thumbnail slider via JS.
    *
    * @implements woocommerce_single_product_image_gallery_classes

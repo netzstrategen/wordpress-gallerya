@@ -1,127 +1,112 @@
 (function ($) {
-  function renderMediaUploader(variation_id) {
-    let file_frame;
+  const queues = {};
+  let file_frame;
+  let target_variation_id;
 
-    if (file_frame !== undefined) {
-      file_frame.open();
-      return;
+  function showError(response) {
+    window.alert(response && typeof response.data === 'string' ? response.data : gallerya_admin.i18n.error);
+  }
+
+  // Runs a variation's gallery requests one after another, so an older request can't overwrite a newer one.
+  // getData is called when the request is sent, so queued requests use the latest state.
+  function request(variation_id, action, getData) {
+    const send = () => $.ajax({
+      type: 'post',
+      dataType: 'json',
+      url: gallerya_admin.ajaxurl,
+      data: $.extend({
+        action: action,
+        nonce: gallerya_admin.nonce,
+        variation_id: variation_id,
+      }, getData()),
+    }).then((response) => (response && true === response.success ? response : $.Deferred().reject(response)));
+
+    queues[variation_id] = (queues[variation_id] || $.when()).then(send, send);
+    return queues[variation_id];
+  }
+
+  function addImages(variation_id, image_ids) {
+    request(variation_id, 'gallerya_add_variation_image', () => ({ image_ids: image_ids }))
+      .done((response) => {
+        const $images = $(`#variation_gallery_${variation_id} .variation_gallery__images`);
+        response.images.forEach((item) => $images.append(item.html));
+        initSortable();
+        $images.sortable('refresh');
+      })
+      .fail(showError);
+  }
+
+  function openMediaFrame(variation_id) {
+    target_variation_id = variation_id;
+
+    if (!file_frame) {
+      file_frame = wp.media({
+        frame: 'post',
+        state: 'insert',
+        multiple: true,
+        library: {
+          type: 'image',
+        },
+      });
+      // The frame is shared by all variations, so start each one without the previous selection.
+      file_frame.on('open', () => file_frame.state('insert').get('selection').reset());
+      file_frame.on('insert', () => {
+        addImages(target_variation_id, file_frame.state().get('selection').map((attachment) => attachment.id));
+      });
     }
 
-    // Prepare an instance of the wp media frame.
-    file_frame = wp.media.frames.file_frame = wp.media({
-      frame: 'post',
-      state: 'insert',
-      multiple: true,
-      library: {
-        type: 'image',
-      },
-    });
-
-    file_frame.on('open', function () {
-      // Remove the placeholder image.
-      $(`#variation_gallery_${variation_id} .variation_gallery__image--placeholder`).remove();
-    });
-
-    file_frame.on('insert', function (e) {
-      // Retrieve the selected images data returned from the Media Uploader.
-      const attachments = file_frame.state().get('selection').map(
-        function (attachment) {
-          attachment.toJSON();
-          return attachment;
-      });
-
-      const images = attachments.map(function (item) {
-        return {
-          image_id: item.attributes.id,
-          thumbnail_url: item.attributes.sizes.thumbnail.url,
-        };
-      });
-
-      // Add the selected images to the variation gallery.
-      $.ajax({
-        type: 'post',
-        dataType: 'json',
-        url: gallerya_admin.ajaxurl,
-        data: {
-          action: 'gallerya_add_variation_image',
-          nonce: gallerya_admin.nonce,
-          variation_id: variation_id,
-          images: images,
-        },
-        success: function (response) {
-          // Append additional product images.
-          if (response && true === response.success) {
-            response.images.forEach(item => {
-              $(`#variation_gallery_${response.variation_id} .variation_gallery__images`).append(
-              `<li
-                id="variation_${response.variation_id}_image_${item.image_id}"
-                class="variation_gallery__image"
-                data-image_id="${item.image_id}"
-                data-variation_id="${response.variation_id}"
-              >
-                <img src="${item.thumbnail_url}" />
-              </li>`);
-            });
-          }
-          else {
-            console.error(response.data);
-          }
-        }
-      });
-
-    });
-
-    // Now display the actual file_frame
     file_frame.open();
   }
 
-  $('#woocommerce-product-data').on('woocommerce_variations_loaded', function () {
-    // Adds one or more images to the variation gallery.
-    $('.variation_gallery').on('click', '.variation_gallery__add-image', function () {
-      const variation_id = $(this).data('variation_id');
-      // Appends a temporary placeholder image.
-      $(`#variation_gallery_${variation_id} .variation_gallery__images`).append(
-        '<li class="variation_gallery__image variation_gallery__image--placeholder"></li>'
-      );
+  function saveOrder($images) {
+    request($images.closest('.variation_gallery').data('variation_id'), 'gallerya_sort_variation_images', () => ({
+      image_ids: $images.sortable('toArray', { attribute: 'data-image_id' }),
+    })).fail(showError);
+  }
 
-      // Display the media uploader.
-      renderMediaUploader(variation_id);
+  // Same drag and drop behaviour as the WooCommerce product gallery.
+  function initSortable() {
+    $('.variation_gallery__images').not('.ui-sortable').sortable({
+      items: '.variation_gallery__image',
+      // Images being deleted can't be dragged; "items" alone doesn't stop already registered items.
+      cancel: '.disabled, input, textarea, button, select, option',
+      cursor: 'move',
+      scrollSensitivity: 40,
+      forcePlaceholderSize: true,
+      forceHelperSize: false,
+      helper: 'clone',
+      opacity: 0.65,
+      placeholder: 'variation_gallery__image--sortable-placeholder',
+      update: function () {
+        saveOrder($(this));
+      },
     });
+  }
 
-    // Removes an image from the variation gallery.
-    $('.variation_gallery').on('click', '.variation_gallery__image', function () {
-      const $this = $(this);
+  const $product_data = $('#woocommerce-product-data');
 
-      if (
-        $this.hasClass('variation_gallery__placeholder') ||
-        $this.hasClass('disabled')
-      ) {
-        return;
-      }
+  $product_data.on('woocommerce_variations_loaded woocommerce_variations_added', initSortable);
 
-      $this.css('opacity', '0.3');
-      $this.addClass('disabled');
+  // Adds one or more images to the variation gallery.
+  $product_data.on('click', '.variation_gallery__add-image', function () {
+    openMediaFrame($(this).data('variation_id'));
+  });
 
-      $.ajax({
-        type: 'post',
-        dataType: 'json',
-        url: gallerya_admin.ajaxurl,
-        data: {
-          action: 'gallerya_remove_variation_image',
-          nonce: gallerya_admin.nonce,
-          variation_id: $this.data('variation_id'),
-          image_id: $this.data('image_id'),
-        },
-        success: function (response) {
-          if (response && true === response.success) {
-            $(`#variation_${response.variation_id}_image_${response.image_id}`).remove();
-          }
-          else {
-            console.error(response.data);
-          }
-        }
+  // Removes an image from the variation gallery.
+  $product_data.on('click', '.variation_gallery__delete', function () {
+    const $image = $(this).closest('.variation_gallery__image');
+
+    if ($image.hasClass('disabled')) {
+      return;
+    }
+    $image.addClass('disabled');
+
+    request($image.data('variation_id'), 'gallerya_remove_variation_image', () => ({ image_id: $image.data('image_id') }))
+      .done(() => $image.remove())
+      .fail((response) => {
+        $image.removeClass('disabled');
+        showError(response);
       });
-    });
   });
 
 })(jQuery);
