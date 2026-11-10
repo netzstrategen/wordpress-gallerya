@@ -3,7 +3,7 @@ Contributors: netzstrategen, fabianmarz, juanlopez4691, lucapipolo, tha_sun, gyo
 Tags: gallery, image gallery, video gallery, carousel, lightbox, slider, responsive gallery, image slider, lightgallery, flickity
 Requires at least: 5.0
 Tested up to: 6.9.1
-Stable tag: 3.2.6
+Stable tag: 3.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,10 @@ Gallerya transforms the WordPress native post gallery into a full fledged slides
 * PHP 7.0 or later.
 
 == Changelog ==
+
+= 3.3.0 =
+Added file name and alt text on hover, drag and drop sorting and multi-row layout to the variation gallery in the backend.
+Fixed the GraphQL galleryaImages field to return images in the saved gallery order.
 
 = 3.2.6 =
 Fixed variation image queries on sites with a custom database table prefix.
